@@ -1,16 +1,22 @@
-// // import React from 'react'
-// // import { View } from 'react-native'
-// // import BottomTab from '../Tab/BottomTab';
-// // import { Route } from '../../routes';
+import React from 'react'
+import { View } from 'react-native'
+import BottomTab from '../Tab/BottomTab';
+import { Route } from '../../routes';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../Redux/Store';
 
-// // // const RootStack = () => {
-// // //     switch (navigation) {
+
+const RootStack = () => {
+
+    const navigation = useSelector((state: RootState) => state.navigation.currentScreen);
+
+    switch (navigation) {
    
-// // //         case 'FEED':
-// // //           return <BottomTab />;
-// // //         default:
-// // //           return <BottomTab />;
-// // // }
+        case Route.DEFAULT:
+          return <BottomTab />;
+        default:
+          return <BottomTab />;
+}
+}
 
-
-// export default RootStack
+export default RootStack
