@@ -1,8 +1,8 @@
-// store.ts
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+// store.js
+import {configureStore, combineReducers} from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { persistReducer, persistStore } from 'redux-persist';
-import navigationReducer from './Reducer/NavigationReducer'
+import {persistReducer, persistStore} from 'redux-persist';
+import NavigationSlice from './Reducer/NavigationSlice';
 
 // Define persistConfig
 const persistConfig = {
@@ -10,11 +10,10 @@ const persistConfig = {
   storage: AsyncStorage,
 };
 
-export type RootState = ReturnType<typeof rootReducer>;
 // Create root reducer
 const rootReducer = combineReducers({
-  navigation: navigationReducer,
   // Add other reducers here...
+  navigation: NavigationSlice,
 });
 
 // Create persisted reducer
