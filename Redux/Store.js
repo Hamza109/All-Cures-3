@@ -1,28 +1,41 @@
-// store.js
 import {configureStore, combineReducers} from '@reduxjs/toolkit';
+import indexSlice from './Slice/indexSlice';
+import screenSlice from './Slice/screenNameSlice';
+import DoctorDataSlice from './Slice/DoctorDetailSlice';
+import {
+  persistReducer,
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {persistReducer, persistStore} from 'redux-persist';
-import NavigationSlice from './Reducer/NavigationSlice';
+import heightSlice from './Slice/heightSlice';
+const rootReducer = combineReducers({
+  screen: screenSlice,
+  height: heightSlice,
+  index: indexSlice,
+  docData: DoctorDataSlice,
+});
 
-// Define persistConfig
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
+  blacklist: ['screen', 'index', 'height'],
 };
-
-// Create root reducer
-const rootReducer = combineReducers({
-  // Add other reducers here...
-  navigation: NavigationSlice,
-});
-
-// Create persisted reducer
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// Create store
 export const store = configureStore({
   reducer: persistedReducer,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
-// Create persisted store
 export const persistor = persistStore(store);

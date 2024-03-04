@@ -6,10 +6,10 @@ import {useSelector} from 'react-redux';
 import {RootState} from '../../Redux/Store';
 
 const RootStack = () => {
-  const navigation = useSelector(state => state.navigation.currentScreen);
+  const navigation = useSelector(state => state.screen.screen);
 
   switch (navigation) {
-    case Route.DEFAULT:
+    case Route.MAIN:
       return <BottomTab />;
     default:
       return <BottomTab />;
