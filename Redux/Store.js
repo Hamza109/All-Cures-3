@@ -2,6 +2,7 @@ import {configureStore, combineReducers} from '@reduxjs/toolkit';
 import indexSlice from './Slice/indexSlice';
 import screenSlice from './Slice/screenNameSlice';
 import DoctorDataSlice from './Slice/DoctorDetailSlice';
+import profileSlice from './Slice/ProfileDataSlice';
 import {
   persistReducer,
   persistStore,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   height: heightSlice,
   index: indexSlice,
   docData: DoctorDataSlice,
+  profile: profileSlice,
 });
 
 const persistConfig = {

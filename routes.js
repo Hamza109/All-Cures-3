@@ -9,6 +9,7 @@ export  const Route={
     DOCTOR_MAIN_SCREEN:"DOCTOR_MAIN_SCREEN",
     DOC_CURES : "DOC_CURES",
     FILTER_DOC : "FILTER_DOC",
+    APPOINTMENT:"APPOINTMENT",
    //search screen and tab
     SEARCH:"SEARCH",
     SEARCH_TAB :"SEARCH_TAB",
@@ -16,7 +17,14 @@ export  const Route={
    //profle screen and tab
     PROFILE:"PROFILE",
     PROFILE_TAB:"PROFILE_TAB",
-    MAIN:'MAIN'
+    MAIN:'MAIN',
+    LOGIN:'LOGIN',
+    ABOUT:'ABOUT',
+    HELP:'HELP',
+    LOGOUT:'LOGOUT',
+    NOTIFICATION:'NOTIFICATION',
+    SUBMITARTICLE:'SUBMITARTICLE',
+    TIPOFTHEDAY:'TIPOFTHEDAY'
 
 }
 

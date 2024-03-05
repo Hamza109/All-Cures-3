@@ -12,10 +12,12 @@ import InactiveDoctor from '../../assets/images/INACTIVE_DOCTOR.svg';
 import ActiveSearch from '../../assets/images/ACTIVE_SEARCH.svg';
 import InactiveSearch from '../../assets/images/INACTIVE_SEARCH.svg';
 import SearchStack from '../Stacks/SearchStack';
+import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 const BottomTab = () => {
   const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator
+    initialRouteName={Route.DOCTOR_TAB}
       screenOptions={({route, navigation}) => {
         return {
           headerShown: false,
@@ -25,7 +27,15 @@ const BottomTab = () => {
             alignItems: 'center',
             height: 60,
 
-            display: 'flex',
+            display:
+              getFocusedRouteNameFromRoute(route) === 'NOTIFICATION' ||
+              getFocusedRouteNameFromRoute(route) === 'HELP' ||
+              getFocusedRouteNameFromRoute(route) === 'SUBMITARTICLE' ||
+              getFocusedRouteNameFromRoute(route) === 'LOGIN' ||
+              getFocusedRouteNameFromRoute(route) === 'ABOUT' ||
+              getFocusedRouteNameFromRoute(route) === 'videoCall'
+                ? 'none'
+                : 'flex',
           },
           tabBarInactiveTintColor: 'grey',
           tabBarActiveBackgroundColor: 'aliceblue',

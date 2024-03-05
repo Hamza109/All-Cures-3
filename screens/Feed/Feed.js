@@ -14,9 +14,9 @@ import {FontFamily, Color} from '../../config/GlobalStyles';
 import MyLoader from '../../Components/ContentLoader';
 import axios from 'axios';
 import NetInfo from '@react-native-community/netinfo';
-import NotificationIcon from '../../assets/images/Notification.svg';
+
 import {width, height} from '../../config/GlobalStyles';
-import ArticlesCard from '../../Components/ArticleCard';
+import NotificationIcon from '../../assets/images/Notification.svg';import ArticlesCard from '../../Components/ArticleCard';
 import {backendHost, headers} from '../../Components/apiConfig';
 import {FlashList} from '@shopify/flash-list';
 import {Route} from '../../routes';
