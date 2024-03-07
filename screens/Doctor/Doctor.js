@@ -19,9 +19,8 @@ import {FILTER_DOC} from '../../routes';
 import {Route} from '../../routes';
 import ContentLoader from '../../Components/ContentLoader';
 
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 const Doctor = () => {
-  
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
@@ -30,7 +29,7 @@ const Doctor = () => {
   const [error, setError] = useState(null);
   const [speciality, setSpeciality] = useState([]);
   const [medicineId, setMedicineId] = useState(null);
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const selectItem = item => {
     setMedicineId(item.med_type);
@@ -61,7 +60,7 @@ const Doctor = () => {
 
     fetchData();
   }, []);
-  // const onChange = (event, selectedDate) => {
+ 
   //   const currentDate = selectedDate;
   //   setShow(false);
   //   setDate(currentDate);
@@ -119,26 +118,26 @@ const Doctor = () => {
 
     return (
       <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => {
-            console.log('ID', item.map.docID);
-            navigation.navigate(Route.DOCTOR_MAIN_SCREEN, {
-              ids: item.map.docID,
-              firstName: item.map.firstName,
-              secondName: item.map.lastName,
-              imgLoc:item.map.imgLoc
-            });
-          }}>
+        activeOpacity={0.7}
+        onPress={() => {
+          console.log('ID', item.map.docID);
+          navigation.navigate(Route.DOCTOR_MAIN_SCREEN, {
+            ids: item.map.docID,
+            firstName: item.map.firstName,
+            secondName: item.map.lastName,
+            imgLoc: item.map.imgLoc,
+          });
+        }}>
         <DoctorsCard
-            training={item.map.medtype}
-            firstName={item.map.firstName}
-            secondName={item.map.lastName}
-            DocID={item.map.docID}
-            primarySpl={item.map.primarySpl}
-            imgLoc={item.map.imgLoc}
-            state = {item.map.state}
-            hospitalAffiliated={item.map.hospitalAffiliated}
-          />
+          training={item.map.medtype}
+          firstName={item.map.firstName}
+          secondName={item.map.lastName}
+          DocID={item.map.docID}
+          primarySpl={item.map.primarySpl}
+          imgLoc={item.map.imgLoc}
+          state={item.map.state}
+          hospitalAffiliated={item.map.hospitalAffiliated}
+        />
       </TouchableOpacity>
     );
   };

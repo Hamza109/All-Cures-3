@@ -12,14 +12,13 @@ const DoctorStack = () => {
       screenOptions={{
         headerShown: false,
       }}>
-         <Stack.Screen name={Route.APPOINTMENT} component={Appointment} />
       <Stack.Screen name={Route.DOCTOR} component={Doctor} />
       <Stack.Screen
         name={Route.DOCTOR_MAIN_SCREEN}
         component={DoctorMainScreen}
       />
+      <Stack.Screen name={Route.APPOINTMENT} component={Appointment} />
       <Stack.Screen name={Route.ARTICLES_READ} component={ArticlesRead} />
-     
     </Stack.Navigator>
   );
 };

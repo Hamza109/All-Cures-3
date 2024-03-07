@@ -9,7 +9,6 @@ import {
 import React, {useEffect, useState} from 'react';
 import {backendHost} from '../../Components/apiConfig';
 
-
 import {useDispatch, useSelector} from 'react-redux';
 import {FontFamily, Color, width} from '../../config/GlobalStyles';
 import ContentLoader from '../../Components/ContentLoader';
@@ -17,7 +16,7 @@ import ScheduleButton from '../../Components/ScheduleButton';
 import OutButton from '../../Components/outButton';
 import RelatedCard from '../../Components/RelatedCard';
 import Right from '../../assets/images/RIGHT.svg';
-import { Route } from '../../routes';
+import {Route} from '../../routes';
 
 const DoctorMainScreen = ({route, navigation}) => {
   const doc = useSelector(state => state.docData.doc);
@@ -30,8 +29,8 @@ const DoctorMainScreen = ({route, navigation}) => {
   const [url, setUrl] = useState(
     `http://all-cures.com:8080/cures_articleimages/doctors/${id}.png`,
   );
-  const firstName = route.params.firstName
-  const secondName = route.params.secondName
+  const firstName = route.params.firstName;
+  const secondName = route.params.secondName;
 
   const checkIfImage = async imageUrl => {
     try {
@@ -48,7 +47,6 @@ const DoctorMainScreen = ({route, navigation}) => {
     }
   };
   useEffect(() => {
-
     const fetchDocData = async () => {
       try {
         // Array of promises representing your API calls
@@ -67,7 +65,7 @@ const DoctorMainScreen = ({route, navigation}) => {
         // Assuming the API returns JSON, use .json() to parse the responses
         const data1 = await response1.json();
         const data2 = await response2.json();
-    
+
         // Set the state with the fetched data
         setItem(data1);
         setDocCures(data2);
@@ -97,7 +95,6 @@ const DoctorMainScreen = ({route, navigation}) => {
       const json = await response.json();
 
       setItem(json);
-     
     } catch (error) {
       console.error('An error occurred:', error);
       // Handle errors, e.g., show an error message to the user
@@ -121,7 +118,6 @@ const DoctorMainScreen = ({route, navigation}) => {
                 borderRadius: 5,
                 padding: 10,
                 marginVertical: 10,
-
                 alignSelf: 'center',
               }}
             />
@@ -244,11 +240,15 @@ const DoctorMainScreen = ({route, navigation}) => {
               })}
 
             {docCures.length > 2 ? (
-              <TouchableOpacity style={{marginTop: 10}} onPress={()=>{navigation.navigate(Route.DOC_CURES,{
-                docId:id,
-                firstName:firstName,
-                secondName:secondName
-              })}}>
+              <TouchableOpacity
+                style={{marginTop: 10}}
+                onPress={() => {
+                  navigation.navigate(Route.DOC_CURES, {
+                    docId: id,
+                    firstName: firstName,
+                    secondName: secondName,
+                  });
+                }}>
                 <Text style={styles.seeAll}>
                   See All Cures <Right />
                 </Text>
@@ -259,7 +259,7 @@ const DoctorMainScreen = ({route, navigation}) => {
                 styles.button,
                 {flexDirection: 'row', justifyContent: 'space-between'},
               ]}>
-              <ScheduleButton />
+              <ScheduleButton docID={id} />
               <OutButton />
             </View>
           </View>
