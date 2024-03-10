@@ -17,6 +17,8 @@ import Divider from '../../Components/Divider';
 import {backendHost} from '../../Components/apiConfig';
 import ContentLoader from '../../Components/ContentLoader';
 import moment from 'moment';
+import { useNavigation } from '@react-navigation/native';
+import { Route } from '../../routes';
 
 const Appointment = () => {
   const [availableSlots, setAvailableSlots] = useState([]);
@@ -24,6 +26,7 @@ const Appointment = () => {
   const [unbookedSlots, setUnBookedSlots] = useState();
   const [isloaded, setIsLoaded] = useState(true);
   const [timeSlot, setTimeSlot] = useState();
+  const navigation = useNavigation()
 
   const getDayName = dateString => {
     const date = new Date(dateString);
@@ -105,6 +108,9 @@ const Appointment = () => {
       if (responseData === 1) {
         // Appointment creation successful
         console.log('Appointment created successfully!');
+        Alert.alert("Appointment created successfully!")
+        navigation.goBack()
+      
 
         // ... any further actions after success
       } else {

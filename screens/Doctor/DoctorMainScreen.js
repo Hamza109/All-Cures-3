@@ -47,6 +47,28 @@ const DoctorMainScreen = ({route, navigation}) => {
     }
   };
   useEffect(() => {
+    // Initially, mark the component as not loaded.
+    setIsLoaded(false);
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `${backendHost}/video/get/${id}/availability`,
+        );
+        const data = await response.json();
+        console.log('availability', data);
+
+        setAvailability(data);
+        setIsLoaded(true);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  const [appointmentStatus, setAppointmentStatus] = useState();
+  useEffect(() => {
     const fetchDocData = async () => {
       try {
         // Array of promises representing your API calls
@@ -57,18 +79,22 @@ const DoctorMainScreen = ({route, navigation}) => {
           fetch(
             `${backendHost}/article/authallkv/reg_type/1/reg_doc_pat_id/${id}`,
           ),
+          fetch(`${backendHost}/appointments/get/1`),
         ];
 
         // Wait for all promises to resolve using Promise.all
-        const [response1, response2] = await Promise.all(promises);
+        const [response1, response2, response3] = await Promise.all(promises);
 
         // Assuming the API returns JSON, use .json() to parse the responses
         const data1 = await response1.json();
         const data2 = await response2.json();
+        const data3 = await response3.json();
+        console.log("data3",data3)
 
         // Set the state with the fetched data
         setItem(data1);
         setDocCures(data2);
+        setAppointmentStatus(data3);
         setIsLoaded(true);
       } catch (error) {
         console.error('Error fetching data:', error);
