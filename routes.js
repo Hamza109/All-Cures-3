@@ -21,6 +21,7 @@ export const Route = {
   MAIN: 'MAIN',
 
   LOGIN: 'LOGIN',
+  SIGNUP:"SIGNUP",
   ABOUT: 'ABOUT',
   HELP: 'HELP',
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                LOGOUT: 'LOGOUT',

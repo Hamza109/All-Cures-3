@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import Appointment from '../Doctor/Appointment';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import UserProfile from '../../Components/profile/UserProfile';
 import Divider from '../../Components/Divider';
 import {Color, FontFamily, width} from '../../config/GlobalStyles';
@@ -12,8 +12,11 @@ import {backendHost} from '../../Components/apiConfig';
 import {Route} from '../../routes';
 import {imageHost} from '../../Components/apiConfig';
 import {docData} from '../../Redux/Slice/DoctorDetailSlice';
+import { screen } from '../../Redux/Slice/screenNameSlice';
+;
 const Profile = ({navigation}) => {
   const profileData = useSelector(state => state.profile.data);
+  const dispatch=useDispatch()
   console.log('PRofile Data', profileData);
   const profileOptionsData = [
     {title: 'SignIn', route: Route.LOGIN},
@@ -100,10 +103,10 @@ const Profile = ({navigation}) => {
   };
 
   useEffect(() => {
-    if (profilxeData.registration_id) {
+    if (profileData.registration_id) {
       getUser();
     } else {
-      navigation.navigate(Route.LOGIN);
+      dispatch(screen(Route.LOGIN))
     }
   }, []);
   return (

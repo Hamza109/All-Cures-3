@@ -17,7 +17,7 @@ const BottomTab = () => {
   const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator
-    initialRouteName={Route.DOCTOR_TAB}
+    initialRouteName={Route.FEED_TAB}
       screenOptions={({route, navigation}) => {
         return {
           headerShown: false,

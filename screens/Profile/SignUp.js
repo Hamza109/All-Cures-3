@@ -141,7 +141,7 @@ import {
     );
   };
   
-  export default Login;
+  export default SignUp;
   
   const styles = StyleSheet.create({
     container: {
