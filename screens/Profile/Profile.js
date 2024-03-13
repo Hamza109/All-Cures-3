@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import Appointment from '../Doctor/Appointment';
 import {useSelector} from 'react-redux';
 import UserProfile from '../../Components/profile/UserProfile';
@@ -8,19 +8,104 @@ import {Color, FontFamily, width} from '../../config/GlobalStyles';
 import Right from '../../assets/images/RIGHT.svg';
 import DoctorProfile from '../../Components/profile/DoctorProfile';
 import NotificationIcon from '../../assets/images/Notification.svg';
-import { Route } from '../../routes';
+import {backendHost} from '../../Components/apiConfig';
+import {Route} from '../../routes';
+import {imageHost} from '../../Components/apiConfig';
+import {docData} from '../../Redux/Slice/DoctorDetailSlice';
 const Profile = ({navigation}) => {
   const profileData = useSelector(state => state.profile.data);
-  console.log(profileData);
+  console.log('PRofile Data', profileData);
   const profileOptionsData = [
-    {title: 'SignIn',route:Route.LOGIN},
-    {title: 'Tip of the Day',route:Route.NOTIFICATION},
-    {title: 'About us',route:Route.ABOUT},
-    {title: 'Submit Articles',route:Route.SUBMITARTICLE},
-    
-    {title: 'Help',route:Route.HELP},
-    {title: 'Logout',route:Route.LOGOUT},
+    {title: 'SignIn', route: Route.LOGIN},
+    {title: 'Tip of the Day', route: Route.NOTIFICATION},
+    {title: 'About us', route: Route.ABOUT},
+    {title: 'Submit Articles', route: Route.SUBMITARTICLE},
+
+    {title: 'Help', route: Route.HELP},
+    {title: 'Logout', route: Route.LOGOUT},
   ];
+
+  const [docDataUpdated, setDocDataUpdated] = useState();
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [img, setImg] = useState();
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [email, setEmail] = useState('');
+
+  const getUser = () => {
+    return function (dispatch) {
+      const userData = new Promise((resolve, reject) => {
+        if (profileData.docID != 0) {
+          axios
+            .get(
+              `${backendHost}/DoctorsActionController?DocID=${Number(
+                profileData.docID,
+              )}&cmd=getProfile`,
+            )
+            .then(res => res.data)
+            .then(json => {
+              console.log('profile', json);
+              setDocDataUpdated(json);
+              if (json == null) {
+                setIsLoaded(true);
+                Alert.alert('No details found', 'Please add your information', [
+                  {
+                    text: 'OK',
+                    onPress: () => {
+                      navigation.navigate(Route.EDITPROFILE, {data: json});
+                    },
+                  },
+                ]);
+              } else {
+                resolve(dispatch(docData(json)));
+                console.log('Doc profile Dispatched Successfully');
+
+                setImg(`${imageHost}${json.imgLoc}`);
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        } else {
+          getProfile(profileData.registration_id);
+        }
+      });
+      userData.then(() => {
+        setIsLoaded(true);
+      });
+    };
+  };
+  const getProfile = userId => {
+    const data = new Promise((resolve, reject) => {
+      if (isConnected) {
+        setIsLoaded(false);
+        axios
+          .get(`${backendHost}/profile/${userId}`, {
+            signal: abort.signal,
+          })
+          .then(res => {
+            console.log('fetched Data', res);
+            resolve(setFirstName(res.data.first_name));
+            resolve(setLastName(res.data.last_name));
+            resolve(setEmail(res.data.email_address));
+          })
+          .catch(err => {
+            return;
+          });
+      }
+    });
+    data.then(() => {
+      setIsLoaded(true);
+    });
+  };
+
+  useEffect(() => {
+    if (profilxeData.registration_id) {
+      getUser();
+    } else {
+      navigation.navigate(Route.LOGIN);
+    }
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.feedHeader}>
@@ -36,7 +121,7 @@ const Profile = ({navigation}) => {
           <NotificationIcon width={16} height={18} style={{marginTop: 5}} />
         </View>
       </View>
-      {profileData.docID == 0 ? (
+      {profileData.docID == 0 || profileData.length == [] ? (
         <UserProfile />
       ) : (
         <DoctorProfile docID={profileData.docID} />

@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
-  docData: "Hell",
+  docData: "",
 };
 
 export const docDataSlice = createSlice({

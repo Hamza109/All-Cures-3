@@ -16,7 +16,7 @@ import {Color, width} from '../../config/GlobalStyles';
 import {backendHost} from '../../Components/apiConfig';
 import {UseDispatch, useDispatch} from 'react-redux';
 import {profileData} from '../../Redux/Slice/ProfileDataSlice';
-import { Route } from '../../routes';
+import {Route} from '../../routes';
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -44,6 +44,7 @@ const Login = ({navigation}) => {
   };
 
   const handleSubmit = async () => {
+    console.log("Pressed",password.trim())
     if (!validate()) return; // Validate the form data
 
     if (!agreeToTerms) {
@@ -53,6 +54,7 @@ const Login = ({navigation}) => {
 
     try {
       // Attempt login
+      console.log("Staring");
       const response = await fetch(
         `${backendHost}/login?cmd=login&email=${email}&psw=${password}&rempwd=on`,
         {
@@ -64,18 +66,21 @@ const Login = ({navigation}) => {
           },
         },
       );
+      const data = await response.json()
+      console.log("Fetched",data)
 
       if (!response.ok) {
         // If server response is not okay, handle it accordingly
         const errorText = await response.text(); // Attempt to read server error response
         throw new Error(`Network response was not ok: ${errorText}`);
       }
+      console.log("response is okay")
 
-      const loginData = await response.json();
       // Parse JSON response into JavaScript object
-      console.log('Login Response', loginData);
-      dispatch(profileData(loginData));
-      navigation.navigate(Route.PROFILE)
+      
+      console.log('Login Response 1', data);
+      dispatch(profileData(data));
+      navigation.navigate(Route.PROFILE);
     } catch (err) {
       // Handle login error
     }
@@ -197,6 +202,7 @@ const styles = StyleSheet.create({
   },
   termsText: {
     fontSize: 14,
+    color: '#000',
   },
   termsLink: {
     color: Color.appDefaultColor,

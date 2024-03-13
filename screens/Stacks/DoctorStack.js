@@ -5,6 +5,7 @@ import Doctor from '../Doctor/Doctor';
 import DoctorMainScreen from '../Doctor/DoctorMainScreen';
 import ArticlesRead from '../Article/ArticlesRead';
 import Appointment from '../Doctor/Appointment';
+import EditProfile from '../Profile/EditProfile';
 const DoctorStack = () => {
   const Stack = createStackNavigator();
   return (
@@ -19,6 +20,7 @@ const DoctorStack = () => {
       />
       <Stack.Screen name={Route.APPOINTMENT} component={Appointment} />
       <Stack.Screen name={Route.ARTICLES_READ} component={ArticlesRead} />
+      <Stack.Screen name={Route.EDITPROFILE} component={EditProfile} />
     </Stack.Navigator>
   );
 };

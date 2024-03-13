@@ -11,6 +11,7 @@ const RootStack = () => {
   switch (navigation) {
     case Route.MAIN:
       return <BottomTab />;
+   
     default:
       return <BottomTab />;
   }
