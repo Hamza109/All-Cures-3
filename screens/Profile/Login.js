@@ -17,6 +17,7 @@ import {backendHost} from '../../Components/apiConfig';
 import {UseDispatch, useDispatch} from 'react-redux';
 import {profileData} from '../../Redux/Slice/ProfileDataSlice';
 import {Route} from '../../routes';
+import { screen } from '../../Redux/Slice/screenNameSlice';
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -80,7 +81,7 @@ const Login = ({navigation}) => {
       
       console.log('Login Response 1', data);
       dispatch(profileData(data));
-      navigation.navigate(Route.PROFILE);
+      dispatch(screen(Route.MAIN))
     } catch (err) {
       // Handle login error
     }

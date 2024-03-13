@@ -14,14 +14,19 @@ import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {Color, FontFamily, width} from '../../config/GlobalStyles';
 import {Route} from '../../routes';
+import {useDispatch} from 'react-redux';
 import {User} from './UserPic';
+import { useStore } from 'react-redux';
+import {docData} from '../../Redux/Slice/DoctorDetailSlice';
 const DoctorProfile = ({docID}) => {
   const [isConnected, setIsConnected] = useState(true);
-  const [docData, setDocData] = useState();
+  const [docDataUpdate, setDocDataUpdate] = useState();
   const profileData = useSelector(state => state.profile.data);
   const [isLoaded, setIsLoaded] = useState(true);
   const navigation = useNavigation();
-  console.log(docID);
+  const dispatch = useDispatch();
+  const datadoctor = useSelector(state => state.doc.data);
+  const store = useStore()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,8 +40,10 @@ const DoctorProfile = ({docID}) => {
             )}&cmd=getProfile`,
           );
           const json = await response.data;
+
+          setDocDataUpdate(json);
+          store.dispatch(docData(json));
           console.log('User Data', json);
-          setDocData(json);
 
           if (json == null) {
             navigation.navigate(Route.EDITPROFILE);
@@ -52,45 +59,51 @@ const DoctorProfile = ({docID}) => {
     fetchData();
 
     // Cleanup (e.g., if you're using an AbortController)
-  }, [isConnected, docID]);
+  }, []);
+  useEffect(() => {
+    console.log(datadoctor);
+  }, [datadoctor]);
   return (
     <>
       {isLoaded ? (
         <View style={{marginHorizontal: 10}}>
           <View style={{backgroundColor: '#fff'}}>
             <View style={{flexDirection: 'row'}}>
-              {
-                (docData?.imgLoc == '' ? (
-                  <User />
-                ) : (
-                  <Image
-                    source={{uri: `${imageHost}${docData?.imgLoc}`}}
-                    style={{
-                      height: 131,
-                      width: 131,
-                      backgroundColor: '#000',
-                      borderRadius: 3,
-                    }}
-                  />
-                ))
-              }
+              {docDataUpdate?.imgLoc == '' ? (
+                <User />
+              ) : (
+                <Image
+                  source={{uri: `${imageHost}${docDataUpdate?.imgLoc}`}}
+                  style={{
+                    height: 131,
+                    width: 131,
+                    backgroundColor: '#000',
+                    borderRadius: 3,
+                  }}
+                />
+              )}
 
-              <View style={{marginLeft: 15, justifyContent: 'space-around'}}>
+              <View
+                style={{
+                  marginLeft: 15,
+                  justifyContent: 'space-around',
+                  width: width / 1.5,
+                }}>
                 <Text style={styles.profileName}>
-                  Dr. {docData?.firstName} {docData?.lastName}
+                  Dr. {datadoctor?.firstName} {datadoctor?.lastName}
                 </Text>
                 <Text style={styles.otherSections}>
-                  {docData?.medicineType}
+                  {docDataUpdate?.medicineType}
                 </Text>
-                <Text style={styles.otherSections}>{docData?.email}</Text>
+                <Text style={styles.otherSections}>{docDataUpdate?.email}</Text>
               </View>
             </View>
           </View>
           <Pressable
             style={styles.editProfile}
             onPress={() => {
-              navigation.navigate(Route.EDITPROFILE,{
-                docID:docID
+              navigation.navigate(Route.EDITPROFILE, {
+                docID: docID,
               });
             }}>
             <Text style={styles.editProfileText}>Edit Profile</Text>

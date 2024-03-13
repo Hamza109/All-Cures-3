@@ -1,7 +1,7 @@
 import {configureStore, combineReducers} from '@reduxjs/toolkit';
 import indexSlice from './Slice/indexSlice';
 import screenSlice from './Slice/screenNameSlice';
-import DoctorDataSlice from './Slice/DoctorDetailSlice';
+import docSlice from './Slice/DoctorDetailSlice';
 import profileSlice from './Slice/ProfileDataSlice';
 import {
   persistReducer,
@@ -13,13 +13,14 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import heightSlice from './Slice/heightSlice';
 const rootReducer = combineReducers({
   screen: screenSlice,
   height: heightSlice,
   index: indexSlice,
-  docData: DoctorDataSlice,
+  doc: docSlice,
   profile: profileSlice,
 });
 

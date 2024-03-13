@@ -12,12 +12,12 @@ import {backendHost} from '../../Components/apiConfig';
 import {Route} from '../../routes';
 import {imageHost} from '../../Components/apiConfig';
 import {docData} from '../../Redux/Slice/DoctorDetailSlice';
-import { screen } from '../../Redux/Slice/screenNameSlice';
-;
+import {screen} from '../../Redux/Slice/screenNameSlice';
+import {profileData} from '../../Redux/Slice/ProfileDataSlice';
 const Profile = ({navigation}) => {
-  const profileData = useSelector(state => state.profile.data);
-  const dispatch=useDispatch()
-  console.log('PRofile Data', profileData);
+  const profileInfo = useSelector(state => state.profile.data);
+  const dispatch = useDispatch();
+  console.log('PRofile Data', profileInfo);
   const profileOptionsData = [
     {title: 'SignIn', route: Route.LOGIN},
     {title: 'Tip of the Day', route: Route.NOTIFICATION},
@@ -35,14 +35,31 @@ const Profile = ({navigation}) => {
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState('');
 
+  const handleLogOut = () => {
+    Alert.alert('Log Out', 'Are you Sure You want to log Out?', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'OK',
+        onPress: () => {
+          console.log('OK Pressed'),
+            dispatch(profileData([]), dispatch(screen(Route.MAIN)));
+        },
+      },
+    ]);
+  };
+
   const getUser = () => {
     return function (dispatch) {
       const userData = new Promise((resolve, reject) => {
-        if (profileData.docID != 0) {
+        if (profileInfo.docID != 0) {
           axios
             .get(
               `${backendHost}/DoctorsActionController?DocID=${Number(
-                profileData.docID,
+                profileInfo.docID,
               )}&cmd=getProfile`,
             )
             .then(res => res.data)
@@ -70,7 +87,7 @@ const Profile = ({navigation}) => {
               console.log(err);
             });
         } else {
-          getProfile(profileData.registration_id);
+          getProfile(profileInfo.registration_id);
         }
       });
       userData.then(() => {
@@ -103,10 +120,10 @@ const Profile = ({navigation}) => {
   };
 
   useEffect(() => {
-    if (profileData.registration_id) {
+    if (profileInfo.registration_id) {
       getUser();
     } else {
-      dispatch(screen(Route.LOGIN))
+      dispatch(screen(Route.LOGIN));
     }
   }, []);
   return (
@@ -121,13 +138,13 @@ const Profile = ({navigation}) => {
             marginLeft: 5,
           }}>
           <Text style={styles.read}>Account</Text>
-          <NotificationIcon width={16} height={18} style={{marginTop: 5}} />
+          
         </View>
       </View>
-      {profileData.docID == 0 || profileData.length == [] ? (
+      {profileInfo.docID == 0 || profileInfo.length == [] ? (
         <UserProfile />
       ) : (
-        <DoctorProfile docID={profileData.docID} />
+        <DoctorProfile docID={profileInfo.docID} />
       )}
 
       <Text style={styles.setting}>Settings</Text>
@@ -138,7 +155,9 @@ const Profile = ({navigation}) => {
           <TouchableOpacity
             key={index}
             onPress={() => {
-              navigation.navigate(item.route);
+              item.title == 'Logout'
+                ? handleLogOut()
+                : navigation.navigate(item.route);
             }}>
             <View style={styles.titleView}>
               <Text style={styles.titleText}>{item.title}</Text>
@@ -171,6 +190,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
+    margin: 5,
   },
   titleText: {
     fontSize: 16,

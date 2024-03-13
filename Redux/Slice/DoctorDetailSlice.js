@@ -1,19 +1,19 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
-  docData: "",
+  data: [],
 };
 
-export const docDataSlice = createSlice({
-  name: 'docData',
+export const docSlice = createSlice({
+  name: 'doc',
   initialState,
   reducers: {
     docData: (state, action) => {
-      state.screen = action.payload;
+      state.data = action.payload
     },
   },
 });
 
-export const {docData} = docDataSlice.actions;
+export const {docData} = docSlice.actions;
 
-export default docDataSlice.reducer;
+export default docSlice.reducer;

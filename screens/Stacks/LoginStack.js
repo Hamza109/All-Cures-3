@@ -5,18 +5,17 @@ import Login from '../Profile/Login';
 import SignUp from '../Profile/SignUp';
 
 const LoginStack = () => {
-    const Stack=createStackNavigator()
+  const Stack = createStackNavigator();
   return (
-   <Stack.Navigator
-   initialRouteName={Route.LOGIN}
-   screenOptions={{
-    headerShown: false,
-  }}
-   >
-    <Stack.Screen name={Route.LOGIN} component={Login} />
-<Stack.Screen name={Route.SIGNUP} component={SignUp} />
-   </Stack.Navigator>
-  )
-}
+    <Stack.Navigator
+      initialRouteName={Route.LOGIN}
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name={Route.LOGIN} component={Login} />
+      <Stack.Screen name={Route.SIGNUP} component={SignUp} />
+    </Stack.Navigator>
+  );
+};
 
-export default LoginStack
+export default LoginStack;
