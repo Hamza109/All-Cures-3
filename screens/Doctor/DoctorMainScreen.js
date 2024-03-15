@@ -19,7 +19,7 @@ import Right from '../../assets/images/RIGHT.svg';
 import {Route} from '../../routes';
 
 const DoctorMainScreen = ({route, navigation}) => {
-  const doc = useSelector(state => state.docData.doc);
+  const doc = useSelector(state => state.doc.data);
   const dispatch = useDispatch();
   const id = route.params.ids;
   const [isLoaded, setIsLoaded] = useState(false);

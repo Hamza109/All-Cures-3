@@ -31,7 +31,7 @@ import axios from 'axios';
 import LottieView from 'lottie-react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {screenName} from '../Redux/Action';
-import {backendHost} from '../../Components/apiConfig';
+import {backendHost, imageHost} from '../../Components/apiConfig';
 import ImagePicker from 'react-native-image-crop-picker';
 import InputBox from '../../Components/InputBox';
 import {Color} from '../../config/GlobalStyles';
@@ -287,7 +287,7 @@ const EditProfile = ({route}) => {
           }}>
           <TouchableOpacity onPress={choosePhotoFromLibrary}>
             <ImageBackground
-              source={{uri: image}}
+              source={{uri: `${imageHost}${preData?.imgLoc}`}}
               style={{
                 width: 100,
                 height: 100,
@@ -373,7 +373,7 @@ const EditProfile = ({route}) => {
             <Select
               rounded="3xl"
               width={'100%'}
-              defaultValue={preData?.city}
+              defaultValue={preData?.cityID}
               onValueChange={value => setCity(value)}
               selectedValue={city}
               isRequired
@@ -401,7 +401,7 @@ const EditProfile = ({route}) => {
               width={'100%'}
               onValueChange={value => setStates(value)}
               selectedValue={states}
-              defaultValue={preData?.state}
+              defaultValue={preData?.stateID}
               isRequired
               placeholder="Select state">
               {stateList.map(i => (
@@ -424,8 +424,10 @@ const EditProfile = ({route}) => {
             <Select
               rounded="3xl"
               width={'100%'}
-              onValueChange={value => setCountry(value)}
-              defaultValue={preData?.country}
+              onValueChange={value => {
+                console.log(value), setCountry(value);
+              }}
+              defaultValue={preData?.countryID}
               selectedValue={country}
               isRequired
               placeholder="Select country">
@@ -450,7 +452,7 @@ const EditProfile = ({route}) => {
               rounded="3xl"
               width={'100%'}
               onValueChange={value => setPrimary(value)}
-              defaultValue={preData?.primarySpl}
+              defaultValue={preData?.primarySplCode}
               selectedValue={primary}
               isRequired
               placeholder="Select primary speciality">
@@ -502,7 +504,7 @@ const EditProfile = ({route}) => {
               onValueChange={value => {
                 setOther(value), console.log(value);
               }}
-              defaultValue={preData?.medicineType}
+              defaultValue={preData?.medicineTypeID}
               selectedValue={preData?.medicineType}
               isRequired
               placeholder="Types Of medicine">
@@ -523,7 +525,7 @@ const EditProfile = ({route}) => {
           <InputBox
             placeholder={'enter education'}
             label={'Education'}
-            defaultValue={preData?.edu_training}
+            defaultValue={preData?.degDesc}
             value={education}
             onChangeText={education => setEducation(education)}
             keyboard="default"
@@ -569,7 +571,7 @@ const EditProfile = ({route}) => {
             placeholder={'Enter Awards '}
             label={'Awards'}
             keyboard="default"
-            defaultValue={awards}
+            defaultValue={preData?.awards}
             value={awards}
             onChangeText={text => setAwards(text)}
             size={'3xl'}
@@ -580,7 +582,7 @@ const EditProfile = ({route}) => {
           <InputBox
             placeholder={'enter website url'}
             label={'Doctor website url'}
-            defaultValue={preData?.website_url}
+            defaultValue={preData?.websiteUrl}
             value={website}
             onChangeText={text => setWebsite(text)}
             keyboard="default"
@@ -621,7 +623,7 @@ const EditProfile = ({route}) => {
           </FormControl>
           <Radio.Group
             style={styles.radio}
-            defaultValue={preData?.insurance_accept}
+            defaultValue={preData?.insuranceAccept}
             value={acceptInsurance}
             onChange={val => setInsurance(val)}
             name="myRadioGroup">
@@ -644,6 +646,7 @@ const EditProfile = ({route}) => {
             h={20}
             defaultValue={preData?.about}
             placeholder="Text Area Placeholder"
+            x
             w="100%"
             _focus={{borderColor: Color.appDefaultColor}}
             onChangeText={text => setAbout(text)}

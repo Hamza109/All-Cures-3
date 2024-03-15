@@ -16,7 +16,7 @@ import {Color, FontFamily, width} from '../../config/GlobalStyles';
 import {Route} from '../../routes';
 import {useDispatch} from 'react-redux';
 import {User} from './UserPic';
-import { useStore } from 'react-redux';
+import {useStore} from 'react-redux';
 import {docData} from '../../Redux/Slice/DoctorDetailSlice';
 const DoctorProfile = ({docID}) => {
   const [isConnected, setIsConnected] = useState(true);
@@ -26,7 +26,7 @@ const DoctorProfile = ({docID}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const datadoctor = useSelector(state => state.doc.data);
-  const store = useStore()
+  const store = useStore();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -77,15 +77,16 @@ const DoctorProfile = ({docID}) => {
                   style={{
                     height: 131,
                     width: 131,
-                    backgroundColor: '#000',
-                    borderRadius: 3,
+
+                    borderRadius: 10,
+                    overflow: 'hidden',
                   }}
                 />
               )}
 
               <View
                 style={{
-                  marginLeft: 15,
+                  marginLeft: 5,
                   justifyContent: 'space-around',
                   width: width / 1.5,
                 }}>
@@ -96,6 +97,9 @@ const DoctorProfile = ({docID}) => {
                   {docDataUpdate?.medicineType}
                 </Text>
                 <Text style={styles.otherSections}>{docDataUpdate?.email}</Text>
+                <Text style={styles.otherSections}>
+                  {docDataUpdate?.country}
+                </Text>
               </View>
             </View>
           </View>
@@ -125,9 +129,10 @@ const styles = StyleSheet.create({
     fontSize: 25,
     marginLeft: 14,
     marginTop: -10,
+    fontWeight: '600',
   },
   otherSections: {
-    color: Color.colorDarkslategray,
+    color: Color.colorGray,
     fontFamily: FontFamily.poppinsRegular,
     fontSize: 13,
     marginLeft: 14,

@@ -21,9 +21,7 @@ import ContentLoader from '../../Components/ContentLoader';
 
 import {useNavigation} from '@react-navigation/native';
 const Doctor = () => {
-  const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
+
   const [featuredDoctors, setFeaturedDoctors] = useState([]);
   const [Loaded, setLoaded] = useState(false);
   const [error, setError] = useState(null);

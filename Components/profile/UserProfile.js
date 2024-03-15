@@ -1,14 +1,14 @@
 import {StyleSheet, Text, View, StatusBar} from 'react-native';
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {Color} from '../../config/GlobalStyles';
+import {Color, FontFamily} from '../../config/GlobalStyles';
 import {User} from './UserPic';
 const UserProfile = () => {
   const profileData = useSelector(state => state.profile.data);
   return (
-    <View>
+    <View style= {{}}>
       <StatusBar
-        backgroundColor={Color.appDefaultColor}
+       
         barStyle="light-content"
       />
       <View style={styles.profileHeader}>
@@ -36,15 +36,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
 
     alignItems: 'center',
-    padding: 25,
+    padding: 15,
   },
 
   profileName: {
-    color: Color.appDefaultColor,
-    fontFamily: 'Raleway-Bold',
+    color: Color.colorDarkslategray,
+    fontFamily: FontFamily.poppinsRegular,
     fontSize: 25,
     marginLeft: 14,
     marginTop: -10,
+    fontWeight:'500',
+    letterSpacing:1
   },
   headerTitle: {
     marginLeft: 12,
@@ -73,9 +75,9 @@ const styles = StyleSheet.create({
     borderBottomColor: 'grey',
   },
   infoText: {
-    color: Color.appDefaultColor,
-    fontFamily: 'Raleway-Medium',
-    fontSize: 14,
+    color: Color.colorGray,
+    fontFamily: FontFamily.poppinsRegular,
+    fontSize: 12,
     marginBottom: 5,
     marginLeft: 15,
   },

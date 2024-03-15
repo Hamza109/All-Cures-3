@@ -19,7 +19,6 @@ const Profile = ({navigation}) => {
   const dispatch = useDispatch();
   console.log('PRofile Data', profileInfo);
   const profileOptionsData = [
-    {title: 'SignIn', route: Route.LOGIN},
     {title: 'Tip of the Day', route: Route.NOTIFICATION},
     {title: 'About us', route: Route.ABOUT},
     {title: 'Submit Articles', route: Route.SUBMITARTICLE},
@@ -46,7 +45,7 @@ const Profile = ({navigation}) => {
         text: 'OK',
         onPress: () => {
           console.log('OK Pressed'),
-            dispatch(profileData([]), dispatch(screen(Route.MAIN)));
+            dispatch(profileData(), dispatch(screen(Route.PROFILE)));
         },
       },
     ]);
@@ -127,6 +126,7 @@ const Profile = ({navigation}) => {
     }
   }, []);
   return (
+    <>
     <View style={styles.container}>
       <View style={styles.feedHeader}>
         <View
@@ -138,7 +138,6 @@ const Profile = ({navigation}) => {
             marginLeft: 5,
           }}>
           <Text style={styles.read}>Account</Text>
-          
         </View>
       </View>
       {profileInfo.docID == 0 || profileInfo.length == [] ? (
@@ -168,6 +167,7 @@ const Profile = ({navigation}) => {
         ))}
       </View>
     </View>
+    </>
   );
 };
 
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     color: Color.colorDarkslategray,
   },
   feedHeader: {
-    height: 100,
+    height: 90,
     width: width,
     backgroundColor: '#fff',
     paddingHorizontal: 20,
