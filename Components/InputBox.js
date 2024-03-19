@@ -11,23 +11,31 @@ const InputBox = ({
   onChangeText,
   defaultValue,
   color,
-  border,
+
+  activeBorderColor,
+  borderColor,
+  activeBorder,
+  borderWidth,
+
 }) => {
   const [text, setText] = useState();
   return (
     <View style={styles.container}>
       <FormControl mb="2">
-        <FormControl.Label _text={{color:Color.appDefaultColor}} ml="1">
+        <FormControl.Label  ml="1">
           {label}
         </FormControl.Label>
         <Input
           rounded={size}
           defaultValue={defaultValue}
           placeholder={placeholder}
-          _focus={{borderColor: '#fff', borderWidth: border}}
+          borderColor={borderColor}
+          _focus={{borderColor: activeBorderColor, borderWidth: activeBorder ,bgColor:color}}
           keyboardType={keyboard}
           value={value}
+          borderWidth={borderWidth}
           onChangeText={onChangeText}
+          _hover={{color:'#fff',bgColor:'#fff'}}
         />
       </FormControl>
     </View>

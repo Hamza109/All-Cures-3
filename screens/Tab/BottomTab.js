@@ -78,8 +78,10 @@ const BottomTab = () => {
       />
       <Tab.Screen
         name={Route.SEARCH_TAB}
+    
         component={SearchStack}
         options={{
+          unmountOnBlur:true,
           tabBarLabel: '',
           tabBarIcon: ({focused}) =>
             focused ? (
