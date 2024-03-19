@@ -16,7 +16,7 @@ import MyLoader from '../../Components/ContentLoader';
 import {FlashList} from '@shopify/flash-list';
 import DoctorsCard from '../../Components/DoctorsCard';
 
-const SearchResults = ({route}) => {
+const SearchResults = ({navigation,route}) => {
   const [data, setData] = useState([]);
   const [Loaded, setLoaded] = useState(false);
 
