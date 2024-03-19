@@ -14,7 +14,8 @@ export const Route = {
   //search screen and tab
   SEARCH: 'SEARCH',
   SEARCH_TAB: 'SEARCH_TAB',
-  RESULTS: 'RESULTS',
+  SEARCH_INPUT:"SEARCH_INPUT",
+  SEARCH_RESULT:"SEARCH_RESULT",
   //profle screen and tab
   PROFILE: 'PROFILE',
   PROFILE_TAB: 'PROFILE_TAB',
