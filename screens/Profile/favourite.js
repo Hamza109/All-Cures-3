@@ -1,9 +1,10 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import ArticleCard from '../../Components/ArticleCard';
 import {backendHost} from '../../Components/apiConfig';
 import {useSelector} from 'react-redux';
 import {FlashList} from '@shopify/flash-list';
+import { width ,Color} from '../../config/GlobalStyles';
 import ContentLoader from '../../Components/ContentLoader';
 const Favourite = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -129,6 +130,16 @@ const Favourite = () => {
   }, []);
   const renderItem = ({item}) => {
     console.log(item);
+    let imageLoc = '';
+    const imgLocation = item.content_location;
+    if (imgLocation && imgLocation.includes('cures_articleimages')) {
+      imageLoc =
+        `https://all-cures.com:444/` +
+        imgLocation.replace('json', 'png').split('/webapps/')[1];
+    } else {
+      imageLoc =
+        'https://all-cures.com:444/cures_articleimages//299/default.png';
+    }
     return (
       <ArticleCard
         title={item.title}
@@ -143,8 +154,21 @@ const Favourite = () => {
   return (
     <>
       {isLoaded ? (
-        <View style={{flex: 1}}>
-          <FlatList
+        <View style={{flex: 1,backgroundColor:'#fff'}}>
+          <View style={styles.feedHeader}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginTop: 36,
+                marginLeft: 5,
+              }}>
+              <Text style={styles.read}>Favourite</Text>
+            
+            </View>
+          </View>
+          <FlashList
             data={items}
             renderItem={renderItem}
             keyExtractor={item => item.article_id.toString()}
@@ -159,4 +183,16 @@ const Favourite = () => {
 
 export default Favourite;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    feedHeader: {
+        height: 100,
+        width: width,
+        backgroundColor: '#fff',
+        paddingHorizontal: 20,
+      },
+      read: {
+        color: Color.colorDarkslategray,
+        fontWeight: '700',
+        fontSize: 25,
+      },
+});

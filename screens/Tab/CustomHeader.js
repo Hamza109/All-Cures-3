@@ -135,16 +135,16 @@ const CustomHeader = ({title, id}) => {
               }
             }}>
             {addFav == 0 ? (
-              <Icon name="heart-o" color={Color.appDefaultColor} />
+              <Icon name="heart-o" color={Color.appDefaultColor} size={15} />
             ) : (
-              <Icon name="heart" color={Color.appDefaultColor} />
+              <Icon name="heart" color={Color.appDefaultColor} size={15} />
             )}
           </TouchableOpacity>
-          <TouchableOpacity>
-            <Line width={'11.74'} height={'15'} />
+          <TouchableOpacity style={{justifyContent:'center',alignItems:'center'}}>
+            <Line width={'15'} height={'15'} />
           </TouchableOpacity>
           <TouchableOpacity onPress={onShare} style={{}}>
-            <ShareButt width={'11.74'} height={'15'} />
+            <ShareButt width={'15'} height={'15'} />
           </TouchableOpacity>
         </View>
       </View>

@@ -26,6 +26,7 @@ const DoctorMainScreen = ({route, navigation}) => {
   const [item, setItem] = useState();
   const [exist, setExist] = useState(false);
   const [docCures, setDocCures] = useState([]);
+  const [availability, setAvailability] = useState();
   const [url, setUrl] = useState(
     `http://all-cures.com:8080/cures_articleimages/doctors/${id}.png`,
   );
@@ -89,10 +90,11 @@ const DoctorMainScreen = ({route, navigation}) => {
         const data1 = await response1.json();
         const data2 = await response2.json();
         const data3 = await response3.json();
-        console.log("data3",data3)
+        console.log('data3', data3);
 
         // Set the state with the fetched data
         setItem(data1);
+        console.log('doc', data1);
         setDocCures(data2);
         setAppointmentStatus(data3);
         setIsLoaded(true);
@@ -172,13 +174,13 @@ const DoctorMainScreen = ({route, navigation}) => {
                 </View>
               )}
 
-              {item?.primary_spl !== null && (
+              {item?.degDesc != null && (
                 <View style={{flex: 1}}>
                   <Text style={[styles.mainTextTitle, {alignSelf: 'flex-end'}]}>
                     Positions
                   </Text>
                   <Text style={[styles.mainText, {alignSelf: 'flex-end'}]}>
-                    Add{' '}
+                    {item?.degDesc}
                   </Text>
                 </View>
               )}
@@ -196,13 +198,13 @@ const DoctorMainScreen = ({route, navigation}) => {
                   </Text>
                 </View>
               )}
-              {item?.country_code !== null && (
+              {item?.state !== null && (
                 <View style={{flex: 1}}>
                   <Text style={[styles.mainTextTitle, {alignSelf: 'flex-end'}]}>
                     Location
                   </Text>
                   <Text style={[styles.mainText, {alignSelf: 'flex-end'}]}>
-                    {item?.country_code}
+                    {item?.state}
                   </Text>
                 </View>
               )}
@@ -280,14 +282,15 @@ const DoctorMainScreen = ({route, navigation}) => {
                 </Text>
               </TouchableOpacity>
             ) : null}
-            <View
+            {docCures.length != 0? <View
               style={[
                 styles.button,
                 {flexDirection: 'row', justifyContent: 'space-between'},
               ]}>
               <ScheduleButton docID={id} />
               <OutButton />
-            </View>
+            </View>:null}
+           
           </View>
         </ScrollView>
       ) : (

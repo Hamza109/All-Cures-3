@@ -21,6 +21,7 @@ import {Route} from '../../routes';
 import axios from 'axios';
 import {useToast} from 'native-base';
 import {screen} from '../../Redux/Slice/screenNameSlice';
+import ContentLoader from '../../Components/ContentLoader';
 const SignUp = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -29,7 +30,13 @@ const SignUp = ({navigation}) => {
   const [showPassword, setShowPassword] = useState(false);
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [userType, setUserType] = useState(false);
-  const [loginError, setLoginError] = useState(null);
+  const [loginError, setLoginError] = useState({
+    error: {
+      mail: null,
+      password: null,
+    },
+  });
+  const [isLoaded, setIsLoaded] = useState(false);
   const toast = useToast();
   const dispatch = useDispatch();
 
@@ -41,11 +48,27 @@ const SignUp = ({navigation}) => {
   const validate = () => {
     // Add your specific validation logic here, e.g., length, format, etc.
     if (!email.trim()) {
-      setLoginError('Email is required');
+      setLoginError(prevState => ({
+        ...prevState,
+        error: {
+          ...prevState.error,
+          mail: 'Email is required.', // Set the error message for mail field
+          password:null
+        
+        },
+      }));
       return false;
     }
     if (!password.trim()) {
-      setLoginError('Password is required');
+      setLoginError(prevState => ({
+        ...prevState,
+        error: {
+          ...prevState.error,
+          mail:null,
+          password: 'Password is required.', // Set the error message for mail field
+        
+        },
+      }));
       return false;
     }
     setLoginError(null); // Clear errors if validation passes
@@ -55,7 +78,7 @@ const SignUp = ({navigation}) => {
   const handleSubmit = async () => {
     console.log('Pressed');
     if (!validate()) return; // Validate the form data
-
+    setIsLoaded(true);
     if (!agreeToTerms) {
       alert('You must agree to the terms and conditions.');
       return;
@@ -90,10 +113,10 @@ const SignUp = ({navigation}) => {
 
       if (response.data.registration_id) {
         setTimeout(() => {
-          dispatch(screen(Route.MAIN));
-
           console.log('docID', response.data.docID);
           dispatch(profileData(response.data));
+          setIsLoaded(false);
+          dispatch(screen(Route.MAIN));
 
           toast.show({
             title: 'Signup Successful',
@@ -102,7 +125,7 @@ const SignUp = ({navigation}) => {
             placement: 'bottom',
             style: {borderRadius: 20, width: '80%', marginBottom: 20},
           });
-        }, 3000);
+        }, 2000);
       } else if (
         response.data === 'Email Address already Exists in the System'
       ) {
@@ -124,18 +147,19 @@ const SignUp = ({navigation}) => {
     <>
       <SignUpImg width={width} height={280} style={{marginTop: -30}} />
       <StatusBar translucent backgroundColor="transparent" />
-      <Text
-        style={{
-          alignSelf: 'center',
-          fontSize: 20,
-          color: Color.colorDarkslategray,
-        }}>
-        Create Account
-      </Text>
+
       <View style={styles.container}>
         {/* Adjust image component as needed */}
 
         <View style={styles.form}>
+          <Text
+            style={{
+              alignSelf: 'center',
+              fontSize: 20,
+              color: Color.colorDarkslategray,
+            }}>
+            Create Account
+          </Text>
           <TextInput
             style={[styles.input, {borderBottomWidth: 1}]}
             placeholder="enter first Name"
@@ -155,6 +179,7 @@ const SignUp = ({navigation}) => {
             onChangeText={setEmail}
             value={email}
           />
+          {loginError.error.mail && <Text style={styles.errorText}>{loginError.error.mail}</Text>}
           <TextInput
             style={[styles.input, {borderBottomWidth: 1}]}
             placeholder="Phone Number"
@@ -162,7 +187,6 @@ const SignUp = ({navigation}) => {
             onChangeText={setNumber}
             value={number}
           />
-          {loginError && <Text style={styles.errorText}>{loginError}</Text>}
 
           <View style={[styles.passwordContainer]}>
             <TextInput
@@ -172,9 +196,10 @@ const SignUp = ({navigation}) => {
               onChangeText={setPassword}
               value={password}
             />
+            {loginError && <Text style={styles.errorText}>{loginError.error.password}</Text>}
             <TouchableOpacity onPress={togglePasswordVisibility}>
               <Ionicons
-                name={showPassword ? 'eye-off-outline' : 'eye-outline'}
+                name={!showPassword ? 'eye-off-outline' : 'eye-outline'}
                 size={20}
                 color="gray"
               />
@@ -216,17 +241,22 @@ const SignUp = ({navigation}) => {
             </Text>
           </Pressable>
         </View>
-        <Pressable
-          onPress={() => {
-            dispatch(screen(Route.MAIN));
-          }}>
-          <Ionicons
-            name={'close-circle-outline'}
-            size={35}
-            color={Color.appDefaultColor}
-          />
-          <Text style={{fontSize: 6, alignSelf: 'center'}}>close</Text>
-        </Pressable>
+        {isLoaded ? (
+          <ContentLoader />
+        ) : (
+          <Pressable
+            onPress={() => {
+              dispatch(screen(Route.MAIN));
+            }}
+            style={{marginTop: 5}}>
+            <Ionicons
+              name={'close-circle-outline'}
+              size={35}
+              color={Color.appDefaultColor}
+            />
+            <Text style={{fontSize: 6, alignSelf: 'center'}}>close</Text>
+          </Pressable>
+        )}
       </View>
     </>
   );

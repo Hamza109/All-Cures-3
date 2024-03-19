@@ -29,6 +29,7 @@ const Doctor = () => {
   const navigation = useNavigation();
 
   const selectItem = item => {
+    console.log(item.med_type);
     setMedicineId(item.med_type);
   };
 
@@ -45,11 +46,14 @@ const Doctor = () => {
 
         const data1 = await response1.json();
         const data2 = await response2.json();
+        console.log(data1.map.DoctorDetails.myArrayList);
+        console.log(data2);
 
         setFeaturedDoctors(data1.map.DoctorDetails.myArrayList);
-        con;
+
         setSpeciality(data2);
       } catch (error) {
+        console.log(error);
         setError(error);
       } finally {
         setLoaded(true);
@@ -58,9 +62,15 @@ const Doctor = () => {
 
     fetchData();
   }, []);
+  useEffect(() => {
+    const data = featuredDoctors.filter(i => {
+      console.log('odl', i.map.primarySpl);
+      console.log('new', medicineId);
+      return i.map.primarySpl === medicineId;
+    });
+    console.log('new data', data);
+  }, [medicineId]);
 
-D
-  
   const renderItem = ({item}) => {
     let imageLoc = '';
     const imgLocation = item.content_location;
@@ -129,11 +139,13 @@ D
                           : styles.inactiveLabel
                         : null
                     }
-                    onPress={() => {}}>
+                    onPress={() => {
+                      selectItem({med_id: 0, med_type: 'Featured'});
+                    }}>
                     <Text
                       style={[
                         styles.featured,
-                        medicineId === null
+                        medicineId == 'Featured'
                           ? styles.activeLabel
                           : styles.inactiveLabel,
                       ]}>
@@ -154,6 +166,7 @@ D
                             : null
                         }
                         onPress={() => {
+                          console.log(item);
                           selectItem(item);
                         }}>
                         <Text
@@ -194,65 +207,6 @@ D
         ) : (
           <ContentLoader />
         )}
-
-        {/* <Text style={{color: '#000', fontSize: 40}}>Doc</Text>
-        <TouchableOpacity
-          style={{
-            width: 120,
-            height: 50,
-            backgroundColor: 'aliceblue',
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: 5,
-            padding: 10,
-            marginTop: 30,
-          }}>
-          <Text>Start Video call</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={handlePayment}>
-          <Text> Submit PAyment</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={showDatepicker}
-          style={{
-            width: 120,
-            height: 50,
-            backgroundColor: 'aliceblue',
-            borderRadius: 5,
-            padding: 4,
-            margin: 15,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text> Pick Date</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={showTimepicker}
-          style={{
-            width: 120,
-            height: 50,
-            backgroundColor: 'aliceblue',
-            borderRadius: 5,
-            padding: 4,
-            margin: 15,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text> Select Time</Text>
-        </TouchableOpacity>
-        <Text>selected: {date.toLocaleString()}</Text>
-        {show && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={date}
-            mode={mode}
-            is24Hour={true}
-            onChange={onChange}
-          />
-        )}  */}
       </SafeAreaView>
     </>
   );

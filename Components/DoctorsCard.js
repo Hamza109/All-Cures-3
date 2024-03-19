@@ -24,25 +24,6 @@ const DoctorsCard = ({
   hospitalAffiliated,
 }) => {
   return (
-    // <View style={styles.cardContainer}>
-    //   <View style={styles.detailsCardContainer}>
-    //     <Text>
-    //       Dr . {firstName} {secondName}
-    //     </Text>
-    //     <ImageBackground
-    //       resizeMode="stretch"
-    //       source={{
-    //         uri: `https://all-cures.com:444/cures_articleimages/doctors/${rowno}.png`,
-    //       }}
-    //       style={{
-    //         width: 110,
-    //         height: 130,
-    //         borderRadius: 20,
-    //         overflow: 'hidden',
-    //       }}
-    //     />
-    //   </View>
-    // </View>
     <View style={styles.cardContainer}>
       <View style={styles.detailsCardContainer}>
         <Text style={styles.article_title}>
@@ -52,10 +33,11 @@ const DoctorsCard = ({
           {primarySpl}
         </Text>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text style={styles.time}>
-            <Dot height={5} width={5} />
-            {state}
+          <Text style={[styles.time, {maxWidth: 160}]}>
+            {hospitalAffiliated}{' '}
           </Text>
+          <Dot height={5} width={5} />
+          <Text style={styles.time}> {state}</Text>
         </View>
       </View>
       <View style={{justifyContent: 'center'}}>
