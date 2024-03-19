@@ -13,7 +13,7 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-
+import OptionSlice from './Slice/OptionSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import heightSlice from './Slice/heightSlice';
 const rootReducer = combineReducers({
@@ -21,6 +21,7 @@ const rootReducer = combineReducers({
   height: heightSlice,
   index: indexSlice,
   doc: docSlice,
+  option:OptionSlice,
   profile: profileSlice,
 });
 

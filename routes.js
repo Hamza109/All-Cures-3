@@ -19,16 +19,16 @@ export const Route = {
   PROFILE: 'PROFILE',
   PROFILE_TAB: 'PROFILE_TAB',
   MAIN: 'MAIN',
+  FAVOURITE: 'FAVOURITE',
 
   LOGIN: 'LOGIN',
-  SIGNUP:"SIGNUP",
+  SIGNUP: 'SIGNUP',
   ABOUT: 'ABOUT',
   HELP: 'HELP',
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               LOGOUT: 'LOGOUT',
+  LOGOUT: 'LOGOUT',
   NOTIFICATION: 'NOTIFICATION',
   SUBMITARTICLE: 'SUBMITARTICLE',
   TIPOFTHEDAY: 'TIPOFTHEDAY',
 };
 
 //feed screen and tab
- 

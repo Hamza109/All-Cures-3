@@ -3,30 +3,32 @@ import {
   StyleSheet,
   View,
   Text,
-
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
-
+  StatusBar,
   Platform,
 } from 'react-native';
 import {FontFamily, Color} from '../../config/GlobalStyles';
-import MyLoader from '../../Components/ContentLoader';
+import ContentLoader from '../../Components/ContentLoader';
 import axios from 'axios';
 import NetInfo from '@react-native-community/netinfo';
-
+import ArticleCard from '../../Components/ArticleCard';
 import {width, height} from '../../config/GlobalStyles';
-import NotificationIcon from '../../assets/images/Notification.svg';import ArticlesCard from '../../Components/ArticleCard';
+import NotificationIcon from '../../assets/images/Notification.svg';
+import ArticlesCard from '../../Components/ArticleCard';
 import {backendHost, headers} from '../../Components/apiConfig';
 import {FlashList} from '@shopify/flash-list';
 import {Route} from '../../routes';
-
+import {useDispatch} from 'react-redux';
+import {option} from '../../Redux/Slice/OptionSlice';
 const Feed = ({navigation}) => {
   const [isConnected, setIsConnected] = useState(true);
   const [diseaseId, setDiseaseId] = useState(null);
   const [item, setItem] = useState();
   const [Loaded, setLoaded] = useState(false);
   const [articleId, setArticleId] = useState();
+  const dispatch = useDispatch();
 
   const abortController = new AbortController();
   const signal = abortController.signal;
@@ -64,24 +66,24 @@ const Feed = ({navigation}) => {
   async function getFeaturedArticle() {
     try {
       const startTime = performance.now(); // Get current time before request
-  
+
       const response = await fetch(`${backendHost}/article/allkvranked`, {
         method: 'GET',
         headers: headers,
         signal: signal,
       });
-  
+
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-  
+
       const json = await response.json();
-  
+
       // Using map directly to create the array
       setArticleId(json[0].article_id);
       setItem(json);
       setLoaded(true);
-  
+
       const endTime = performance.now(); // Get current time after request
       const timeElapsed = endTime - startTime;
       console.log(`API load time: ${timeElapsed.toFixed(2)} milliseconds`); // Log the time
@@ -196,6 +198,7 @@ const Feed = ({navigation}) => {
           create_date={item.create_date}
           image_location={imageLoc}
           dc_name={item.med_type_name}
+          articleId={item.article_id}
         />
       </TouchableOpacity>
     );
@@ -218,8 +221,6 @@ const Feed = ({navigation}) => {
           <Text style={styles.read}>Read</Text>
           <NotificationIcon width={16} height={18} style={{marginTop: 5}} />
         </View>
-
-      
 
         <ScrollView
           horizontal
@@ -283,9 +284,12 @@ const Feed = ({navigation}) => {
           keyExtractor={item => item.article_id.toString()}
           data={item}
           renderItem={renderItem}
+          onScroll={() => {
+            dispatch(option(-100));
+          }}
         />
       ) : (
-        <MyLoader />
+        <ContentLoader />
       )}
     </SafeAreaView>
   );

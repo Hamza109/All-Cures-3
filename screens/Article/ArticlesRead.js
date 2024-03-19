@@ -61,6 +61,7 @@ const ArticlesRead = ({route, navigation}) => {
             signal: signal,
           });
           const json = await response.json();
+          console.log(json);
 
           const relatedArticlesResponse = await fetch(
             `${backendHost}/isearch/${json.dc_name}`,
@@ -74,11 +75,24 @@ const ArticlesRead = ({route, navigation}) => {
           setData(json);
           setRelatedItem(relatedArticlesJson);
 
-          const contentBlocks = JSON.parse(
-            decodeURIComponent(json.content),
-          ).blocks;
-
-          setItems(contentBlocks);
+          try {
+            console.log(
+              'content',
+              JSON.parse(decodeURIComponent(json.content)),
+            );
+  
+            const contentBlocks = await JSON.parse(
+              decodeURIComponent(json.content),
+            ).blocks;
+            setIsLoaded(true);
+  
+            setItems(contentBlocks);
+          } catch (error) {
+            console.log(error);
+            
+          }
+          
+       
         }
       } catch (err) {
         console.error(err);
@@ -95,7 +109,7 @@ const ArticlesRead = ({route, navigation}) => {
     return () => {
       abortController.abort();
     };
-  }, [isConnected, id]); // Dependencies for the useEffect
+  }, []); // Dependencies for the useEffect
 
   // const onScroll = e => {
   //   let contentoffsetY = e.nativeEvent.contentOffset.y;
@@ -131,7 +145,7 @@ const ArticlesRead = ({route, navigation}) => {
   return (
     <SafeAreaView style={styles.readContainer}>
       <Animated.View style={[styles.animatedHeader, {opacity: headerOpacity}]}>
-        <CustomHeader title={title} />
+        <CustomHeader title={title} id={id} />
       </Animated.View>
 
       {isLoaded ? (

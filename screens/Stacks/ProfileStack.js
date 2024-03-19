@@ -10,6 +10,7 @@ import Notification from '../Profile/Settings/Notification';
 import SubmitArticle from '../Profile/Settings/SubmitArticle';
 import TipOfTheDay from '../Profile/Settings/TipOfTheDay';
 import EditProfile from '../Profile/EditProfile';
+import Favourite from '../Profile/favourite';
 const ProfileStack = () => {
   const Stack = createStackNavigator();
   return (
@@ -17,18 +18,16 @@ const ProfileStack = () => {
       screenOptions={{
         headerShown: false,
       }}>
-       
       <Stack.Screen name={Route.PROFILE} component={Profile} />
       <Stack.Screen name={Route.LOGIN} component={Login} />
       <Stack.Screen name={Route.ABOUT} component={About} />
       <Stack.Screen name={Route.HELP} component={Help} />
+      <Stack.Screen name={Route.FAVOURITE} component={Favourite} />
       <Stack.Screen name={Route.EDITPROFILE} component={EditProfile} />
-      
-    
+
       <Stack.Screen name={Route.NOTIFICATION} component={Notification} />
       <Stack.Screen name={Route.SUBMITARTICLE} component={SubmitArticle} />
       <Stack.Screen name={Route.TIPOFTHEDAY} component={TipOfTheDay} />
-      
     </Stack.Navigator>
   );
 };

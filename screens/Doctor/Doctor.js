@@ -21,7 +21,6 @@ import ContentLoader from '../../Components/ContentLoader';
 
 import {useNavigation} from '@react-navigation/native';
 const Doctor = () => {
-
   const [featuredDoctors, setFeaturedDoctors] = useState([]);
   const [Loaded, setLoaded] = useState(false);
   const [error, setError] = useState(null);
@@ -48,6 +47,7 @@ const Doctor = () => {
         const data2 = await response2.json();
 
         setFeaturedDoctors(data1.map.DoctorDetails.myArrayList);
+        con;
         setSpeciality(data2);
       } catch (error) {
         setError(error);
@@ -58,50 +58,9 @@ const Doctor = () => {
 
     fetchData();
   }, []);
- 
-  //   const currentDate = selectedDate;
-  //   setShow(false);
-  //   setDate(currentDate);
-  // };
 
-  // const showMode = currentMode => {
-  //   setShow(true);
-  //   setMode(currentMode);
-  // };
-
-  // const showDatepicker = () => {
-  //   showMode('date');
-  // };
-
-  // const showTimepicker = () => {
-  //   showMode('time');
-  // };
-
-  // const handlePayment = () => {
-  //   var options = {
-  //     description: 'Credits towards consultation',
-  //     image: 'https://i.imgur.com/3g7nmJC.png',
-  //     currency: 'INR',
-  //     key: RAZOR_PAY_KEY_ID, // Your api key
-  //     amount: '5000',
-  //     name: 'foo',
-  //     prefill: {
-  //       email: 'void@razorpay.com',
-  //       contact: '9191919191',
-  //       name: 'Razorpay Software',
-  //     },
-  //     theme: {color: Color.appDefaultColor},
-  //   };
-  //   RazorpayCheckout.open(options)
-  //     .then(data => {
-  //       // handle success
-  //       alert(`Success: ${data.razorpay_payment_id}`);
-  //     })
-  //     .catch(error => {
-  //       // handle failure
-  //       alert(`Error: ${error.code} | ${error.description}`);
-  //     });
-  // };
+D
+  
   const renderItem = ({item}) => {
     let imageLoc = '';
     const imgLocation = item.content_location;

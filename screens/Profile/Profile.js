@@ -22,6 +22,7 @@ const Profile = ({navigation}) => {
     {title: 'Tip of the Day', route: Route.NOTIFICATION},
     {title: 'About us', route: Route.ABOUT},
     {title: 'Submit Articles', route: Route.SUBMITARTICLE},
+    {title:'Favorite',route:Route.FAVOURITE},
 
     {title: 'Help', route: Route.HELP},
     {title: 'Logout', route: Route.LOGOUT},
@@ -127,46 +128,46 @@ const Profile = ({navigation}) => {
   }, []);
   return (
     <>
-    <View style={styles.container}>
-      <View style={styles.feedHeader}>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginTop: 36,
-            marginLeft: 5,
-          }}>
-          <Text style={styles.read}>Account</Text>
+      <View style={styles.container}>
+        <View style={styles.feedHeader}>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginTop: 36,
+              marginLeft: 5,
+            }}>
+            <Text style={styles.read}>Account</Text>
+          </View>
+        </View>
+        {profileInfo.docID == 0 || profileInfo.length == [] ? (
+          <UserProfile />
+        ) : (
+          <DoctorProfile docID={profileInfo.docID} />
+        )}
+
+        <Text style={styles.setting}>Settings</Text>
+        <View style={{marginHorizontal: 10}}>
+          {/* Commented out section; not relevant to map function focus */}
+
+          {profileOptionsData.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => {
+                item.title == 'Logout'
+                  ? handleLogOut()
+                  : navigation.navigate(item.route);
+              }}>
+              <View style={styles.titleView}>
+                <Text style={styles.titleText}>{item.title}</Text>
+                <Right width={7.5} height={15} />
+              </View>
+              <Divider />
+            </TouchableOpacity>
+          ))}
         </View>
       </View>
-      {profileInfo.docID == 0 || profileInfo.length == [] ? (
-        <UserProfile />
-      ) : (
-        <DoctorProfile docID={profileInfo.docID} />
-      )}
-
-      <Text style={styles.setting}>Settings</Text>
-      <View style={{marginHorizontal: 10}}>
-        {/* Commented out section; not relevant to map function focus */}
-
-        {profileOptionsData.map((item, index) => (
-          <TouchableOpacity
-            key={index}
-            onPress={() => {
-              item.title == 'Logout'
-                ? handleLogOut()
-                : navigation.navigate(item.route);
-            }}>
-            <View style={styles.titleView}>
-              <Text style={styles.titleText}>{item.title}</Text>
-              <Right width={7.5} height={15} />
-            </View>
-            <Divider />
-          </TouchableOpacity>
-        ))}
-      </View>
-    </View>
     </>
   );
 };
