@@ -282,15 +282,16 @@ const DoctorMainScreen = ({route, navigation}) => {
                 </Text>
               </TouchableOpacity>
             ) : null}
-            {docCures.length != 0? <View
-              style={[
-                styles.button,
-                {flexDirection: 'row', justifyContent: 'space-between'},
-              ]}>
-              <ScheduleButton docID={id} />
-              <OutButton />
-            </View>:null}
-           
+            {docCures.length != 0 ? (
+              <View
+                style={[
+                  styles.button,
+                  {flexDirection: 'row', justifyContent: 'space-between'},
+                ]}>
+                <ScheduleButton docID={id} />
+                <OutButton />
+              </View>
+            ) : null}
           </View>
         </ScrollView>
       ) : (

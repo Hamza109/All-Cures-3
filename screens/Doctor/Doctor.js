@@ -25,7 +25,7 @@ const Doctor = () => {
   const [Loaded, setLoaded] = useState(false);
   const [error, setError] = useState(null);
   const [speciality, setSpeciality] = useState([]);
-  const [medicineId, setMedicineId] = useState("Featured");
+  const [medicineId, setMedicineId] = useState('Featured');
   const navigation = useNavigation();
 
   const selectItem = item => {
@@ -62,13 +62,16 @@ const Doctor = () => {
 
     fetchData();
   }, []);
+  const [sortedDoc,setSortedDoc] = useState()
   useEffect(() => {
     const data = featuredDoctors.filter(i => {
-      console.log('odl', i.map.primarySpl);
+      console.log('odl', i.map.medicineType);
       console.log('new', medicineId);
-      return i.map.primarySpl === medicineId;
+      return i.map.medicineType === medicineId;
     });
+    setSortedDoc(data)
     console.log('new data', data);
+
   }, [medicineId]);
 
   const renderItem = ({item}) => {
@@ -201,7 +204,7 @@ const Doctor = () => {
         {Loaded ? (
           <FlashList
             estimatedItemSize={100}
-            data={featuredDoctors}
+            data={ medicineId == 'Featured'?featuredDoctors:sortedDoc}
             renderItem={renderItem}
           />
         ) : (
