@@ -25,7 +25,7 @@ const Doctor = () => {
   const [Loaded, setLoaded] = useState(false);
   const [error, setError] = useState(null);
   const [speciality, setSpeciality] = useState([]);
-  const [medicineId, setMedicineId] = useState(null);
+  const [medicineId, setMedicineId] = useState("Featured");
   const navigation = useNavigation();
 
   const selectItem = item => {

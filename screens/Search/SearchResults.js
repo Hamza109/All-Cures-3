@@ -16,7 +16,7 @@ import MyLoader from '../../Components/ContentLoader';
 import {FlashList} from '@shopify/flash-list';
 import DoctorsCard from '../../Components/DoctorsCard';
 
-const SearchResults = ({navigation,route}) => {
+const SearchResults = ({navigation, route}) => {
   const [data, setData] = useState([]);
   const [Loaded, setLoaded] = useState(false);
 
@@ -26,79 +26,66 @@ const SearchResults = ({navigation,route}) => {
 
   const searchByText = async () => {
     if (key == 'cure') {
-        try {
-            console.log('key-->',key)
-            const response = fetch(`${backendHost}/isearch/${text}`);
-            const articleData = await response.json();
-          
-            setData(articleData);
-            setLoaded(true);
-        } catch (error) {
-            console.log(error)
-        }
- 
+      try {
+        console.log('key-->', key);
+        const response = await fetch(`${backendHost}/isearch/${text}`);
+        const articleData = await response.json();
 
+        setData(articleData);
+        setLoaded(true);
+      } catch (error) {
+        console.log(error);
+      }
     } else if (key == 'name') {
-try {
-    console.log('key-->',key)
-    console.log('text-->',text)
-    const response = await fetch(
-        `${backendHost}/SearchActionController?cmd=getResults&city=&doctors=${text}`,
-      );
-      const doctorByName = await response.json()
-          setData(doctorByName.map.DoctorDetails.myArrayList)
-         console.log(doctorByName.map.DoctorDetails.myArrayList)
-          setLoaded(true);
-
-
-} catch (error) {
-    console.log(error)
-}
-    
-
+      try {
+        console.log('key-->', key);
+        console.log('text-->', text);
+        const response = await fetch(
+          `${backendHost}/SearchActionController?cmd=getResults&city=&doctors=${text}`,
+        );
+        const doctorByName = await response.json();
+        setData(doctorByName.map.DoctorDetails.myArrayList);
+        console.log(doctorByName.map.DoctorDetails.myArrayList);
+        setLoaded(true);
+      } catch (error) {
+        console.log(error);
+      }
     } else if (key == 'city') {
-
-try {
-    console.log('key-->',key)
-    const response = await fetch(
-        `${backendHost}/SearchActionController?cmd=getResults&city=${text}=&doctors=&Latitude=32.7266&Longitude=74.8570`,
-      )
-      const doctorByCity = await response.json()
-      setData(doctorByCity.map.DoctorDetails.myArrayList)
-      setLoaded(true);
-    
-} catch (error) {
-    console.log(error)
-}
-
+      try {
+        console.log('key-->', key);
+        const response = await fetch(
+          `${backendHost}/SearchActionController?cmd=getResults&city=${text}=&doctors=&Latitude=32.7266&Longitude=74.8570`,
+        );
+        const doctorByCity = await response.json();
+        setData(doctorByCity.map.DoctorDetails.myArrayList);
+        setLoaded(true);
+      } catch (error) {
+        console.log(error);
+      }
     } else {
-
       searchByMedicine();
     }
   };
 
   const searchByMedicine = async () => {
     try {
-        const response = await fetch(
-            `${backendHost}/isearch/medicinetype/${medicineId}`,
-            {
-              headers: headers,
-            },
-          );
-          const medicineResult = await response.json();
-      
-        
-      
-          setData(medicineResult);
-          setLoaded(true);
+      const response = await fetch(
+        `${backendHost}/isearch/medicinetype/${medicineId}`,
+        {
+          headers: headers,
+        },
+      );
+      const medicineResult = await response.json();
+
+      setData(medicineResult);
+      setLoaded(true);
     } catch (error) {
-         console.log(error)
+      console.log(error);
     }
- 
   };
 
   useEffect(() => {
-  searchByText()
+    searchByText();
   }, [key]);
 
   const renderCure = ({item}) => {
@@ -114,7 +101,6 @@ try {
     }
 
     return (
-    
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={() => {
@@ -134,8 +120,7 @@ try {
     );
   };
 
-
-  const renderDoctor= ({item}) => {
+  const renderDoctor = ({item}) => {
     let imageLoc = '';
     const imgLocation = item.content_location;
     if (imgLocation && imgLocation.includes('cures_articleimages')) {
@@ -173,7 +158,6 @@ try {
     );
   };
 
-
   return (
     <SafeAreaView style={styles.feedContainer}>
       <View style={styles.feedHeader}>
@@ -193,9 +177,14 @@ try {
       {Loaded ? (
         <FlashList
           estimatedItemSize={100}
-         
           data={data}
-          renderItem={key=='cure'?(renderCure):key == 'name' || key=== 'city'? (renderDoctor):(renderCure) }
+          renderItem={
+            key == 'cure'
+              ? renderCure
+              : key == 'name' || key === 'city'
+              ? renderDoctor
+              : renderCure
+          }
         />
       ) : (
         <MyLoader />

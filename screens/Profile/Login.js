@@ -9,6 +9,7 @@ import {
   StatusBar,
   ScrollView,
   Alert,
+  KeyboardAvoidingView
 } from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import React, {useState} from 'react';
@@ -168,7 +169,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
           />
           {loginError && <Text style={styles.errorText}>{loginError}</Text>}
 
-          <View style={[styles.passwordContainer]}>
+          <KeyboardAvoidingView style={[styles.passwordContainer]}>
             <TextInput
               style={[styles.input, {width: 180}]}
               placeholder="Password"
@@ -183,7 +184,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
                 color="gray"
               />
             </TouchableOpacity>
-          </View>
+          </KeyboardAvoidingView>
 
           <View style={styles.termsContainer}>
             <CheckBox value={agreeToTerms} onValueChange={setAgreeToTerms} />

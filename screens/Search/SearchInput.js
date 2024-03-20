@@ -1,13 +1,20 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { View, SafeAreaView, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { Input } from 'native-base';
-import { FlashList } from '@shopify/flash-list';
-import { backendHost } from '../../Components/apiConfig';
+import React, {useState, useCallback, useEffect} from 'react';
+import {
+  View,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  KeyboardAvoidingView
+} from 'react-native';
+import {Input} from 'native-base';
+import {FlashList} from '@shopify/flash-list';
+import {backendHost} from '../../Components/apiConfig';
 import NotificationIcon from '../../assets/images/Notification.svg';
 import InactiveSearch from '../../assets/images/INACTIVE_SEARCH.svg';
-import { Route } from '../../routes';
+import {Route} from '../../routes';
 
-const SearchInput = ({ navigation, route }) => {
+const SearchInput = ({navigation, route}) => {
   const header = route.params.header;
   const placeholder = route.params.placeholder;
   const key = route.params.key;
@@ -32,7 +39,7 @@ const SearchInput = ({ navigation, route }) => {
   };
 
   const debouncedSearch = useCallback(
-    debounce((text) => {
+    debounce(text => {
       if (key === 'cure') {
         searchCures(text);
       } else if (key === 'name') {
@@ -41,15 +48,15 @@ const SearchInput = ({ navigation, route }) => {
         searchByCity(text);
       }
     }, 500),
-    []
+    [],
   );
 
-  const searchByname = async (text) => {
+  const searchByname = async text => {
     try {
       const response = await fetch(`${backendHost}/IntegratedActionController`);
       const doctorData = await response.json();
       const newData = doctorData.map.Doctorname.myArrayList.filter(function (
-        item
+        item,
       ) {
         const itemData = item ? item.toUpperCase() : ''.toUpperCase();
         const textData = text.toUpperCase();
@@ -62,12 +69,12 @@ const SearchInput = ({ navigation, route }) => {
     }
   };
 
-  const searchByCity = async (text) => {
+  const searchByCity = async text => {
     const response = await fetch(`${backendHost}/city/all`);
     const cityData = await response.json();
 
     var temp = [];
-    cityData.forEach((i) => {
+    cityData.forEach(i => {
       temp.push(i.Cityname, i.Pincode);
     });
 
@@ -80,7 +87,7 @@ const SearchInput = ({ navigation, route }) => {
     setData(newData);
   };
 
-  const searchCures = async (text) => {
+  const searchCures = async text => {
     try {
       const response = await fetch(`${backendHost}/isearch/combo/${text}`);
       const curesResult = await response.json();
@@ -90,7 +97,7 @@ const SearchInput = ({ navigation, route }) => {
     }
   };
 
-  const onSearch = (text) => {
+  const onSearch = text => {
     setInputText(text);
     if (text) {
       setSearching(true);
@@ -101,7 +108,7 @@ const SearchInput = ({ navigation, route }) => {
     }
   };
 
-  const onSubmit = async (item) => {
+  const onSubmit = async item => {
     setInputText('');
     setSearching(false);
     navigation.navigate(Route.SEARCH_RESULT, {
@@ -111,6 +118,7 @@ const SearchInput = ({ navigation, route }) => {
   };
 
   return (
+    
     <SafeAreaView style={styles.container}>
       <View style={styles.feedHeader}>
         <View style={styles.headerContent}>
@@ -145,12 +153,12 @@ const SearchInput = ({ navigation, route }) => {
       {searching && (
         <View style={styles.listContainer}>
           {data.length ? (
-            <View style={{ height: '100%', width: '100%' }}>
+            <View style={{height: '100%', width: '100%'}}>
               <FlashList
                 estimatedItemSize={100}
                 data={data}
                 keyExtractor={(item, idx) => idx.toString()}
-                renderItem={({ item }) => (
+                renderItem={({item}) => (
                   <TouchableOpacity onPress={() => onSubmit(item)}>
                     <View style={styles.itemView}>
                       <Text style={styles.itemText}>{item}</Text>
@@ -169,7 +177,6 @@ const SearchInput = ({ navigation, route }) => {
 };
 
 export default SearchInput;
-
 
 const styles = StyleSheet.create({
   container: {
@@ -204,7 +211,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-    paddingHorizontal:26
+    paddingHorizontal: 26,
   },
   itemView: {
     borderBottomWidth: 0.8,
@@ -222,5 +229,3 @@ const styles = StyleSheet.create({
     marginLeft: -5,
   },
 });
-
-

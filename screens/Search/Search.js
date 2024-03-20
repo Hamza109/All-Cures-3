@@ -1,28 +1,25 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet,SafeAreaView,TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+} from 'react-native';
 import {Input} from 'native-base';
 import {width, height, FontFamily, Color} from '../../config/GlobalStyles';
 import {backendHost} from '../../Components/apiConfig';
 import NotificationIcon from '../../assets/images/Notification.svg';
-import { Route } from '../../routes';
+import {Route} from '../../routes';
 
 const Search = ({navigation}) => {
-  const [medicineName, setMedicineName] = useState([]);
-
-  const getMedicineNames = async () => {
-    try {
-      const response = await fetch(`${backendHost}/data/medicines`);
-      const medicineData = await response.json();
-      console.log(medicineData);
-      setMedicineName(medicineData);
-    } catch (error) {
-      console.log(error);
-    }
+  const handleNavigation = (title, placeholder, key) => {
+    navigation.navigate(Route.SEARCH_INPUT, {
+      header: title,
+      placeholder: placeholder,
+      key: key,
+    });
   };
-
-  const handleNavigation=(title,placeholder,key)=>{
-    navigation.navigate(Route.SEARCH_INPUT,{header:title,placeholder:placeholder,key:key})
-  }
 
   const DATA = [
     {med_id: 1, med_type: 'Ayurveda'},
@@ -40,59 +37,62 @@ const Search = ({navigation}) => {
     {med_id: 13, med_type: 'Acupressure'},
   ];
 
-  useEffect(() => {
-    //  getMedicineNames()
-  }, []);
-
   return (
     <SafeAreaView style={styles.container}>
-        <View style={styles.feedHeader}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginTop: 36,
-              marginLeft: 5,
-            }}>
-            <Text style={styles.read}>Search</Text>
-            <NotificationIcon width={16} height={18} style={{marginTop: 5}} />
+      <View style={styles.feedHeader}>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginTop: 36,
+            marginLeft: 5,
+          }}>
+          <Text style={styles.read}>Search</Text>
+          <NotificationIcon width={16} height={18} style={{marginTop: 5}} />
+        </View>
+      </View>
+
+      <View style={{paddingHorizontal: 26}}>
+        <View style={{marginBottom: 22}}>
+          <View style={styles.label}>
+            <Text style={styles.headlabel}>Find Cures</Text>
           </View>
+
+          <View style={styles.label}>
+            <Text style={styles.sublabel}>Popular</Text>
           </View>
 
-          <View style={{paddingHorizontal:26}}>
+          <View style={styles.medicineName}>
+            {DATA.filter((item, index) => index < 6).map(item => (
+              <TouchableOpacity
+                activeOpacity={0.7}
+                style={styles.popular}
+                onPress={() => {
+                  navigation.navigate(Route.SEARCH_RESULT, {
+                    medicineId: item.med_id,
+                  });
+                }}
+                key={item.med_id}>
+                <Text style={styles.item}>{item.med_type}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
 
-      <View style={{marginBottom: 22}}>
-        <View style={styles.label}>
-          <Text style={styles.headlabel}>Find Cures</Text>
-        </View>
+          <View style={styles.label}>
+            <Text style={styles.sublabel}>Search</Text>
+          </View>
 
-        <View style={styles.label}>
-          <Text style={styles.sublabel}>Popular</Text>
-        </View>
+          <TouchableOpacity
+            onPress={() =>
+              handleNavigation('Find Cures', 'Search for cures', 'cure')
+            }
+            activeOpacity={0.5}
+            style={styles.textBox}>
+            <Text style={styles.placeholderText}>Search for cures</Text>
+          </TouchableOpacity>
 
-        <View style={styles.medicineName}>
-
-          {DATA.filter((item, index) => index < 6).map(item => (
-            <TouchableOpacity activeOpacity={0.7} onPress={()=>{
-              navigation.navigate(Route.SEARCH_RESULT,{medicineId:item.med_id})
-            }}  key={item.med_id}>
-              <Text style={styles.item}>{item.med_type}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-
-        <View style={styles.label}>
-          <Text style={styles.sublabel}>Search</Text>
-        </View>
-
-        <TouchableOpacity onPress={()=>handleNavigation('Find Cures','Search for cures','cure')} activeOpacity={0.5} style={styles.textBox}>
-      <Text style={styles.placeholderText}>
-        Search for cures
-      </Text>
-        </TouchableOpacity>
-
-        {/* <Input
+          {/* <Input
           placeholder="search for cures"
           height={12}
           color={'#fff'}
@@ -107,46 +107,48 @@ const Search = ({navigation}) => {
           autoCapitalize="none"
           returnKeyType="done"
         /> */}
-      </View>
-
-      <View style={styles.label}>
-        <Text style={styles.headlabel}>Find Practitioner</Text>
-      </View>
-
-      <View style={{marginBottom: 22}}>
-        <View style={styles.label}>
-          <Text style={styles.mainlabel}>By Name</Text>
         </View>
 
         <View style={styles.label}>
-          <Text style={styles.sublabel}>Search</Text>
+          <Text style={styles.headlabel}>Find Practitioner</Text>
         </View>
 
-        <TouchableOpacity onPress={()=>handleNavigation('Find Practitioner','Practitioner Name','name')} activeOpacity={0.5} style={styles.textBox}>
-      <Text style={styles.placeholderText}>
-       Practitioner Name
-      </Text>
-        </TouchableOpacity>
-   
-      </View>
-      <View>
-        <View style={styles.label}>
-          <Text style={styles.mainlabel}>By City</Text>
+        <View style={{marginBottom: 22}}>
+          <View style={styles.label}>
+            <Text style={styles.mainlabel}>By Name</Text>
+          </View>
+
+          <View style={styles.label}>
+            <Text style={styles.sublabel}>Search</Text>
+          </View>
+
+          <TouchableOpacity
+            onPress={() =>
+              handleNavigation('Find Practitioner', 'Practitioner Name', 'name')
+            }
+            activeOpacity={0.5}
+            style={styles.textBox}>
+            <Text style={styles.placeholderText}>Practitioner Name</Text>
+          </TouchableOpacity>
         </View>
+        <View>
+          <View style={styles.label}>
+            <Text style={styles.mainlabel}>By City</Text>
+          </View>
 
-        <View style={styles.label}>
-          <Text style={styles.sublabel}>Search</Text>
+          <View style={styles.label}>
+            <Text style={styles.sublabel}>Search</Text>
+          </View>
+
+          <TouchableOpacity
+            onPress={() =>
+              handleNavigation('Find Practitioner', 'Practitioner City', 'city')
+            }
+            activeOpacity={0.5}
+            style={styles.textBox}>
+            <Text style={styles.placeholderText}>Practitioner City</Text>
+          </TouchableOpacity>
         </View>
-
-        <TouchableOpacity onPress={()=>handleNavigation('Find Practitioner','Practitioner City','city')} activeOpacity={0.5} style={styles.textBox}>
-      <Text style={styles.placeholderText}>
-       Practitioner City
-      </Text>
-        </TouchableOpacity>
-
-
-      
-      </View>
       </View>
     </SafeAreaView>
   );
@@ -159,11 +161,20 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  textBox:{
-    borderWidth:1,width:'100%',borderColor:'rgba(76, 78, 100, 0.22)',height:50,justifyContent:'center',borderRadius:5
+  textBox: {
+    borderWidth: 1,
+    width: '100%',
+    borderColor: 'rgba(76, 78, 100, 0.22)',
+    height: 50,
+    justifyContent: 'center',
+    borderRadius: 5,
   },
-  placeholderText:{
-    fontSize:12,marginLeft:12,fontWeight:'500',color:'rgba(76, 78, 100, 0.6)',fontFamily:FontFamily.poppinsRegular
+  placeholderText: {
+    fontSize: 12,
+    marginLeft: 12,
+    fontWeight: '500',
+    color: 'rgba(76, 78, 100, 0.6)',
+    fontFamily: FontFamily.poppinsRegular,
   },
   mainlabel: {
     fontFamily: FontFamily.poppinsRegular,
@@ -187,21 +198,20 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   medicineName: {
-   
     flexDirection: 'row',
-    flexWrap:'wrap',
-    width:'100%',
-
+    flexWrap: 'wrap',
+    width: '100%',
   },
 
-  item:{
-    marginRight:10,
-    color:'rgba(76, 78, 100, 0.6)',
-    lineHeight:20,
-    fontFamily:FontFamily.poppinsRegular,
-    fontWeight:'500',
-    fontSize:13,
-    marginBottom:22
+  item: {
+
+    color: 'rgba(76, 78, 100, 0.6)',
+    lineHeight: 20,
+    fontFamily: FontFamily.poppinsRegular,
+    fontWeight: '500',
+    fontSize: 13,
+
+    alignSelf: 'center',
   },
   feedHeader: {
     height: 102,
@@ -214,5 +224,13 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 25,
   },
-
+  popular: {
+    backgroundColor: Color.lightpurple,
+    borderRadius: 20,
+    margin: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: width / 4,
+    height: 30,
+  },
 });
