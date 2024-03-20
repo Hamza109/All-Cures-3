@@ -14,6 +14,8 @@ import {imageHost} from '../../Components/apiConfig';
 import {docData} from '../../Redux/Slice/DoctorDetailSlice';
 import {screen} from '../../Redux/Slice/screenNameSlice';
 import {profileData} from '../../Redux/Slice/ProfileDataSlice';
+import { StackActions } from '@react-navigation/native';
+
 const Profile = ({navigation}) => {
   const profileInfo = useSelector(state => state.profile.data);
   const dispatch = useDispatch();
@@ -35,6 +37,15 @@ const Profile = ({navigation}) => {
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState('');
 
+  const remove=()=>{
+console.log('removed')
+
+navigation.navigate(Route.FEED_TAB,{screen: Route.FEED})
+dispatch(profileData({}))
+
+
+  }
+
   const handleLogOut = () => {
     Alert.alert('Log Out', 'Are you Sure You want to log Out?', [
       {
@@ -45,8 +56,8 @@ const Profile = ({navigation}) => {
       {
         text: 'OK',
         onPress: () => {
-          console.log('OK Pressed'),
-            dispatch(profileData(), dispatch(screen(Route.PROFILE)));
+         remove()
+            ;
         },
       },
     ]);
@@ -120,7 +131,8 @@ const Profile = ({navigation}) => {
   };
 
   useEffect(() => {
-    if (profileInfo.registration_id) {
+    console.log(Object.keys(profileInfo).length)
+    if (Object.keys(profileInfo).length!=0) {
       getUser();
     } else {
       dispatch(screen(Route.LOGIN));

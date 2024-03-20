@@ -144,6 +144,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
 
       console.log('Login Response 1', data);
       dispatch(profileData(data));
+
       dispatch(screen(Route.MAIN));
       setIsLoaded(false);
     } catch (err) {

@@ -6,6 +6,7 @@ import {useSelector} from 'react-redux';
 import {RootState} from '../../Redux/Store';
 import LoginStack from './LoginStack';
 import Profile from '../Profile/Profile';
+import FeedStack from './FeedStack';
 
 import ProfileStack from './ProfileStack';
 const RootStack = () => {
@@ -13,7 +14,7 @@ const RootStack = () => {
 
   switch (navigation) {
     case Route.MAIN:
-      return <BottomTab />;
+      return <BottomTab  />;
     case Route.LOGIN:
       return <LoginStack />;
     case Route.PROFILE:
