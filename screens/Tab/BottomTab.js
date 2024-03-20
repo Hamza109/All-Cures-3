@@ -96,7 +96,9 @@ const BottomTab = () => {
         }}
       />
       <Tab.Screen
+      
         options={{
+       
           tabBarLabel: '',
           tabBarIcon: ({focused}) =>
             focused ? (
