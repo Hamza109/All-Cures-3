@@ -5,6 +5,7 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
+  ScrollView
 } from 'react-native';
 import {Input} from 'native-base';
 import {width, height, FontFamily, Color} from '../../config/GlobalStyles';
@@ -53,7 +54,7 @@ const Search = ({navigation}) => {
         </View>
       </View>
 
-      <View style={{paddingHorizontal: 26}}>
+      <ScrollView  style={{paddingHorizontal: 26,width:'100%',height:'100%'}}>
         <View style={{marginBottom: 22}}>
           <View style={styles.label}>
             <Text style={styles.headlabel}>Find Cures</Text>
@@ -133,7 +134,7 @@ const Search = ({navigation}) => {
             <Text style={styles.placeholderText}>Practitioner City</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -185,6 +186,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     width: '100%',
+    marginBottom:22
   },
 
   item: {
