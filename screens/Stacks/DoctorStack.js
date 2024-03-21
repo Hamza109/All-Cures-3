@@ -9,6 +9,7 @@ import EditProfile from '../Profile/EditProfile';
 import DocCures from '../Doctor/DocCures';
 import Chat from '../Inbox/Chat';
 
+
 const DoctorStack = () => {
   const Stack = createStackNavigator();
   return (
@@ -26,6 +27,7 @@ const DoctorStack = () => {
       <Stack.Screen name={Route.ARTICLES_READ} component={ArticlesRead} />
       <Stack.Screen name={Route.DOC_CURES} component={DocCures} />
       <Stack.Screen name={Route.CHAT} component={Chat} />
+     
 
       <Stack.Screen name={Route.EDITPROFILE} component={EditProfile} />
     </Stack.Navigator>

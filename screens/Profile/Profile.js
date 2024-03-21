@@ -14,7 +14,7 @@ import {imageHost} from '../../Components/apiConfig';
 import {docData} from '../../Redux/Slice/DoctorDetailSlice';
 import {screen} from '../../Redux/Slice/screenNameSlice';
 import {profileData} from '../../Redux/Slice/ProfileDataSlice';
-import { StackActions } from '@react-navigation/native';
+import {StackActions} from '@react-navigation/native';
 
 const Profile = ({navigation}) => {
   const profileInfo = useSelector(state => state.profile.data);
@@ -24,7 +24,8 @@ const Profile = ({navigation}) => {
     {title: 'Tip of the Day', route: Route.NOTIFICATION},
     {title: 'About us', route: Route.ABOUT},
     {title: 'Submit Articles', route: Route.SUBMITARTICLE},
-    {title:'Favorite',route:Route.FAVOURITE},
+    {title: 'Favorite', route: Route.FAVOURITE},
+    {title: 'Inbox', route: Route.INBOX},
 
     {title: 'Help', route: Route.HELP},
     {title: 'Logout', route: Route.LOGOUT},
@@ -37,14 +38,12 @@ const Profile = ({navigation}) => {
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState('');
 
-  const remove=()=>{
-console.log('removed')
+  const remove = () => {
+    console.log('removed');
 
-navigation.navigate(Route.FEED_TAB,{screen: Route.FEED})
-dispatch(profileData({}))
-
-
-  }
+    navigation.navigate(Route.FEED_TAB, {screen: Route.FEED});
+    dispatch(profileData({}));
+  };
 
   const handleLogOut = () => {
     Alert.alert('Log Out', 'Are you Sure You want to log Out?', [
@@ -56,8 +55,7 @@ dispatch(profileData({}))
       {
         text: 'OK',
         onPress: () => {
-         remove()
-            ;
+          remove();
         },
       },
     ]);
@@ -131,8 +129,8 @@ dispatch(profileData({}))
   };
 
   useEffect(() => {
-    console.log(Object.keys(profileInfo).length)
-    if (Object.keys(profileInfo).length!=0) {
+    console.log(Object.keys(profileInfo).length);
+    if (Object.keys(profileInfo).length != 0) {
       getUser();
     } else {
       dispatch(screen(Route.LOGIN));

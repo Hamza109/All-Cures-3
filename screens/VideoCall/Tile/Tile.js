@@ -101,13 +101,13 @@ export default function Tile(props) {
         {videoMuted && (
           <Image
             style={styles.icon}
-            source={require('../../../assets/img/camera-off.png')}
+            source={require('../../../assets/images/camera-off.png')}
           />
         )}
         {audioMuted && (
           <Image
             style={styles.icon}
-            source={require('../../../assets/img/mic-off.png')}
+            source={require('../../../assets/images/mic-off.png')}
           />
         )}
       </View>

@@ -13,7 +13,7 @@ export default function CallMessage(props) {
     <View style={[styles.container, props.isError && styles.errorContainer]}>
       <View style={styles.textRow}>
         {props.isError && (
-          <Image source={require('../../../assets/img/error.png')} />
+          <Image source={require('../../../assets/images/error.png')} />
         )}
         <Text
           style={[

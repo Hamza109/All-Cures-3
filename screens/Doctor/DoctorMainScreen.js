@@ -212,7 +212,7 @@ const DoctorMainScreen = ({route, navigation}) => {
             </View>
           ) : null}
           {item?.videoService == 1 ? (
-            <View style={{alignSelf: 'center', width: '100%'}}>
+            <View style={{alignSelf: 'center', width: '100%', marginBottom: 10}}>
               <OutButton
                 name="Video Call"
                 docID={item.docID}
@@ -223,7 +223,7 @@ const DoctorMainScreen = ({route, navigation}) => {
           ) : null}
           {item?.videoService == 1 ? (
             <View style={{alignSelf: 'center', width: '100%'}}>
-              <ScheduleButton />
+              <ScheduleButton docID={item.docID} />
             </View>
           ) : null}
 

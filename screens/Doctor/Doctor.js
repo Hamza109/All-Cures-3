@@ -187,17 +187,7 @@ const Doctor = () => {
                 })}
               </ScrollView>
             }
-            <View style={{borderLeftWidth: 1}}>
-              <Pressable
-                style={{
-                  justifyContent: 'center',
-                  marginLeft: 10,
-                  alignItems: 'center',
-                }}
-                onPress={() => navigation.navigate(Route.FILTER_DOC)}>
-                <FilterList width={24} height={24} style={{marginTop: 5}} />
-              </Pressable>
-            </View>
+       
           </View>
         </View>
 

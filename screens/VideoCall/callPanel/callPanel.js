@@ -212,7 +212,7 @@ const CallPanel = props => {
       if (isScreenShare(id)) {
         tileType = TileType.Full;
       } else if (isLocal(id) || containsScreenShare(callState.callItems)) {
-        console.log('TyleType.Thmb not wqorking');
+        
         tileType = TileType.Thumbnail;
       } else if (participantCount(callState.callItems) <= 3) {
         tileType = TileType.Full;

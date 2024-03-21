@@ -1,11 +1,12 @@
 import React from 'react'
-import {ActivityIndicator, StyleSheet, View} from 'react-native';
+import {ActivityIndicator, StyleSheet, View,Text} from 'react-native';
 import { Color } from '../config/GlobalStyles';
 function ContentLoader() {
   return (
-    <View style={[styles.container, styles.horizontal]}>
+    <View style={[styles.container]}>
    
     <ActivityIndicator size="large" color={Color.appDefaultColor} />
+    <Text style={{textAlign:'center'}}> Please Wait ...</Text>
   </View>
   )
 }

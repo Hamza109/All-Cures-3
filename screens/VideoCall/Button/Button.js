@@ -8,6 +8,7 @@ import {
 
 import theme from '../theme';
 import {robotID} from '../utils';
+import {Color} from '../../../config/GlobalStyles';
 
 const Props = {
   onPress: () => {},
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   primary: {
-    backgroundColor: "#00415e",
+    backgroundColor: Color.appDefaultColor,
   },
   secondary: {
     backgroundColor: theme.colors.white,
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: theme.fontFamily.body,
-    color: "#fff",
+    color: '#fff',
     fontSize: theme.fontSize.base,
     fontWeight: '700',
   },

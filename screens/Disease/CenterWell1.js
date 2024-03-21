@@ -1,11 +1,11 @@
 import React from 'react';
-import {FlatList, StyleSheet, Text} from 'react-native';
+import {FlatList, StyleSheet, Text,ActivityIndicator} from 'react-native';
 import {View} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {Image} from 'react-native';
+import {Image} from '@rneui/themed';
 
 import RenderHTML from 'react-native-render-html';
 import {useSelector} from 'react-redux';
@@ -72,6 +72,7 @@ const CenterWell1 = ({
               <Image
                 source={{uri: imageUrl}}
                 style={{width: '100%', height: 378 * ratio}}
+                PlaceholderContent={<ActivityIndicator />}
               />
               <Text>{caption}</Text>
             </View>

@@ -14,7 +14,7 @@ import React, {useEffect, useState} from 'react';
 import {width, height} from '../config/GlobalStyles';
 import ShareButt from '../assets/images/share.svg';
 import {backendHost} from './apiConfig';
-import Heart from '../assets/images/heart.svg';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Line from '../assets/images/Line.svg';
 import {ARTICLES_READ, Route} from '../routes';

@@ -137,10 +137,7 @@ const Chat = ({route}) => {
 
   return (
     <>
-      <StatusBar
-        backgroundColor={Color.lightpurple}
-        barStyle={'light-content'}
-      />
+      <StatusBar backgroundColor={'#fff'} barStyle={'light-content'} />
       <KeyboardAvoidingView
         behavior="padding"
         keyboardVerticalOffset={-210}

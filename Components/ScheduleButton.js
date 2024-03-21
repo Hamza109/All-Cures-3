@@ -8,6 +8,7 @@ const ScheduleButton = ({docID}) => {
   const navigation = useNavigation();
   const profile = useSelector(state => state.profile.data);
   console.log('profile', profile);
+  console.log(docID);
   return (
     <Pressable
       style={styles.button}

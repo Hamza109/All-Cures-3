@@ -4,13 +4,15 @@ import {
   Pressable,
   StyleSheet,
   SafeAreaView,
-  Image,
+ 
   ScrollView,
   TouchableOpacity,
   Animated,
+  ActivityIndicator
 } from 'react-native';
 import React, {useEffect, useState, memo, useRef} from 'react';
 import NetInfo from '@react-native-community/netinfo';
+import {Image} from '@rneui/themed';
 import {backendHost} from '../../Components/apiConfig';
 import {Route} from '../../routes';
 import {Border, Color, FontFamily} from '../../config/GlobalStyles';
@@ -70,7 +72,7 @@ const ArticlesRead = ({route, navigation}) => {
             },
           );
           const relatedArticlesJson = await relatedArticlesResponse.json();
-          console.log('relatedItems', relatedArticlesJson[0].authors_name);
+          console.log('relatedItems', relatedArticlesJson);
 
           setData(json);
           setRelatedItem(relatedArticlesJson);
@@ -186,6 +188,7 @@ const ArticlesRead = ({route, navigation}) => {
               <Image
                 source={require('../../assets/images/ayurvedic.jpg')}
                 style={styles.approachImage}
+              
               />
 
               <View style={styles.approachData}>
