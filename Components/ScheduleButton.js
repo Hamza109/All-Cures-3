@@ -3,8 +3,11 @@ import React from 'react';
 import {Color, FontFamily} from '../config/GlobalStyles';
 import {useNavigation} from '@react-navigation/native';
 import {Route} from '../routes';
+import {useSelector} from 'react-redux';
 const ScheduleButton = ({docID}) => {
   const navigation = useNavigation();
+  const profile = useSelector(state => state.profile.data);
+  console.log('profile', profile);
   return (
     <Pressable
       style={styles.button}

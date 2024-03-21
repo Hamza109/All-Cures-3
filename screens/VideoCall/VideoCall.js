@@ -49,8 +49,7 @@ const VideoCall = ({route}) => {
   const [callObject, setCallObject] = useState(null);
   const [roomUrlFieldValue, setRoomUrlFieldValue] = useState(undefined);
   const orientation = useOrientation();
-  const [apiUrl, setApiUrl] = useState();
-  const id = route.params.id;
+
   const videoUrl = route.params.url;
   // Make sure to replace with the correct import path
 

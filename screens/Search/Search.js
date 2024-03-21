@@ -91,22 +91,6 @@ const Search = ({navigation}) => {
             style={styles.textBox}>
             <Text style={styles.placeholderText}>Search for cures</Text>
           </TouchableOpacity>
-
-          {/* <Input
-          placeholder="search for cures"
-          height={12}
-          color={'#fff'}
-          borderColor={'rgba(76, 78, 100, 0.22)'}
-          _focus={{
-            borderWidth: 1,
-            borderColor: 'rgba(76, 78, 100, 0.54)',
-            color: '#fff',
-            placeholderTextColor: 'rgba(76, 78, 100, 0.6)',
-            bg: '#fff',
-          }}
-          autoCapitalize="none"
-          returnKeyType="done"
-        /> */}
         </View>
 
         <View style={styles.label}>
@@ -204,7 +188,6 @@ const styles = StyleSheet.create({
   },
 
   item: {
-
     color: 'rgba(76, 78, 100, 0.6)',
     lineHeight: 20,
     fontFamily: FontFamily.poppinsRegular,

@@ -7,13 +7,14 @@ import {
   Message,
   MessageText,
 } from 'react-native-gifted-chat';
+import { Color } from '../../config/GlobalStyles';
 
 export const renderBubble = props => (
   <Bubble
     {...props}
     wrapperStyle={{
       right: {
-        backgroundColor: '#588092',
+        backgroundColor:Color.appDefaultColor,
       },
     }}
   />

@@ -17,7 +17,7 @@ const BottomTab = () => {
   const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator
-    initialRouteName={Route.FEED_TAB}
+      initialRouteName={Route.FEED_TAB}
       screenOptions={({route, navigation}) => {
         return {
           headerShown: false,
@@ -33,7 +33,8 @@ const BottomTab = () => {
               getFocusedRouteNameFromRoute(route) === 'SUBMITARTICLE' ||
               getFocusedRouteNameFromRoute(route) === 'LOGIN' ||
               getFocusedRouteNameFromRoute(route) === 'ABOUT' ||
-              getFocusedRouteNameFromRoute(route) === 'videoCall'
+              getFocusedRouteNameFromRoute(route) === 'videoCall' ||
+              getFocusedRouteNameFromRoute(route) === Route.CHAT
                 ? 'none'
                 : 'flex',
           },
@@ -78,10 +79,9 @@ const BottomTab = () => {
       />
       <Tab.Screen
         name={Route.SEARCH_TAB}
-    
         component={SearchStack}
         options={{
-          unmountOnBlur:true,
+          unmountOnBlur: true,
           tabBarLabel: '',
           tabBarIcon: ({focused}) =>
             focused ? (
@@ -96,9 +96,7 @@ const BottomTab = () => {
         }}
       />
       <Tab.Screen
-      
         options={{
-       
           tabBarLabel: '',
           tabBarIcon: ({focused}) =>
             focused ? (

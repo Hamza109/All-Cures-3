@@ -6,16 +6,14 @@ import SearchInput from '../Search/SearchInput.js';
 import SearchResults from '../Search/SearchResults.js';
 import ArticlesRead from '../Article/ArticlesRead.js';
 import DoctorMainScreen from '../Doctor/DoctorMainScreen.js';
+import Chat from '../Inbox/Chat.js';
 const SearchStack = () => {
   const Stack = createStackNavigator();
   return (
     <Stack.Navigator
-    initialRouteName={Route.SEARCH}
+      initialRouteName={Route.SEARCH}
       screenOptions={{
-        
         headerShown: false,
-        
-        
       }}>
       <Stack.Screen name={Route.SEARCH} component={Search} />
       <Stack.Screen name={Route.SEARCH_INPUT} component={SearchInput} />
@@ -24,7 +22,12 @@ const SearchStack = () => {
         name={Route.DOCTOR_MAIN_SCREEN}
         component={DoctorMainScreen}
       />
-       <Stack.Screen name={Route.ARTICLES_READ} component={ArticlesRead} />
+      <Stack.Screen
+        name={Route.CHAT}
+        component={Chat}
+        options={{headerShown: true}}
+      />
+      <Stack.Screen name={Route.ARTICLES_READ} component={ArticlesRead} />
     </Stack.Navigator>
   );
 };

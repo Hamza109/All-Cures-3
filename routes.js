@@ -11,6 +11,7 @@ export const Route = {
   EDITPROFILE: 'EDITPROFILE',
   FILTER_DOC: 'FILTER_DOC',
   APPOINTMENT: 'APPOINTMENT',
+  CHAT:'CHAT',
   //search screen and tab
   SEARCH: 'SEARCH',
   SEARCH_TAB: 'SEARCH_TAB',

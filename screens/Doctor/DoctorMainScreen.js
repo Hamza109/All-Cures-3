@@ -1,14 +1,14 @@
 import {
   View,
   Text,
-  Image,
+  ActivityIndicator,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {backendHost} from '../../Components/apiConfig';
-
+import {Image} from '@rneui/themed';
 import {useDispatch, useSelector} from 'react-redux';
 import {FontFamily, Color, width} from '../../config/GlobalStyles';
 import ContentLoader from '../../Components/ContentLoader';
@@ -110,26 +110,6 @@ const DoctorMainScreen = ({route, navigation}) => {
     checkIfImage(url);
   }, []); // Empty dependency array to ensure the effect runs only once on mount
 
-  async function getDoc() {
-    try {
-      const response = await fetch(
-        `${backendHost}/DoctorsActionController?rowno=${id}&cmd=getProfile`,
-      );
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const json = await response.json();
-
-      setItem(json);
-    } catch (error) {
-      console.error('An error occurred:', error);
-      // Handle errors, e.g., show an error message to the user
-    } finally {
-      setIsLoaded(true);
-    }
-  }
   return (
     <>
       {isLoaded ? (
@@ -148,6 +128,7 @@ const DoctorMainScreen = ({route, navigation}) => {
                 marginVertical: 10,
                 alignSelf: 'center',
               }}
+              PlaceholderContent={<ActivityIndicator />}
             />
           </View>
           <View style={{justifyContent: 'space-between'}}>
@@ -219,80 +200,101 @@ const DoctorMainScreen = ({route, navigation}) => {
               </View>
             )}
           </View>
-          <View
-            style={[
-              styles.button,
-              {flexDirection: 'row', justifyContent: 'space-between'},
-            ]}>
-            <ScheduleButton />
-            <OutButton />
-          </View>
-          <View style={{paddingVertical: 20}}>
-            <Text style={[styles.h2_text, {color: Color.colorDarkslategray}]}>
-              Articles
-            </Text>
-            {docCures
-              .filter((item, index) => index < 2)
-              .map((related, key) => {
-                let imageLoc = '';
-                const imgLocation = related.content_location;
-                if (
-                  imgLocation &&
-                  imgLocation.includes('cures_articleimages')
-                ) {
-                  imageLoc =
-                    `https://all-cures.com:444/` +
-                    imgLocation.replace('json', 'png').split('/webapps/')[1];
-                } else {
-                  imageLoc =
-                    'https://all-cures.com:444/cures_articleimages//299/default.png';
-                }
-                console.log(related);
-                return (
-                  <TouchableOpacity
-                    onPress={() => {
-                      navigation.push(Route.ARTICLES_READ, {
-                        articleId: related.article_id,
-                      });
-                    }}
-                    activeOpacity={0.7}
-                    key={`${key}-${related.articleId}`}>
-                    <RelatedCard
-                      author={related.authors_name}
-                      title={related.title}
-                      image={imageLoc}
-                      published_date={related.published_date}
-                    />
-                  </TouchableOpacity>
-                );
-              })}
+          {item?.chatService == 1 ? (
+            <View
+              style={{alignSelf: 'center', width: '100%', marginBottom: 10}}>
+              <OutButton
+                name="Initiate Chat"
+                docID={item.docID}
+                firstName={item.firstName}
+                lastName={item.lastName}
+              />
+            </View>
+          ) : null}
+          {item?.videoService == 1 ? (
+            <View style={{alignSelf: 'center', width: '100%'}}>
+              <OutButton
+                name="Video Call"
+                docID={item.docID}
+                firstName={item.firstName}
+                lastName={item.lastName}
+              />
+            </View>
+          ) : null}
+          {item?.videoService == 1 ? (
+            <View style={{alignSelf: 'center', width: '100%'}}>
+              <ScheduleButton />
+            </View>
+          ) : null}
 
-            {docCures.length > 2 ? (
-              <TouchableOpacity
-                style={{marginTop: 10}}
-                onPress={() => {
-                  navigation.navigate(Route.DOC_CURES, {
-                    docId: id,
-                    firstName: firstName,
-                    secondName: secondName,
-                  });
-                }}>
-                <Text style={styles.seeAll}>
-                  See All Cures <Right />
-                </Text>
-              </TouchableOpacity>
-            ) : null}
-            {docCures.length != 0 ? (
-              <View
-                style={[
-                  styles.button,
-                  {flexDirection: 'row', justifyContent: 'space-between'},
-                ]}>
-                <ScheduleButton docID={id} />
-                <OutButton />
-              </View>
-            ) : null}
-          </View>
+          {docCures.length != 0 ? (
+            <View style={{paddingVertical: 20}}>
+              <Text style={[styles.h2_text, {color: Color.colorDarkslategray}]}>
+                Articles
+              </Text>
+              {docCures
+                .filter((item, index) => index < 2)
+                .map((related, key) => {
+                  let imageLoc = '';
+                  const imgLocation = related.content_location;
+                  if (
+                    imgLocation &&
+                    imgLocation.includes('cures_articleimages')
+                  ) {
+                    imageLoc =
+                      `https://all-cures.com:444/` +
+                      imgLocation.replace('json', 'png').split('/webapps/')[1];
+                  } else {
+                    imageLoc =
+                      'https://all-cures.com:444/cures_articleimages//299/default.png';
+                  }
+                  console.log(related);
+                  return (
+                    <TouchableOpacity
+                      onPress={() => {
+                        navigation.push(Route.ARTICLES_READ, {
+                          articleId: related.article_id,
+                        });
+                      }}
+                      activeOpacity={0.7}
+                      key={`${key}-${related.articleId}`}>
+                      <RelatedCard
+                        author={related.authors_name}
+                        title={related.title}
+                        image={imageLoc}
+                        published_date={related.published_date}
+                      />
+                    </TouchableOpacity>
+                  );
+                })}
+
+              {docCures.length > 2 ? (
+                <TouchableOpacity
+                  style={{marginTop: 10}}
+                  onPress={() => {
+                    navigation.navigate(Route.DOC_CURES, {
+                      docId: id,
+                      firstName: firstName,
+                      secondName: secondName,
+                    });
+                  }}>
+                  <Text style={styles.seeAll}>
+                    See All Cures <Right />
+                  </Text>
+                </TouchableOpacity>
+              ) : null}
+              {docCures.length != 0 && item?.videoService == 1 ? (
+                <View
+                  style={[
+                    styles.button,
+                    {flexDirection: 'row', justifyContent: 'space-between'},
+                  ]}>
+                  <ScheduleButton docID={id} />
+                  <OutButton />
+                </View>
+              ) : null}
+            </View>
+          ) : null}
         </ScrollView>
       ) : (
         <ContentLoader />

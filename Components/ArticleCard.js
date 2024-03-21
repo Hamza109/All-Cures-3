@@ -30,7 +30,8 @@ import {useToast} from 'native-base';
 import {screen} from '../Redux/Slice/screenNameSlice';
 import axios from 'axios';
 const cardItemHeight = 136;
-const ArticleCard = ({
+const 
+ArticleCard = ({
   title,
   window_title,
   create_date,
