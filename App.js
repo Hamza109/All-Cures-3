@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import BottomTab from './screens/Tab/BottomTab';
 import {Provider, useDispatch} from 'react-redux';
@@ -30,7 +31,6 @@ const App = () => {
   const checkApplicationPermission = async () => {
     if (Platform.OS == 'android') {
       try {
-  
         await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.POST_NOTIFICATION,
         );
@@ -99,7 +99,7 @@ console.log('you have a notification')
    
       console.log('FCM', token);
       // Send the token to your server for further processing if needed.
-    
+
       // Handle token (send to server, save locally, etc.)
     } catch (error) {
       console.error('Error getting token:', error);
@@ -198,23 +198,16 @@ console.log('you have a notification')
     handleInitialNotification()
   }, []);
 
-
-  useEffect(()=>{
+  useEffect(() => {
     configPush();
-  })
-
-
-
-
-
-
+  });
 
   return (
     <Provider store={store}>
-       <NativeBaseProvider>
-      <NavigationContainer>
-        <RootStack />
-      </NavigationContainer>
+      <NativeBaseProvider>
+        <NavigationContainer>
+          <RootStack />
+        </NavigationContainer>
       </NativeBaseProvider>
     </Provider>
   );

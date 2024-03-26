@@ -1,5 +1,5 @@
 import {Pressable, StyleSheet, Text, View, Alert} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {Color, FontFamily} from '../config/GlobalStyles';
 import axios from 'axios';
 import {useSelector, useDispatch} from 'react-redux';
@@ -11,12 +11,16 @@ const OutButton = ({name, docID, firstName, lastName}) => {
   const profile = useSelector(state => state.profile.data);
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const [isLoaded, setIsLoaded] = useState(true);
   console.log('aas', docID);
   const handlePress = () => {
-    if ((name = 'Initiate Chat')) {
+    console.log(name);
+    if (name == 'Initiate Chat') {
+      console.log('Initiated', name);
       initiateChat();
-    } else {
+    } else if (name == 'Video Call') {
       videoCall();
+      console.log('Video', name);
     }
   };
 
@@ -88,11 +92,12 @@ const OutButton = ({name, docID, firstName, lastName}) => {
   const videoCall = async () => {
     setIsLoaded(false);
     try {
-      const response = await fetch(`${backendHost}/video/create/room/${id}`);
+      const response = await fetch(`${backendHost}/video/create/room/${docID}`);
       const result = await response.json();
-      setApiUrl(result);
+      console.log(result);
+
       setIsLoaded(true);
-      navigation.navigate('videoCall', {id: `${id}`, url: result});
+      navigation.navigate(Route.VIDEOCALL, {id: `${docID}`, url: result});
 
       console.log('res', result);
     } catch (error) {

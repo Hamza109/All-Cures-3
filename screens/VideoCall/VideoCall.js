@@ -212,19 +212,7 @@ const VideoCall = ({route}) => {
             `robots-deps-${JSON.stringify(packageJson.dependencies)}`,
           )}>
           {showCallPanel ? (
-            <View
-              style={[
-                styles.callContainerBase,
-                orientation === Orientation.Landscape
-                  ? styles.callContainerLandscape
-                  : null,
-              ]}>
-              <CallPanel roomUrl={roomUrl || ''} />
-              <Tray
-                onClickLeaveCall={leaveCall}
-                disabled={!enableCallButtons}
-              />
-            </View>
+            <Text>Started </Text>
           ) : (
             <ScrollView
               contentContainerStyle={
@@ -250,19 +238,19 @@ const VideoCall = ({route}) => {
                     editable={false}
                     value={videoUrl}
                     onChangeText={text => {
-                      setRoomUrlFieldValue(text);
+                      setRoomUrlFieldValue(videoUrl);
                       setRoomCreateError(false);
                     }}
                   />
-                  {!!roomUrlFieldValue && (
+                  {/* {!!roomUrlFieldValue && (
                     <TouchableWithoutFeedback
                       onPress={() => setRoomUrlFieldValue(undefined)}>
                       <Image
                         style={styles.closeIcon}
-                        source={require('../../assets/img/close.png')}
+                        source={require('../../assets/images/close.png')}
                       />
                     </TouchableWithoutFeedback>
-                  )}
+                  )} */}
                 </View>
 
                 <StartButton

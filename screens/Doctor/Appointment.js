@@ -19,14 +19,20 @@ import ContentLoader from '../../Components/ContentLoader';
 import moment from 'moment';
 import {useNavigation} from '@react-navigation/native';
 import {Route} from '../../routes';
+import {useSelector} from 'react-redux';
 
-const Appointment = () => {
+const Appointment = ({route}) => {
   const [availableSlots, setAvailableSlots] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [unbookedSlots, setUnBookedSlots] = useState();
   const [isloaded, setIsLoaded] = useState(true);
   const [timeSlot, setTimeSlot] = useState();
   const navigation = useNavigation();
+  const profile = useSelector(state => state.profile.data);
+  const userId = profile.registration_id;
+
+  const [id, setId] = useState(route.params.docID);
+  console.log('DocID Appoint', id);
 
   const getDayName = dateString => {
     const date = new Date(dateString);
@@ -37,7 +43,7 @@ const Appointment = () => {
     const fetchData = async () => {
       setIsLoaded(false);
       try {
-        const data = await fetch(`${backendHost}/appointments/get/Slots/1`);
+        const data = await fetch(`${backendHost}/appointments/get/Slots/${id}`);
         if (!data.ok) {
           throw new Error('Network response was not ok');
         }
@@ -85,8 +91,8 @@ const Appointment = () => {
 
   const handlePress = async () => {
     const appointmentData = {
-      docID: 1, //change it to docID
-      userID: 84, // change it to original YserID
+      docID: id, //change it to docID
+      userID: userId, // change it to original YserID
       appointmentDate: selectedDate,
       startTime: timeSlot.slot,
 
@@ -95,6 +101,7 @@ const Appointment = () => {
     console.log('appointment', appointmentData);
 
     try {
+      setIsLoaded(false);
       const response = await fetch(`${backendHost}/appointments/create`, {
         method: 'POST',
         headers: {
@@ -107,6 +114,7 @@ const Appointment = () => {
 
       if (responseData === 1) {
         // Appointment creation successful
+        setIsLoaded(true);
         console.log('Appointment created successfully!');
         Alert.alert('Appointment created successfully!');
         navigation.goBack();
@@ -263,7 +271,10 @@ const Appointment = () => {
           </View>
         </SafeAreaView>
       ) : (
-        <ContentLoader />
+        
+          <ContentLoader />
+          
+       
       )}
     </>
   );

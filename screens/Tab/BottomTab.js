@@ -33,7 +33,7 @@ const BottomTab = () => {
               getFocusedRouteNameFromRoute(route) === 'SUBMITARTICLE' ||
               getFocusedRouteNameFromRoute(route) === 'LOGIN' ||
               getFocusedRouteNameFromRoute(route) === 'ABOUT' ||
-              getFocusedRouteNameFromRoute(route) === 'videoCall' ||
+              getFocusedRouteNameFromRoute(route) === Route.VIDEOCALL ||
               getFocusedRouteNameFromRoute(route) === Route.CHAT
                 ? 'none'
                 : 'flex',

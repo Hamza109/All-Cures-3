@@ -12,11 +12,14 @@ export const Route = {
   FILTER_DOC: 'FILTER_DOC',
   APPOINTMENT: 'APPOINTMENT',
   CHAT:'CHAT',
+  VIDEOCALL:'VIDEOCALL',
+
   //search screen and tab
   SEARCH: 'SEARCH',
   SEARCH_TAB: 'SEARCH_TAB',
   SEARCH_INPUT:"SEARCH_INPUT",
   SEARCH_RESULT:"SEARCH_RESULT",
+
   //profle screen and tab
   PROFILE: 'PROFILE',
   PROFILE_TAB: 'PROFILE_TAB',
@@ -31,6 +34,7 @@ export const Route = {
   NOTIFICATION: 'NOTIFICATION',
   SUBMITARTICLE: 'SUBMITARTICLE',
   TIPOFTHEDAY: 'TIPOFTHEDAY',
+  INBOX:'INBOX'
 };
 
 //feed screen and tab

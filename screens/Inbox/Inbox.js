@@ -11,11 +11,11 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import Svg, {Path, Circle} from 'react-native-svg';
-import {backendHost} from '../../components/apiConfig';
+import {backendHost} from '../../Components/apiConfig';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import {chatInfo} from '../Redux/Action';
+
 import moment from 'moment';
 import {StackActions} from '@react-navigation/native';
 
@@ -28,7 +28,7 @@ const Inbox = () => {
   const navigation = useNavigation();
   const profile = useSelector(state => state.profile.data);
   const user = profile.registration_id;
-  const row = useSelector(state => state.docRow.rowId);
+  // const row = useSelector(state => state.docRow.rowId);
 
   function User() {
     return (
@@ -57,68 +57,63 @@ const Inbox = () => {
       .catch(err => err);
   };
 
-  const initiateChat = (getId, getFirstName, getLastName, rowno) => {
-    dispatch(
-      chatInfo({
-        first_name: getFirstName,
-        last_name: getLastName,
-        rowno: rowno,
-      }),
-    );
-    const data = new Promise((resolve, reject) => {
-      fetch(
-        `${backendHost}/chat/${row === 0 ? user : getId}/${
-          row === 0 ? getId : user
-        }`,
-      )
-        .then(res => {
-          resolve(res.json());
-        })
-        .catch(err => err);
-    });
-    data.then(responseData => {
-      const transformedMessages = responseData.map(message => {
-        return {
-          _id: Math.random().toString(36).substring(2, 9),
-          text: message.Message,
-          createdAt: new Date(message.Time),
-          user: {
-            _id: message.From_id,
-          },
-        };
-      });
+  // const initiateChat = (getId, getFirstName, getLastName, rowno) => {
 
-      navigation.push('chat', {
-        messages:
-          responseData.length !== 1 ? transformedMessages.reverse() : [],
-        chatId: responseData[0].Chat_id,
-        id: getId,
-        first_name: getFirstName,
-        last_name: getLastName,
-      });
-    });
-  };
+  //   const data = new Promise((resolve, reject) => {
+  //     fetch(
+  //       `${backendHost}/chat/${row === 0 ? user : getId}/${
+  //         row === 0 ? getId : user
+  //       }`,
+  //     )
+  //       .then(res => {
+  //         resolve(res.json());
+  //       })
+  //       .catch(err => err);
+  //   });
+  //   data.then(responseData => {
+  //     const transformedMessages = responseData.map(message => {
+  //       return {
+  //         _id: Math.random().toString(36).substring(2, 9),
+  //         text: message.Message,
+  //         createdAt: new Date(message.Time),
+  //         user: {
+  //           _id: message.From_id,
+  //         },
+  //       };
+  //     });
+
+  //     navigation.push('chat', {
+  //       messages:
+  //         responseData.length !== 1 ? transformedMessages.reverse() : [],
+  //       chatId: responseData[0].Chat_id,
+  //       id: getId,
+  //       first_name: getFirstName,
+  //       last_name: getLastName,
+  //     });
+  //   });
+  // };
+
+  // useEffect(() => {
+  //   const backHandler = BackHandler.addEventListener(
+  //     'hardwareBackPress',
+  //     () => {
+  //       navigation.dispatch(StackActions.replace('Profile'));
+
+  //       return true;
+  //     },
+  //   );
+
+  //   return () => backHandler.remove();
+  // }, [navigation]);
 
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      () => {
-        navigation.dispatch(StackActions.replace('Profile'));
-
-        return true;
-      },
-    );
-
-    return () => backHandler.remove();
-  }, [navigation]);
-
-  useLayoutEffect(() => {
     const fetchData = async () => {
       fetch(`${backendHost}/chat/list/${user}`)
         .then(res => res.json())
 
         .then(json => {
           setData(json);
+          console.log('json', json);
         })
 
         .catch(err => {
