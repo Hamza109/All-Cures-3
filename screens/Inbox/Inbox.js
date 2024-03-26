@@ -18,6 +18,8 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import moment from 'moment';
 import {StackActions} from '@react-navigation/native';
+import {Route} from '../../routes';
+import HeaderComponent from '../../Components/HeaderComponent';
 
 const Inbox = () => {
   const [messages, setMessages] = useState([]);
@@ -57,54 +59,51 @@ const Inbox = () => {
       .catch(err => err);
   };
 
-  // const initiateChat = (getId, getFirstName, getLastName, rowno) => {
+  const initiateChat = docID => {
+    if (profile.registration_id != 0) {
+      console.log(docID);
+      axios
+        .get(`${backendHost}/chat/${profile.registration_id}/${docID}`)
+        .then(res => {
+          console.log(res.data);
+          if (res.status === 200) {
+            if (res.data[0].Chat_id === null) {
+              createChat();
+            } else {
+              console.log('transformedMEssage');
+              const transformedMessages = res.data.map(message => {
+                return {
+                  _id: Math.random().toString(36).substring(2, 9),
+                  text: message.Message,
+                  createdAt: new Date(message.Time),
+                  user: {
+                    _id: message.From_id,
+                    name: message.From,
+                  },
+                };
+              });
+              console.log('navigate');
 
-  //   const data = new Promise((resolve, reject) => {
-  //     fetch(
-  //       `${backendHost}/chat/${row === 0 ? user : getId}/${
-  //         row === 0 ? getId : user
-  //       }`,
-  //     )
-  //       .then(res => {
-  //         resolve(res.json());
-  //       })
-  //       .catch(err => err);
-  //   });
-  //   data.then(responseData => {
-  //     const transformedMessages = responseData.map(message => {
-  //       return {
-  //         _id: Math.random().toString(36).substring(2, 9),
-  //         text: message.Message,
-  //         createdAt: new Date(message.Time),
-  //         user: {
-  //           _id: message.From_id,
-  //         },
-  //       };
-  //     });
-
-  //     navigation.push('chat', {
-  //       messages:
-  //         responseData.length !== 1 ? transformedMessages.reverse() : [],
-  //       chatId: responseData[0].Chat_id,
-  //       id: getId,
-  //       first_name: getFirstName,
-  //       last_name: getLastName,
-  //     });
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   const backHandler = BackHandler.addEventListener(
-  //     'hardwareBackPress',
-  //     () => {
-  //       navigation.dispatch(StackActions.replace('Profile'));
-
-  //       return true;
-  //     },
-  //   );
-
-  //   return () => backHandler.remove();
-  // }, [navigation]);
+              navigation.navigate(Route.CHAT, {
+                messages:
+                  res.data[0].Message != ''
+                    ? transformedMessages.reverse()
+                    : [],
+                id: docID,
+                chatId: res.data[0].Chat_id,
+                first_name: profile.firstName,
+                last_name: profile.lastName,
+              });
+            }
+          } else {
+            Alert.alert('Please Try again', 'something went wrong');
+          }
+        })
+        .catch(err => err);
+    } else {
+      dispatch(screen(Route.LOGIN));
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -154,9 +153,7 @@ const Inbox = () => {
     return (
       <View style={{flex: 1, backgroundColor: '#fff'}}>
         <Pressable
-          onPress={() =>
-            initiateChat(item.User, item.First_name, item.Last_name, item.Rowno)
-          }
+          onPress={() => initiateChat(item.docID)}
           style={styles.messageContainer}>
           <View style={styles.leftContainer}>
             {item.Rowno == null ? (
@@ -208,6 +205,7 @@ const Inbox = () => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#00415e" barStyle="light-content" />
+      <HeaderComponent title="Inbox" />
       <FlatList
         data={data}
         style={{width: '100%'}}

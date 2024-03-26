@@ -140,7 +140,8 @@ const CustomHeader = ({title, id}) => {
               <Icon name="heart" color={Color.appDefaultColor} size={15} />
             )}
           </TouchableOpacity>
-          <TouchableOpacity style={{justifyContent:'center',alignItems:'center'}}>
+          <TouchableOpacity
+            style={{justifyContent: 'center', alignItems: 'center'}}>
             <Line width={'15'} height={'15'} />
           </TouchableOpacity>
           <TouchableOpacity onPress={onShare} style={{}}>

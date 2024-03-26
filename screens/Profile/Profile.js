@@ -1,10 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  Pressable,
+  ScrollView,
+} from 'react-native';
 import Appointment from '../Doctor/Appointment';
 import {useDispatch, useSelector} from 'react-redux';
 import UserProfile from '../../Components/profile/UserProfile';
 import Divider from '../../Components/Divider';
-import {Color, FontFamily, width} from '../../config/GlobalStyles';
+import {Color, FontFamily, height, width} from '../../config/GlobalStyles';
 import Right from '../../assets/images/RIGHT.svg';
 import DoctorProfile from '../../Components/profile/DoctorProfile';
 import NotificationIcon from '../../assets/images/Notification.svg';
@@ -24,7 +32,7 @@ const Profile = ({navigation}) => {
     {title: 'Tip of the Day', route: Route.NOTIFICATION},
     {title: 'About us', route: Route.ABOUT},
     {title: 'Submit Articles', route: Route.SUBMITARTICLE},
-    {title: 'Favorite', route: Route.FAVOURITE},
+    {title: 'Favourite', route: Route.FAVOURITE},
     {title: 'Inbox', route: Route.INBOX},
 
     {title: 'Help', route: Route.HELP},
@@ -127,15 +135,49 @@ const Profile = ({navigation}) => {
       setIsLoaded(true);
     });
   };
-
-  useEffect(() => {
-    console.log(Object.keys(profileInfo).length);
-    if (Object.keys(profileInfo).length != 0) {
-      getUser();
+  const handleProfile = item => {
+    if (item.title === 'Logout') {
+      // Exact match
+      handleLogOut();
+    } else if (
+      item.title === 'Submit Articles' ||
+      item.title === 'Inbox' ||
+      item.title === 'favourite'
+    ) {
+      if (Object.keys(profileInfo).length) {
+        navigation.navigate(item.route);
+      } else {
+        dispatch(screen(Route.LOGIN));
+      }
     } else {
-      dispatch(screen(Route.LOGIN));
+      // Consider adding error handling in case of navigation issues
+      navigation.navigate(item.route);
+    }
+  };
+  useEffect(() => {
+    console.log();
+    if (Object.keys(profileInfo).length) {
+      getUser();
     }
   }, []);
+
+  const handlePayment = () => {
+    axios
+      .post(
+        'https://test.ccavenue.com/transaction.do?command=initiateTransaction',
+        {
+          encRequest:
+            '0EE39E5A05CF73D2E10DA350D26555225B1A2B3113AD55BD461E6DB9D990B9CCDFDFD279E48A969E23210C030732FA980303819412A0263EBD6A2F104A67D3AFB0B7410AFA9C801DC36836ABB29A9169FE22EDAFD56649AF082E05D066F349E6C5AF85D763331CFE4CFBCBBE1FD6504EFCEE6AAE0E49C5243A06153463703BBB7327E5ECD799327B0FE6B8AB7F7806A66D62367F5C282BAA6F9A1CAD99CFABBDF86FB65C0A426CA1FA6205FB13AAE97BCFC913670E480B6FD8ABB123D82F669EFBEC14C9757B517D60A8CED051F0E6B86FFC8DB94C9C733795F312991FF01F87',
+          accessCode: 'AVKI05LC59AW25IKWA',
+        },
+      )
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
   return (
     <>
       <View style={styles.container}>
@@ -151,23 +193,52 @@ const Profile = ({navigation}) => {
             <Text style={styles.read}>Account</Text>
           </View>
         </View>
-        {profileInfo.docID == 0 || profileInfo.length == [] ? (
-          <UserProfile />
+        {profileInfo && Object.keys(profileInfo).length !== 0 ? (
+          profileInfo.docID === 0 || profileInfo.length === 0 ? (
+            <UserProfile />
+          ) : (
+            <DoctorProfile docID={profileInfo.docID} />
+          )
         ) : (
-          <DoctorProfile docID={profileInfo.docID} />
+          <Pressable
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: height / 6,
+            }}
+            onPress={() => {
+              dispatch(screen(Route.LOGIN));
+            }}>
+            <Text
+              style={{
+                borderWidth: 1,
+                width: width / 1.5,
+                height: 60,
+
+                textAlign: 'center',
+                textAlignVertical: 'center',
+                backgroundColor: Color.lightpurple,
+                borderRadius: 15,
+                borderColor: Color.appDefaultColor,
+                color: Color.colorDarkslategray,
+                fontSize: 16,
+                fontWeight: '400',
+                fontFamily: FontFamily.poppinsRegular,
+              }}>
+              Sign In/Create Account
+            </Text>
+          </Pressable>
         )}
 
         <Text style={styles.setting}>Settings</Text>
-        <View style={{marginHorizontal: 10}}>
+        <ScrollView style={{marginHorizontal: 10}}>
           {/* Commented out section; not relevant to map function focus */}
 
           {profileOptionsData.map((item, index) => (
             <TouchableOpacity
               key={index}
               onPress={() => {
-                item.title == 'Logout'
-                  ? handleLogOut()
-                  : navigation.navigate(item.route);
+                handleProfile(item);
               }}>
               <View style={styles.titleView}>
                 <Text style={styles.titleText}>{item.title}</Text>
@@ -176,7 +247,7 @@ const Profile = ({navigation}) => {
               <Divider />
             </TouchableOpacity>
           ))}
-        </View>
+        </ScrollView>
       </View>
     </>
   );

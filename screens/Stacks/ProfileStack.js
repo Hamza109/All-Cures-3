@@ -12,6 +12,8 @@ import TipOfTheDay from '../Profile/Settings/TipOfTheDay';
 import EditProfile from '../Profile/EditProfile';
 import Favourite from '../Profile/favourite';
 import Inbox from '../Inbox/Inbox';
+import ForgetPassword from '../Profile/ForgetPassword';
+import Chat from '../Inbox/Chat';
 const ProfileStack = () => {
   const Stack = createStackNavigator();
   return (
@@ -26,6 +28,8 @@ const ProfileStack = () => {
       <Stack.Screen name={Route.FAVOURITE} component={Favourite} />
       <Stack.Screen name={Route.EDITPROFILE} component={EditProfile} />
       <Stack.Screen name={Route.INBOX} component={Inbox} />
+      <Stack.Screen name={Route.FORGETPASSWORD} component={ForgetPassword} />
+      <Stack.Screen name = {Route.CHAT} component={Chat}/>
 
       <Stack.Screen name={Route.NOTIFICATION} component={Notification} />
       <Stack.Screen name={Route.SUBMITARTICLE} component={SubmitArticle} />

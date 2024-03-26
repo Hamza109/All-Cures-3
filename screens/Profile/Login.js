@@ -9,7 +9,7 @@ import {
   StatusBar,
   ScrollView,
   Alert,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import React, {useState} from 'react';
@@ -111,11 +111,8 @@ These Terms and Conditions are governed by the internal substantive laws of the 
     console.log('Pressed', password.trim());
     if (!validate()) return; // Validate the form data
 
-    if (!agreeToTerms) {
-      alert('You must agree to the terms and conditions.');
-      return;
-    }
-
+ 
+ 
     try {
       // Attempt login
       console.log('Staring');
@@ -149,7 +146,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
       setIsLoaded(false);
     } catch (err) {
       // Handle login error
-      
+
       setIsLoaded(false);
     }
   };
@@ -187,19 +184,6 @@ These Terms and Conditions are governed by the internal substantive laws of the 
             </TouchableOpacity>
           </KeyboardAvoidingView>
 
-          <View style={styles.termsContainer}>
-            <CheckBox value={agreeToTerms} onValueChange={setAgreeToTerms} />
-            <Text style={styles.termsText}>
-              I agree to the{' '}
-              <Text
-                style={styles.termsLink}
-                onPress={() => {
-                  setShowModal(true);
-                }}>
-                Terms and Conditions
-              </Text>
-            </Text>
-          </View>
           <Modal
             size="full"
             isOpen={showModal}
@@ -234,6 +218,15 @@ These Terms and Conditions are governed by the internal substantive laws of the 
             <Text
               style={[styles.termsLink, {textAlign: 'center', marginTop: 15}]}>
               Create Account
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={() => {
+              navigation.navigate(Route.FORGETPASSWORD);
+            }}>
+            <Text
+              style={[styles.termsLink, {textAlign: 'center', marginTop: 15}]}>
+              Forget Password?
             </Text>
           </Pressable>
         </View>
