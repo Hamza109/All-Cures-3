@@ -15,14 +15,27 @@ import ArticlesCard from '../../Components/ArticleCard';
 import MyLoader from '../../Components/ContentLoader';
 import {FlashList} from '@shopify/flash-list';
 import DoctorsCard from '../../Components/DoctorsCard';
+import InactiveSearch from '../../assets/images/INACTIVE_SEARCH.svg';
 
 const SearchResults = ({navigation, route}) => {
+
+
+
   const [data, setData] = useState([]);
   const [Loaded, setLoaded] = useState(false);
 
   const medicineId = route.params.medicineId;
   const key = route.params.key;
   const text = route.params.text;
+
+  const handleNavigation = (title, placeholder, key) => {
+    navigation.navigate(Route.SEARCH_INPUT, {
+      header: title,
+      placeholder: placeholder,
+      key: key,
+    });
+  };
+  
 
   const searchByText = async () => {
     if (key == 'cure') {
@@ -173,6 +186,26 @@ const SearchResults = ({navigation, route}) => {
           <NotificationIcon width={16} height={18} style={{marginTop: 5}} />
         </View>
       </View>
+      <View style={{paddingHorizontal:26}}>
+        {
+      <TouchableOpacity
+            onPress={() =>
+                {
+                    key=='cure'? handleNavigation('Find Cures', 'Search for cures', 'cure'):key=='name'?handleNavigation('Find Practitioner', 'Practitioner Name', 'name'):handleNavigation('Find Practitioner', 'Practitioner City', 'city')
+          
+                }
+            }
+            activeOpacity={0.5}
+            style={styles.textBox}>
+                
+            <Text style={styles.placeholderText}> {key=='cure'?'Search for cures':key=='name'?'Practitioner Name':'Practitioner City'} </Text>
+            <View style={styles.searchIcon}>
+              <InactiveSearch width={16} height={16} />
+            </View>
+          </TouchableOpacity>
+}
+          </View>
+       
 
       {Loaded ? (
         <FlashList
@@ -223,4 +256,24 @@ const styles = StyleSheet.create({
     color: Color.colorSilver,
     fontSize: 10,
   },
+  textBox: {
+    borderWidth: 1,
+    width: '100%',
+    borderColor: 'rgba(76, 78, 100, 0.22)',
+    height: 50,
+  alignItems:'center',
+  justifyContent:'space-between',
+    borderRadius: 5,
+    flexDirection:'row'
+  },
+  placeholderText: {
+    fontSize: 12,
+    marginLeft: 12,
+    fontWeight: '500',
+    color: 'rgba(76, 78, 100, 0.6)',
+    fontFamily: FontFamily.poppinsRegular,
+  },
+  searchIcon:{
+    marginRight:20
+  }
 });

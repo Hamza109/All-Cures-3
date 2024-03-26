@@ -212,7 +212,7 @@ const VideoCall = ({route}) => {
             `robots-deps-${JSON.stringify(packageJson.dependencies)}`,
           )}>
           {showCallPanel ? (
-           <Text>Started  </Text>
+            <Text>Started </Text>
           ) : (
             <ScrollView
               contentContainerStyle={
@@ -238,11 +238,11 @@ const VideoCall = ({route}) => {
                     editable={false}
                     value={videoUrl}
                     onChangeText={text => {
-                      setRoomUrlFieldValue(text);
+                      setRoomUrlFieldValue(videoUrl);
                       setRoomCreateError(false);
                     }}
                   />
-                  {!!roomUrlFieldValue && (
+                  {/* {!!roomUrlFieldValue && (
                     <TouchableWithoutFeedback
                       onPress={() => setRoomUrlFieldValue(undefined)}>
                       <Image
@@ -250,7 +250,7 @@ const VideoCall = ({route}) => {
                         source={require('../../assets/images/close.png')}
                       />
                     </TouchableWithoutFeedback>
-                  )}
+                  )} */}
                 </View>
 
                 <StartButton

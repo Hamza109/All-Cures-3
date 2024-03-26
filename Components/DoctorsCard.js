@@ -33,10 +33,14 @@ const DoctorsCard = ({
           {primarySpl}
         </Text>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text style={[styles.time, {maxWidth: 160}]}>
-            {hospitalAffiliated}{' '}
-          </Text>
-          <Dot height={5} width={5} />
+          {hospitalAffiliated ? (
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Text style={[styles.time, {maxWidth: 160}]}>
+                {hospitalAffiliated}{' '}
+              </Text>
+              <Dot height={5} width={5} />
+            </View>
+          ) : null}
           <Text style={styles.time}> {state}</Text>
         </View>
       </View>

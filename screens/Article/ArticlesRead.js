@@ -34,6 +34,7 @@ const ArticlesRead = ({route, navigation}) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [id, setId] = useState(route.params.articleId);
   const [relatedItem, setRelatedItem] = useState([]);
+  console.log(route.params.articleId)
 
   const abortController = new AbortController();
   const signal = abortController.signal;
