@@ -1,16 +1,31 @@
 import React, { useEffect } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import BottomTab from './screens/Tab/BottomTab';
-import {Provider} from 'react-redux';
+import {Provider, useDispatch} from 'react-redux';
 import RootStack from './screens/Stacks/RootStack';
 import {store} from './Redux/Store';
 import {NativeBaseProvider} from 'native-base';
 import messaging from '@react-native-firebase/messaging';
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import PushNotification from "react-native-push-notification";
+import { backendHost } from './Components/apiConfig';
 
+import { articleId } from './Redux/Slice/ArticleIdSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const App = () => {
 
+
+  
+
+
+
+  const articeId = async id => {
+    try {
+      await AsyncStorage.setItem('artId', JSON.stringify(id));
+    } catch (error) {
+      throw error;
+    }
+  };
 
   const checkApplicationPermission = async () => {
     if (Platform.OS == 'android') {
@@ -24,6 +39,28 @@ const App = () => {
       }
     }
   };
+
+  const handleInitialNotification = async () => {
+    const initialNotification = await messaging().getInitialNotification();
+console.log('notification-->',initialNotification)
+ if(initialNotification){
+console.log('you have a notification')
+
+
+  const {notification} = initialNotification;
+  const {action, id} = initialNotification.data;
+  if (action === 'tip') {
+   
+  }
+
+  if (action === 'article') {
+    articeId({id: id, title: notification.body});
+  }
+ }
+   
+  };
+
+
 
 
 
@@ -49,13 +86,17 @@ const App = () => {
 
   // Get token for push notifications
   const getToken = async () => {
+
     try {
       const token = await messaging().getToken();
-      console.log('Push notification token:', token);
-      const response = await fetch(`${backendHost}/notification/token/"${token}"`, {
+    
+      fetch(`${backendHost}/notification/token/"${token}"`, {
         method: 'POST',
       })
-      console.log('token generated',response.json())
+      .then((res)=>{
+        console.log('post',res)
+      })
+   
       console.log('FCM', token);
       // Send the token to your server for further processing if needed.
     
@@ -63,6 +104,7 @@ const App = () => {
     } catch (error) {
       console.error('Error getting token:', error);
     }
+
   };
 
   const configPush = () => {
@@ -153,6 +195,7 @@ const App = () => {
     messaging().registerDeviceForRemoteMessages();
     checkApplicationPermission();
     requestPermission();
+    handleInitialNotification()
   }, []);
 
 
