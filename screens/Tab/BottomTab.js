@@ -4,7 +4,7 @@ import {Route} from '../../routes';
 import FeedStack from '../Stacks/FeedStack';
 import DoctorStack from '../Stacks/DoctorStack';
 import ProfileStack from '../Stacks/ProfileStack';
-import {View} from 'react-native';
+import {Platform, View} from 'react-native';
 import ActiveFeed from '../../assets/images/ACTIVE_FEED.svg';
 import InactiveFeed from '../../assets/images/INACTIVE_FEED.svg';
 import UserAvatar from 'react-native-user-avatar';
@@ -36,11 +36,11 @@ const BottomTab = () => {
       screenOptions={({route, navigation}) => {
         return {
           headerShown: false,
-
+       
           tabBarStyle: {
             justifyContent: 'center',
             alignItems: 'center',
-            height: 60,
+            height: Platform.OS === 'android'?60:80 ,
 
             display:
               getFocusedRouteNameFromRoute(route) === 'NOTIFICATION' ||

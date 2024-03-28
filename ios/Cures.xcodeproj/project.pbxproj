@@ -12,11 +12,12 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		180D0DFB2BAC175C004B66BA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 180D0DFA2BAC175B004B66BA /* GoogleService-Info.plist */; };
+		18E91E3C2BB5439E0014EA28 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 18E91E3B2BB5439E0014EA28 /* main.jsbundle */; };
 		3BD79F6C40095489CB11B0DA /* Pods_Cures_CuresTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07A86475CDC1921557C34F80 /* Pods_Cures_CuresTests.framework */; };
+		5F064228F76B434D816EF00D /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DFA9B0EA20434B549B6D8822 /* Poppins-Regular.ttf */; };
+		6EF6F2DDB69A45CC88C987DB /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF5453E47DC44FE093A5553F /* Poppins-Bold.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		AE8954B83B2F97A587C085B1 /* Pods_Cures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3422F92DF01A2DF38188B071 /* Pods_Cures.framework */; };
-		6EF6F2DDB69A45CC88C987DB /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF5453E47DC44FE093A5553F /* Poppins-Bold.ttf */; };
-		5F064228F76B434D816EF00D /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DFA9B0EA20434B549B6D8822 /* Poppins-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,15 +43,18 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Cures/main.m; sourceTree = "<group>"; };
 		180D0DF92BAC03BB004B66BA /* Cures.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Cures.entitlements; path = Cures/Cures.entitlements; sourceTree = "<group>"; };
 		180D0DFA2BAC175B004B66BA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		18A5AA222BB568050099CCB5 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		18A5AA242BB57E690099CCB5 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		18E91E3B2BB5439E0014EA28 /* main.jsbundle */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		3422F92DF01A2DF38188B071 /* Pods_Cures.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cures.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-Cures.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cures.debug.xcconfig"; path = "Target Support Files/Pods-Cures/Pods-Cures.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-Cures.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cures.release.xcconfig"; path = "Target Support Files/Pods-Cures/Pods-Cures.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-Cures-CuresTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cures-CuresTests.debug.xcconfig"; path = "Target Support Files/Pods-Cures-CuresTests/Pods-Cures-CuresTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Cures/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-Cures-CuresTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cures-CuresTests.release.xcconfig"; path = "Target Support Files/Pods-Cures-CuresTests/Pods-Cures-CuresTests.release.xcconfig"; sourceTree = "<group>"; };
+		DFA9B0EA20434B549B6D8822 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Regular.ttf"; path = "../assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		FF5453E47DC44FE093A5553F /* Poppins-Bold.ttf */ = {isa = PBXFileReference; name = "Poppins-Bold.ttf"; path = "../assets/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		DFA9B0EA20434B549B6D8822 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; name = "Poppins-Regular.ttf"; path = "../assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FF5453E47DC44FE093A5553F /* Poppins-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Bold.ttf"; path = "../assets/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +97,7 @@
 		13B07FAE1A68108700A75B9A /* Cures */ = {
 			isa = PBXGroup;
 			children = (
+				18A5AA212BB567920099CCB5 /* Fonts */,
 				180D0DF92BAC03BB004B66BA /* Cures.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -102,6 +107,15 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = Cures;
+			sourceTree = "<group>";
+		};
+		18A5AA212BB567920099CCB5 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				18A5AA242BB57E690099CCB5 /* MaterialCommunityIcons.ttf */,
+				18A5AA222BB568050099CCB5 /* Ionicons.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -124,6 +138,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				18E91E3B2BB5439E0014EA28 /* main.jsbundle */,
 				180D0DFA2BAC175B004B66BA /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* Cures */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -147,6 +162,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		B347C3CC0AE341C1B96DAA7E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FF5453E47DC44FE093A5553F /* Poppins-Bold.ttf */,
+				DFA9B0EA20434B549B6D8822 /* Poppins-Regular.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,16 +181,6 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
-		};
-		B347C3CC0AE341C1B96DAA7E /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				FF5453E47DC44FE093A5553F /* Poppins-Bold.ttf */,
-				DFA9B0EA20434B549B6D8822 /* Poppins-Regular.ttf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -263,6 +277,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18E91E3C2BB5439E0014EA28 /* main.jsbundle in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				180D0DFB2BAC175C004B66BA /* GoogleService-Info.plist in Resources */,
@@ -520,9 +535,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Cures/Cures.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = J6C8R2478Z;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Cures/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -533,10 +553,16 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.etherium.AllCures;
 				PRODUCT_NAME = Cures;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Cures;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -548,8 +574,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Cures/Cures.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = J6C8R2478Z;
 				INFOPLIST_FILE = Cures/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -560,9 +591,15 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.etherium.AllCures;
 				PRODUCT_NAME = Cures;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Cures;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -647,10 +684,7 @@
 					"-DFOLLY_USE_LIBCPP=1",
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -729,10 +763,7 @@
 					"-DFOLLY_USE_LIBCPP=1",
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;

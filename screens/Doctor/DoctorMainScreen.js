@@ -5,6 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  SafeAreaView
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {backendHost} from '../../Components/apiConfig';
@@ -17,6 +18,7 @@ import OutButton from '../../Components/outButton';
 import RelatedCard from '../../Components/RelatedCard';
 import Right from '../../assets/images/RIGHT.svg';
 import {Route} from '../../routes';
+
 
 const DoctorMainScreen = ({route, navigation}) => {
   const doc = useSelector(state => state.doc.data);
@@ -111,7 +113,7 @@ const DoctorMainScreen = ({route, navigation}) => {
   }, []); // Empty dependency array to ensure the effect runs only once on mount
 
   return (
-    <>
+    <SafeAreaView style={{flex:1,color:'#fff'}}>
       {isLoaded ? (
         <ScrollView style={{backgroundColor: '#fff', paddingHorizontal: 26}}>
           <View style={{backgroundColor: '#fff'}}>
@@ -143,62 +145,62 @@ const DoctorMainScreen = ({route, navigation}) => {
             )}
 
             <View style={styles.positions}>
-              {item?.primary_spl !== null && (
+           
                 <View style={{flex: 1}}>
                   <Text
                     style={[styles.mainTextTitle, {alignSelf: 'flex-start'}]}>
                     Specialization
                   </Text>
                   <Text style={[styles.mainText, {alignSelf: 'flex-start'}]}>
-                    {item?.medicineType}
+                    {item?.medicineType === ""?"-NA-": item?.medicineType}
                   </Text>
                 </View>
-              )}
+          
 
-              {item?.degDesc != null && (
+       
                 <View style={{flex: 1}}>
                   <Text style={[styles.mainTextTitle, {alignSelf: 'flex-end'}]}>
                     Positions
                   </Text>
                   <Text style={[styles.mainText, {alignSelf: 'flex-end'}]}>
-                    {item?.degDesc}
+                    {item?.degDesc === ""?"-NA-": item?.degDesc}
                   </Text>
                 </View>
-              )}
+         
             </View>
 
             <View style={styles.positions}>
-              {item?.hospitalAffiliated != null && (
+       
                 <View style={{flex: 1}}>
                   <Text
                     style={[styles.mainTextTitle, {alignSelf: 'flex-start'}]}>
                     Organisation
                   </Text>
                   <Text style={[styles.mainText, {alignSelf: 'flex-start'}]}>
-                    {item?.hospitalAffiliated}
+                    {item?.hospitalAffiliated === ""?"-NA-":item?.hospitalAffiliated}
                   </Text>
                 </View>
-              )}
-              {item?.state !== null && (
+       
+
                 <View style={{flex: 1}}>
                   <Text style={[styles.mainTextTitle, {alignSelf: 'flex-end'}]}>
                     Location
                   </Text>
                   <Text style={[styles.mainText, {alignSelf: 'flex-end'}]}>
-                    {item?.state}
+                    {item?.state === ""?"-NA-":item?.state}
                   </Text>
                 </View>
-              )}
+      
             </View>
-            {item?.about !== null && (
+      
               <View style={[styles.positions, {flexDirection: 'column'}]}>
                 <Text style={styles.mainTextTitle}>Bio</Text>
 
                 <Text style={[styles.mainText, {maxWidth: width}]}>
-                  {item?.about}
+                  {item?.about === ""?"-NA-": item?.about}
                 </Text>
               </View>
-            )}
+         
           </View>
           {item?.chatService == 1 ? (
             <View
@@ -299,7 +301,7 @@ const DoctorMainScreen = ({route, navigation}) => {
       ) : (
         <ContentLoader />
       )}
-    </>
+    </SafeAreaView>
   );
 };
 

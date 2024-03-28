@@ -9,6 +9,7 @@ import {
   StatusBar,
   Alert,
   Pressable,
+  SafeAreaView
 } from 'react-native';
 import {Spinner, useToast, Modal, Checkbox} from 'native-base';
 import axios from 'axios';
@@ -307,7 +308,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
     );
   };
   return (
-    <View style={{flex: 1, backgroundColor: '#fff'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={styles.feedHeader}>
         <View
           style={{
@@ -407,7 +408,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
           </Modal.Body>
         </Modal.Content>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 };
 

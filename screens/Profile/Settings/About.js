@@ -1,11 +1,11 @@
-import {StyleSheet, Text, View, TouchableOpacity, Linking} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Linking,SafeAreaView} from 'react-native';
 import React from 'react';
 import {Color, width} from '../../../config/GlobalStyles';
 import NotificationIcon from '../../../assets/images/Notification.svg';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 const About = () => {
   return (
-    <View style={{flex: 1, backgroundColor: '#fff'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={styles.feedHeader}>
         <View
           style={{
@@ -86,7 +86,7 @@ const About = () => {
           <View></View>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

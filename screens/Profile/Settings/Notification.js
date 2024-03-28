@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {StyleSheet, Text, View, FlatList, SafeAreaView} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {Color, FontFamily, width} from '../../../config/GlobalStyles';
 import {backendHost} from '../../../Components/apiConfig';
@@ -71,7 +71,7 @@ const Notification = () => {
     );
   };
   return (
-    <View style={{flex: 1, backgroundColor: '#fff'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={styles.feedHeader}>
         <View
           style={{
@@ -82,12 +82,7 @@ const Notification = () => {
             marginLeft: 5,
           }}>
           <Text style={styles.read}>Tip of the Day</Text>
-          <MaterialIcons
-            name="lightbulb-multiple"
-            size={30}
-            style={{}}
-            color={Color.appDefaultColor}
-          />
+        
         </View>
       </View>
       <FlashList
@@ -96,7 +91,7 @@ const Notification = () => {
         removeClippedSubviews
         estimatedItemSize={80} // Replace 80 with the estimated height of your items
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

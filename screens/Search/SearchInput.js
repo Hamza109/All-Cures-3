@@ -21,6 +21,7 @@ const SearchInput = ({navigation, route}) => {
   const [inputText, setInputText] = useState('');
   const [data, setData] = useState([]);
   const [searching, setSearching] = useState(false);
+  const [inputLengthEnough, setInputLengthEnough] = useState(false);
 
   useEffect(() => {
     console.log(key);
@@ -99,26 +100,29 @@ const SearchInput = ({navigation, route}) => {
 
   const onSearch = text => {
     setInputText(text);
-    if (text) {
-      setSearching(true);
-      debouncedSearch(text);
+    if (text.length >= 2) {
+      setInputLengthEnough(true);
     } else {
+      setInputLengthEnough(false);
       setData([]);
       setSearching(false);
+    }
+    if (text.length >= 3) {
+      setSearching(true);
+      debouncedSearch(text);
     }
   };
 
   const onSubmit = async item => {
     setInputText('');
     setSearching(false);
-    navigation.navigate(Route.SEARCH_RESULT, {
+    navigation.push(Route.SEARCH_RESULT, {
       text: item,
       key: key,
     });
   };
 
   return (
-    
     <SafeAreaView style={styles.container}>
       <View style={styles.feedHeader}>
         <View style={styles.headerContent}>
@@ -128,6 +132,7 @@ const SearchInput = ({navigation, route}) => {
       </View>
       <View style={styles.inputContainer}>
         <Input
+          onSubmitEditing={()=>onSubmit(inputText)}
           onChangeText={onSearch}
           placeholder={placeholder}
           value={inputText}
@@ -150,7 +155,7 @@ const SearchInput = ({navigation, route}) => {
           }
         />
       </View>
-      {searching && (
+      {searching && inputLengthEnough && (
         <View style={styles.listContainer}>
           {data.length ? (
             <View style={{height: '100%', width: '100%'}}>
