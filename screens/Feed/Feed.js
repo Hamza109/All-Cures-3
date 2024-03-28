@@ -20,40 +20,34 @@ import ArticlesCard from '../../Components/ArticleCard';
 import {backendHost, headers} from '../../Components/apiConfig';
 import {FlashList} from '@shopify/flash-list';
 import {Route} from '../../routes';
-import {useDispatch,useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {option} from '../../Redux/Slice/OptionSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const Feed = ({navigation}) => {
-
-
- const dispatch=useDispatch()
   const [isConnected, setIsConnected] = useState(true);
   const [diseaseId, setDiseaseId] = useState(null);
   const [item, setItem] = useState();
   const [Loaded, setLoaded] = useState(false);
   const [articleId, setArticleId] = useState();
 
-
   const abortController = new AbortController();
   const signal = abortController.signal;
 
-
-
-  const getValue= async ()=> {
+  const getValue = async () => {
     const myValue = await AsyncStorage.getItem('artId');
     const myObject = myValue != null ? JSON.parse(myValue) : null;
-    console.log('id',myObject.id)
+    console.log('id', myObject.id);
     // Log the retrieved object
     if (myObject !== null) {
-      console.log('id',myObject.id)
-      navigation.navigate(Route.ARTICLES_READ,{
-  articleId:myObject.id
-      })
-      
+      console.log('id in if ', myObject.id);
+      navigation.navigate(Route.ARTICLES_READ, {
+        articleId: myObject.id,
+      });
+
       AsyncStorage.removeItem('artId');
     }
-  }
-
+  };
+  const dispatch = useDispatch();
   const DATA = [
     {dc_id: 1, category: 'Arthritis'},
     {dc_id: 12, category: 'Blood Disorders'},
@@ -79,11 +73,10 @@ const Feed = ({navigation}) => {
     {dc_id: 176, category: 'Healthy Lifestyle'},
   ];
 
-  useEffect(()=>{
-    getValue()
-  },)
   useEffect(() => {
-   
+    getValue();
+  });
+  useEffect(() => {
     NetInfo.addEventListener(state => {
       setIsConnected(state.isConnected);
     });

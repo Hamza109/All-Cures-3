@@ -16,16 +16,20 @@ import Line from '../../assets/images/Line.svg';
 import ShareButt from '../../assets/images/share.svg';
 import Heart from '../../assets/images/heart.svg';
 import {useToast} from 'native-base';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {backendHost} from '../../Components/apiConfig';
+
+import {Route} from '../../routes';
+import {screen} from '../../Redux/Slice/screenNameSlice';
 const CustomHeader = ({title, id}) => {
   const navigation = useNavigation();
-  const [addFav, setAddFav] = useState();
-  const toast = useToast();
+  const [addFav, setAddFav] = useState(0);
+
   const [toggle, setToggle] = useState();
   const profile = useSelector(state => state.profile.data);
+  const dispatch = useDispatch();
   const handleBack = () => {
     navigation.dispatch(CommonActions.goBack());
   };
@@ -35,22 +39,23 @@ const CustomHeader = ({title, id}) => {
   }, [addFav]);
   const stat = async () => {
     console.log('Initiated');
+    if (Object.keys(profile).length !== 0) {
+      try {
+        const {data} = await axios.get(
+          `${backendHost}/favourite/userid/${profile.registration_id}/articleid/${articleId}/favourite`,
+        );
+        console.log('data', data);
+        if (data.length == 0) {
+          setAddFav(0);
+        } else {
+          setAddFav(1);
+        }
 
-    try {
-      const {data} = await axios.get(
-        `${backendHost}/favourite/userid/${profile.registration_id}/articleid/${id}/favourite`,
-      );
-      console.log('data', data);
-      if (data.length == 0) {
-        setAddFav(0);
-      } else {
-        setAddFav(1);
+        setToggle(data?.[0]?.status === 1 || false); // Default to false
+      } catch (error) {
+        console.error('Error fetching favorite status:', error);
+        // Handle the error appropriately (e.g., display an error message to the user)
       }
-
-      setToggle(data?.[0]?.status === 1 || false); // Default to false
-    } catch (error) {
-      console.error('Error fetching favorite status:', error);
-      // Handle the error appropriately (e.g., display an error message to the user)
     }
   };
   const onShare = async () => {
@@ -73,40 +78,43 @@ const CustomHeader = ({title, id}) => {
     }
   };
   const favorite = async status => {
-    if (addFav == 0) {
-      console.log('addFav');
-      await axios
-        .post(
-          `${backendHost}/favourite/userid/${profile.registration_id}/articleid/${id}/status/1/create`,
-        )
-        .then(res => {
-          console.log('added');
-          if (res.data > 0) {
-            Alert.alert('Added to Favorite');
-            setAddFav(2);
-          }
-        })
-        .catch(err => {
-          err;
-          throw err;
-        });
-    } else {
-      console.log('deleted');
-      axios
-        .delete(
-          `${backendHost}/favourite/userid/${profile.registration_id}/articleid/${id}/status/1/delete`,
-        )
-        .then(res => {
-          console.log(res.data);
-          if (res.data > 0) {
-            Alert.alert('Removed from favorite');
-            setAddFav(2);
-          }
-        })
-        .catch(err => {
-          err;
-          throw err;
-        });
+    if (Object.keys(profile).length !== 0) {
+      if (addFav == 0) {
+        console.log('addFav');
+        await axios
+          .post(
+            `${backendHost}/favourite/userid/${profile.registration_id}/articleid/${articleId}/status/1/create`,
+          )
+          .then(res => {
+            console.log('added');
+            if (res.data > 0) {
+              Alert.alert('Added to Favorite');
+              setAddFav(2);
+            }
+          })
+          .catch(err => {
+            err;
+            throw err;
+          });
+      } else {
+        console.log('deleted');
+        axios
+          .delete(
+            `${backendHost}/favourite/userid/${profile.registration_id}/articleid/${articleId}/status/1/delete`,
+          )
+          .then(res => {
+            console.log(res.data);
+            if (res.data > 0) {
+              Alert.alert('Removed from favorite');
+              setAddFav(2);
+              stat();
+            }
+          })
+          .catch(err => {
+            err;
+            throw err;
+          });
+      }
     }
   };
   return (
@@ -129,7 +137,7 @@ const CustomHeader = ({title, id}) => {
           <TouchableOpacity
             style={{alignItems: 'center', justifyContent: 'center'}}
             onPress={() => {
-              if (profile.registration_id != 0) {
+              if (Object.keys(profile).length !== 0) {
                 favorite();
               } else {
                 dispatch(screen(Route.LOGIN));

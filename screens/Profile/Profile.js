@@ -35,6 +35,7 @@ const Profile = ({navigation}) => {
     {title: 'Submit Articles', route: Route.SUBMITARTICLE},
     {title: 'Favourite', route: Route.FAVOURITE},
     {title: 'Inbox', route: Route.INBOX},
+  
 
     {title: 'Help', route: Route.HELP},
     {title: 'Logout', route: Route.LOGOUT},

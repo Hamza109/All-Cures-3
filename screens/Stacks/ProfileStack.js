@@ -14,6 +14,7 @@ import Favourite from '../Profile/favourite';
 import Inbox from '../Inbox/Inbox';
 import ForgetPassword from '../Profile/ForgetPassword';
 import Chat from '../Inbox/Chat';
+import MyCures from '../Profile/Settings/MyCures';
 const ProfileStack = () => {
   const Stack = createStackNavigator();
   return (
@@ -29,7 +30,8 @@ const ProfileStack = () => {
       <Stack.Screen name={Route.EDITPROFILE} component={EditProfile} />
       <Stack.Screen name={Route.INBOX} component={Inbox} />
       <Stack.Screen name={Route.FORGETPASSWORD} component={ForgetPassword} />
-      <Stack.Screen name = {Route.CHAT} component={Chat}/>
+      <Stack.Screen name={Route.CHAT} component={Chat} />
+      <Stack.Screen name={Route.MYCURES} component={MyCures} />
 
       <Stack.Screen name={Route.NOTIFICATION} component={Notification} />
       <Stack.Screen name={Route.SUBMITARTICLE} component={SubmitArticle} />

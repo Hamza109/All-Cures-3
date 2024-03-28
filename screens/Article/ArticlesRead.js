@@ -4,11 +4,10 @@ import {
   Pressable,
   StyleSheet,
   SafeAreaView,
- 
   ScrollView,
   TouchableOpacity,
   Animated,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
 import React, {useEffect, useState, memo, useRef} from 'react';
 import NetInfo from '@react-native-community/netinfo';
@@ -26,7 +25,7 @@ import RelatedCard from '../../Components/RelatedCard';
 import CustomHeader from '../Tab/CustomHeader';
 const ratio = width / 378;
 const ArticlesRead = ({route, navigation}) => {
-  const [title, setTitle] = useState(route.params.title);
+  const [title, setTitle] = useState(route.params?.title);
 
   const [isConnected, setIsConnected] = useState(true);
   const [data, setData] = useState([]);
@@ -34,7 +33,7 @@ const ArticlesRead = ({route, navigation}) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [id, setId] = useState(route.params.articleId);
   const [relatedItem, setRelatedItem] = useState([]);
-  console.log(route.params.articleId)
+  console.log(route.params.articleId);
 
   const abortController = new AbortController();
   const signal = abortController.signal;
@@ -83,19 +82,16 @@ const ArticlesRead = ({route, navigation}) => {
               'content',
               JSON.parse(decodeURIComponent(json.content)),
             );
-  
+
             const contentBlocks = await JSON.parse(
               decodeURIComponent(json.content),
             ).blocks;
             setIsLoaded(true);
-  
+
             setItems(contentBlocks);
           } catch (error) {
             console.log(error);
-            
           }
-          
-       
         }
       } catch (err) {
         console.error(err);
@@ -193,7 +189,6 @@ const ArticlesRead = ({route, navigation}) => {
               <Image
                 source={require('../../assets/images/ayurvedic.jpg')}
                 style={styles.approachImage}
-              
               />
 
               <View style={styles.approachData}>
