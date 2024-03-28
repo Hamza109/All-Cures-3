@@ -202,7 +202,14 @@ const Profile = ({navigation}) => {
             <DoctorProfile docID={profileInfo.docID} />
           )
         ) : (
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'row',
+              gap: 10,
+            }}>
+            <User />
             <Pressable
               style={{
                 backgroundColor: Color.lightpurple,
@@ -219,7 +226,7 @@ const Profile = ({navigation}) => {
                 style={{
                   fontSize: 16,
                   fontWeight: '400',
-                  width: width / 1.5,
+                  width: width / 1.8,
                   textAlign: 'center',
                   fontFamily: FontFamily.poppinsRegular,
                   textDecorationLine: 'underline',
