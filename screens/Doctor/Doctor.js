@@ -35,6 +35,7 @@ const Doctor = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoaded(false);
       try {
         const promises = [
           fetch(
@@ -62,16 +63,15 @@ const Doctor = () => {
 
     fetchData();
   }, []);
-  const [sortedDoc,setSortedDoc] = useState()
+  const [sortedDoc, setSortedDoc] = useState();
   useEffect(() => {
     const data = featuredDoctors.filter(i => {
       console.log('odl', i.map.medicineType);
       console.log('new', medicineId);
       return i.map.medicineType === medicineId;
     });
-    setSortedDoc(data)
+    setSortedDoc(data);
     console.log('new data', data);
-
   }, [medicineId]);
 
   const renderItem = ({item}) => {
@@ -128,7 +128,7 @@ const Doctor = () => {
             <NotificationIcon width={16} height={18} style={{marginTop: 5}} />
           </View>
           <View style={{flexDirection: 'row'}}>
-            {
+            {Loaded ? (
               <ScrollView
                 horizontal
                 style={{padding: 5, flex: 1, marginTop: 20}}
@@ -186,15 +186,16 @@ const Doctor = () => {
                   );
                 })}
               </ScrollView>
-            }
-       
+            ) : (
+              <ContentLoader />
+            )}
           </View>
         </View>
 
         {Loaded ? (
           <FlashList
             estimatedItemSize={100}
-            data={ medicineId == 'Featured'?featuredDoctors:sortedDoc}
+            data={medicineId == 'Featured' ? featuredDoctors : sortedDoc}
             renderItem={renderItem}
           />
         ) : (

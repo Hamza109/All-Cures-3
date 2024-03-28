@@ -23,6 +23,7 @@ import {docData} from '../../Redux/Slice/DoctorDetailSlice';
 import {screen} from '../../Redux/Slice/screenNameSlice';
 import {profileData} from '../../Redux/Slice/ProfileDataSlice';
 import {StackActions} from '@react-navigation/native';
+import {User} from '../../Components/profile/UserPic';
 
 const Profile = ({navigation}) => {
   const profileInfo = useSelector(state => state.profile.data);
@@ -34,7 +35,6 @@ const Profile = ({navigation}) => {
     {title: 'Submit Articles', route: Route.SUBMITARTICLE},
     {title: 'Favourite', route: Route.FAVOURITE},
     {title: 'Inbox', route: Route.INBOX},
-  
 
     {title: 'Help', route: Route.HELP},
     {title: 'Logout', route: Route.LOGOUT},
@@ -206,10 +206,13 @@ const Profile = ({navigation}) => {
               alignItems: 'center',
               justifyContent: 'center',
               height: height / 6,
+              flexDirection: 'row',
+              gap: 10,
             }}
             onPress={() => {
               dispatch(screen(Route.LOGIN));
             }}>
+            <User />
             <Text
               style={{
                 borderWidth: 1,
@@ -218,13 +221,14 @@ const Profile = ({navigation}) => {
 
                 textAlign: 'center',
                 textAlignVertical: 'center',
-                backgroundColor: Color.lightpurple,
+
                 borderRadius: 15,
                 borderColor: Color.appDefaultColor,
                 color: Color.colorDarkslategray,
                 fontSize: 16,
                 fontWeight: '400',
                 fontFamily: FontFamily.poppinsRegular,
+                textDecorationLine: 'underline',
               }}>
               Sign In/Create Account
             </Text>
@@ -236,17 +240,22 @@ const Profile = ({navigation}) => {
           {/* Commented out section; not relevant to map function focus */}
 
           {profileOptionsData.map((item, index) => (
-            <TouchableOpacity
-              key={index}
-              onPress={() => {
-                handleProfile(item);
-              }}>
-              <View style={styles.titleView}>
-                <Text style={styles.titleText}>{item.title}</Text>
-                <Right width={7.5} height={15} />
-              </View>
-              <Divider />
-            </TouchableOpacity>
+            <>
+              {Object.keys(profileInfo).length == 0 &&
+              item.title == 'Logout' ? null : (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => {
+                    handleProfile(item);
+                  }}>
+                  <View style={styles.titleView}>
+                    <Text style={styles.titleText}>{item.title}</Text>
+                    <Right width={7.5} height={15} />
+                  </View>
+                  <Divider />
+                </TouchableOpacity>
+              )}
+            </>
           ))}
         </ScrollView>
       </View>
@@ -279,7 +288,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     fontWeight: '500',
-    fontFamily: FontFamily.poppinsBold,
+    fontFamily: FontFamily.poppinsRegular,
     color: Color.colorDarkslategray,
   },
   feedHeader: {

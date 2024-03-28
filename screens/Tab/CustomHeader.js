@@ -13,8 +13,7 @@ import {useNavigation, CommonActions} from '@react-navigation/native';
 import {Platform} from 'react-native';
 import Line from '../../assets/images/Line.svg';
 import ShareButt from '../../assets/images/share.svg';
-import Heart from '../../assets/images/heart.svg';
-import {useToast} from 'native-base';
+
 import {useSelector, useDispatch} from 'react-redux';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome';

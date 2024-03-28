@@ -24,6 +24,7 @@ import {Route} from '../../routes';
 import {Modal} from 'native-base';
 import RenderHTML from 'react-native-render-html';
 import {screen} from '../../Redux/Slice/screenNameSlice';
+import ContentLoader from '../../Components/ContentLoader';
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -111,8 +112,6 @@ These Terms and Conditions are governed by the internal substantive laws of the 
     console.log('Pressed', password.trim());
     if (!validate()) return; // Validate the form data
 
- 
- 
     try {
       // Attempt login
       console.log('Staring');
@@ -146,8 +145,8 @@ These Terms and Conditions are governed by the internal substantive laws of the 
       setIsLoaded(false);
     } catch (err) {
       // Handle login error
-      console.log(err)
-      Alert.alert("username/password is incorrect")
+      console.log(err);
+      Alert.alert('username/password is incorrect');
 
       setIsLoaded(false);
     }
@@ -209,28 +208,40 @@ These Terms and Conditions are governed by the internal substantive laws of the 
             </Modal.Content>
           </Modal>
 
-          <TouchableOpacity style={styles.login} onPress={handleSubmit}>
-            <Text style={styles.loginText}>Login</Text>
-          </TouchableOpacity>
+          {!isLoaded ? (
+            <>
+              <TouchableOpacity style={styles.login} onPress={handleSubmit}>
+                <Text style={styles.loginText}>Login</Text>
+              </TouchableOpacity>
 
-          <Pressable
-            onPress={() => {
-              navigation.navigate(Route.SIGNUP);
-            }}>
-            <Text
-              style={[styles.termsLink, {textAlign: 'center', marginTop: 15}]}>
-              Create Account
-            </Text>
-          </Pressable>
-          <Pressable
-            onPress={() => {
-              navigation.navigate(Route.FORGETPASSWORD);
-            }}>
-            <Text
-              style={[styles.termsLink, {textAlign: 'center', marginTop: 15}]}>
-              Forget Password?
-            </Text>
-          </Pressable>
+              <Pressable
+                onPress={() => {
+                  navigation.navigate(Route.SIGNUP);
+                }}>
+                <Text
+                  style={[
+                    styles.termsLink,
+                    {textAlign: 'center', marginTop: 15},
+                  ]}>
+                  Create Account
+                </Text>
+              </Pressable>
+              <Pressable
+                onPress={() => {
+                  navigation.navigate(Route.FORGETPASSWORD);
+                }}>
+                <Text
+                  style={[
+                    styles.termsLink,
+                    {textAlign: 'center', marginTop: 15},
+                  ]}>
+                  Forget Password?
+                </Text>
+              </Pressable>
+            </>
+          ) : (
+            <ContentLoader />
+          )}
         </View>
         <Pressable
           onPress={() => {
