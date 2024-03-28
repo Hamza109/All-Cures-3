@@ -159,6 +159,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
         {/* Adjust image component as needed */}
         <View style={styles.form}>
           <TextInput
+          autoCapitalize='none'
             style={[styles.input, {borderBottomWidth: 1}]}
             placeholder="Email/Phone Number"
             keyboardType="email-address" // Or 'phone-pad' if appropriate
@@ -169,6 +170,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
 
           <KeyboardAvoidingView style={[styles.passwordContainer]}>
             <TextInput
+          
               style={[styles.input, {width: 180}]}
               placeholder="Password"
               secureTextEntry={!showPassword}

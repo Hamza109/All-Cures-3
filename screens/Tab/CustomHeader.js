@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Share,
   Alert,
+  SafeAreaView
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {FontFamily, Color} from '../../config/GlobalStyles';
@@ -109,7 +110,7 @@ const CustomHeader = ({title, id}) => {
     }
   };
   return (
-    <>
+    <SafeAreaView>
       <View style={styles.header}>
         <TouchableOpacity
           onPress={handleBack}
@@ -150,7 +151,7 @@ const CustomHeader = ({title, id}) => {
         </View>
       </View>
       <View style={styles.divider}></View>
-    </>
+    </SafeAreaView>
   );
 };
 

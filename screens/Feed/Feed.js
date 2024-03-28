@@ -26,7 +26,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Feed = ({navigation}) => {
 
 
-
+ const dispatch=useDispatch()
   const [isConnected, setIsConnected] = useState(true);
   const [diseaseId, setDiseaseId] = useState(null);
   const [item, setItem] = useState();

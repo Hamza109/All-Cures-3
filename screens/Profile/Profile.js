@@ -7,6 +7,7 @@ import {
   Alert,
   Pressable,
   ScrollView,
+  SafeAreaView,
 } from 'react-native';
 import Appointment from '../Doctor/Appointment';
 import {useDispatch, useSelector} from 'react-redux';
@@ -180,7 +181,7 @@ const Profile = ({navigation}) => {
   };
   return (
     <>
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.feedHeader}>
           <View
             style={{
@@ -200,34 +201,34 @@ const Profile = ({navigation}) => {
             <DoctorProfile docID={profileInfo.docID} />
           )
         ) : (
+        <View style={{justifyContent:'center',alignItems:'center'}}>
           <Pressable
             style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: height / 6,
+              backgroundColor: Color.lightpurple,
+              borderRadius: 15,
+              borderColor: Color.appDefaultColor,
+              color: Color.colorDarkslategray,
+              borderWidth: 1,
+              padding:15
+              
+            
             }}
             onPress={() => {
               dispatch(screen(Route.LOGIN));
             }}>
+           
             <Text
               style={{
-                borderWidth: 1,
-                width: width / 1.5,
-                height: 60,
-
-                textAlign: 'center',
-                textAlignVertical: 'center',
-                backgroundColor: Color.lightpurple,
-                borderRadius: 15,
-                borderColor: Color.appDefaultColor,
-                color: Color.colorDarkslategray,
                 fontSize: 16,
                 fontWeight: '400',
+                width: width / 1.5,
+                textAlign:'center',
                 fontFamily: FontFamily.poppinsRegular,
               }}>
               Sign In/Create Account
             </Text>
           </Pressable>
+          </View>
         )}
 
         <Text style={styles.setting}>Settings</Text>
@@ -248,7 +249,7 @@ const Profile = ({navigation}) => {
             </TouchableOpacity>
           ))}
         </ScrollView>
-      </View>
+      </SafeAreaView>
     </>
   );
 };

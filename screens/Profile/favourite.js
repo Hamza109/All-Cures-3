@@ -1,4 +1,4 @@
-import {FlatList, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {FlatList, StyleSheet, Text, View, TouchableOpacity, SafeAreaView} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import ArticleCard from '../../Components/ArticleCard';
 import {backendHost} from '../../Components/apiConfig';
@@ -154,7 +154,7 @@ const Favourite = () => {
   return (
     <>
       {isLoaded ? (
-        <View style={{flex: 1,backgroundColor:'#fff'}}>
+        <SafeAreaView style={{flex: 1,backgroundColor:'#fff'}}>
           <View style={styles.feedHeader}>
             <View
               style={{
@@ -173,7 +173,7 @@ const Favourite = () => {
             renderItem={renderItem}
             keyExtractor={item => item.article_id.toString()}
           />
-        </View>
+        </SafeAreaView>
       ) : (
         <ContentLoader />
       )}

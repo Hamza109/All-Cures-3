@@ -72,6 +72,7 @@ const Search = ({navigation}) => {
                 onPress={() => {
                   navigation.navigate(Route.SEARCH_RESULT, {
                     medicineId: item.med_id,
+                   
                   });
                 }}
                 key={item.med_id}>
@@ -130,7 +131,7 @@ const Search = ({navigation}) => {
               handleNavigation('Find Practitioner', 'Practitioner City', 'city')
             }
             activeOpacity={0.5}
-            style={styles.textBox}>
+            style={[styles.textBox,{marginBottom:20}]}>
             <Text style={styles.placeholderText}>Practitioner City</Text>
           </TouchableOpacity>
         </View>

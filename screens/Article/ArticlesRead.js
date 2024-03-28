@@ -147,9 +147,13 @@ const ArticlesRead = ({route, navigation}) => {
 
   return (
     <SafeAreaView style={styles.readContainer}>
+         <View style={styles.content}>
       <Animated.View style={[styles.animatedHeader, {opacity: headerOpacity}]}>
+  
         <CustomHeader title={title} id={id} />
+     
       </Animated.View>
+      </View>
 
       {isLoaded ? (
         <Animated.ScrollView
@@ -330,6 +334,11 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 1,
+  },
+  content: {
+    flex: 1, // Ensure the content stretches to fill the safe area
+    justifyContent: 'center', // Center content vertically
+    alignItems: 'center', // Center content horizontally
   },
 });
 

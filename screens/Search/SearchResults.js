@@ -43,7 +43,7 @@ const SearchResults = ({navigation, route}) => {
         console.log('key-->', key);
         const response = await fetch(`${backendHost}/isearch/${text}`);
         const articleData = await response.json();
-
+   console.log('articleResult',articleData)
         setData(articleData);
         setLoaded(true);
       } catch (error) {
@@ -101,7 +101,12 @@ const SearchResults = ({navigation, route}) => {
     searchByText();
   }, [key]);
 
+
+    
+  
+
   const renderCure = ({item}) => {
+  
     let imageLoc = '';
     const imgLocation = item.content_location;
     if (imgLocation && imgLocation.includes('cures_articleimages')) {
@@ -191,14 +196,14 @@ const SearchResults = ({navigation, route}) => {
       <TouchableOpacity
             onPress={() =>
                 {
-                    key=='cure'? handleNavigation('Find Cures', 'Search for cures', 'cure'):key=='name'?handleNavigation('Find Practitioner', 'Practitioner Name', 'name'):handleNavigation('Find Practitioner', 'Practitioner City', 'city')
+                    key=='cure'? handleNavigation('Find Cures', 'Search for cures', 'cure'):key=='name'?handleNavigation('Find Practitioner', 'Practitioner Name', 'name'):key =='city'?handleNavigation('Find Practitioner', 'Practitioner City', 'city'):handleNavigation('Find Cures', 'Search for cures', 'cure')
           
                 }
             }
             activeOpacity={0.5}
             style={styles.textBox}>
                 
-            <Text style={styles.placeholderText}> {key=='cure'?'Search for cures':key=='name'?'Practitioner Name':'Practitioner City'} </Text>
+            <Text style={styles.placeholderText}> {key=='cure'?'Search for cures':key=='name'?'Practitioner Name':key=='city'?'Practitioner City':'Search for cures'} </Text>
             <View style={styles.searchIcon}>
               <InactiveSearch width={16} height={16} />
             </View>
@@ -207,18 +212,22 @@ const SearchResults = ({navigation, route}) => {
           </View>
        
 
-      {Loaded ? (
+      {Loaded ?  data.length > 0 ? (
         <FlashList
           estimatedItemSize={100}
           data={data}
           renderItem={
             key == 'cure'
               ? renderCure
-              : key == 'name' || key === 'city'
+              : key == 'name' || key == 'city'
               ? renderDoctor
               : renderCure
           }
         />
+      ) : (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Text>No data found</Text>
+        </View>
       ) : (
         <MyLoader />
       )}

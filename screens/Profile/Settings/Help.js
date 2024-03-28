@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, SafeAreaView} from 'react-native';
 import React from 'react';
 import {Color, FontFamily, width} from '../../../config/GlobalStyles';
 import NotificationIcon from '../../../assets/images/Notification.svg';
@@ -27,7 +27,7 @@ const Help = () => {
     Linking.openURL(phoneNumber);
   };
   return (
-    <View style={{flex: 1, backgroundColor: '#fff'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={styles.feedHeader}>
         <View
           style={{
@@ -100,7 +100,7 @@ const Help = () => {
           <Text style={{color: '#fff', fontSize: 10}}>Account Deleteion</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
