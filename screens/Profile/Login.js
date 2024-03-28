@@ -146,6 +146,8 @@ These Terms and Conditions are governed by the internal substantive laws of the 
       setIsLoaded(false);
     } catch (err) {
       // Handle login error
+      console.log(err)
+      Alert.alert("username/password is incorrect")
 
       setIsLoaded(false);
     }

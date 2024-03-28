@@ -233,9 +233,9 @@ These Terms and Conditions are governed by the internal substantive laws of the 
             onChangeText={setEmail}
             value={email}
           />
-          {loginError.error.mail && (
+          {/* {loginError.error.mail && (
             <Text style={styles.errorText}>{loginError.error.mail}</Text>
-          )}
+          )} */}
           <TextInput
             style={[styles.input, {borderBottomWidth: 1}]}
             placeholder="phone number"

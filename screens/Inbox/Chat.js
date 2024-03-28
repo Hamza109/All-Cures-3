@@ -40,8 +40,8 @@ const Chat = ({route}) => {
   const navigation = useNavigation();
   const chatData = route.params.messages;
   const Id = route.params.id;
-  const FIRST_NAME = route.params.first_name;
-  const LAST_NAME = route.params.last_name;
+  const FIRST_NAME = route.params.firstName;
+  const LAST_NAME = route.params.lastName;
   const chatid = route.params.chatId;
   const [text, setText] = useState('');
   const [messages, setMessages] = useState([]);
@@ -114,10 +114,7 @@ const Chat = ({route}) => {
     console.log(payload);
 
     socket.send(payload);
-    socket.onerror = error => {
-      console.error('Socket error:', error);
-      // Handle error, e.g., retry or notify the user
-    };
+    
   };
 
   const renderSend = props => (

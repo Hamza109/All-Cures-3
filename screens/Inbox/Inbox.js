@@ -8,6 +8,7 @@ import {
   Pressable,
   Image,
   BackHandler,
+  Alert,
 } from 'react-native';
 import axios from 'axios';
 import Svg, {Path, Circle} from 'react-native-svg';
@@ -20,6 +21,7 @@ import moment from 'moment';
 import {StackActions} from '@react-navigation/native';
 import {Route} from '../../routes';
 import HeaderComponent from '../../Components/HeaderComponent';
+import ContentLoader from '../../Components/ContentLoader';
 
 const Inbox = () => {
   const [messages, setMessages] = useState([]);
@@ -29,7 +31,18 @@ const Inbox = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const profile = useSelector(state => state.profile.data);
-  const user = profile.registration_id;
+  console.log('profile', profile);
+  const [user, setUser] = useState();
+  const [start, setStart] = useState();
+  const [end, setEnd] = useState();
+  useEffect(() => {
+    if (profile.docID != 0) {
+      setUser(profile.docID);
+    } else {
+      setUser(profile.registration_id);
+    }
+  }, [user]);
+
   // const row = useSelector(state => state.docRow.rowId);
 
   function User() {
@@ -59,18 +72,27 @@ const Inbox = () => {
       .catch(err => err);
   };
 
-  const initiateChat = docID => {
+  const initiateChat = userID => {
     if (profile.registration_id != 0) {
-      console.log(docID);
+      console.log('hah', userID);
+      if (profile.docID == 0) {
+        setStart(profile.registration_id);
+        setEnd(userID);
+      } else {
+        setStart(userID);
+        setEnd(profile.docID);
+      }
+      console.log('user', user);
+
       axios
-        .get(`${backendHost}/chat/${profile.registration_id}/${docID}`)
+        .get(`${backendHost}/chat/${start}/${end}`)
         .then(res => {
-          console.log(res.data);
+          console.log('res', res.data);
           if (res.status === 200) {
             if (res.data[0].Chat_id === null) {
               createChat();
             } else {
-              console.log('transformedMEssage');
+              console.log('transformedMEssage', res.data);
               const transformedMessages = res.data.map(message => {
                 return {
                   _id: Math.random().toString(36).substring(2, 9),
@@ -82,14 +104,14 @@ const Inbox = () => {
                   },
                 };
               });
-              console.log('navigate');
+              console.log('navigate', transformedMessages);
 
               navigation.navigate(Route.CHAT, {
                 messages:
                   res.data[0].Message != ''
                     ? transformedMessages.reverse()
                     : [],
-                id: docID,
+                id: user,
                 chatId: res.data[0].Chat_id,
                 first_name: profile.firstName,
                 last_name: profile.lastName,
@@ -104,31 +126,39 @@ const Inbox = () => {
       dispatch(screen(Route.LOGIN));
     }
   };
-
+  const [isLoaded, setIsLoaded] = useState(true);
   useEffect(() => {
-    const fetchData = async () => {
-      fetch(`${backendHost}/chat/list/${user}`)
-        .then(res => res.json())
+    try {
+      console.log('user1', user);
+      setIsLoaded(false);
+      const fetchData = async () => {
+        fetch(`${backendHost}/chat/list/${user}`)
+          .then(res => res.json())
 
-        .then(json => {
-          setData(json);
-          console.log('json', json);
-        })
+          .then(json => {
+            setIsLoaded(true);
+            setData(json);
+            console.log('json', json);
+            setIsLoaded(true);
+          })
 
-        .catch(err => {
-          err;
-          throw err;
-        });
-    };
-    if (isFocused) {
+          .catch(err => {
+            err;
+            throw err;
+          });
+      };
+
       fetchData();
+    } catch (error) {
+      setIsLoaded(true);
+      Alert.alert(error);
     }
-  }, [isFocused]);
+  }, []);
 
   const renderMessage = ({item}) => {
     const now = moment();
     const messageTime = moment(item.Time);
-    const diffInDays = now.diff(messageTime, 'days');
+
     const nowDate = now.format('DD/MM/YYYY');
     const messageDate = messageTime.format('DD/MM/YYYY');
     const yesterday = moment().subtract(1, 'days').format('DD/MM/YYYY');
@@ -153,7 +183,7 @@ const Inbox = () => {
     return (
       <View style={{flex: 1, backgroundColor: '#fff'}}>
         <Pressable
-          onPress={() => initiateChat(item.docID)}
+          onPress={() => initiateChat(item.userID)}
           style={styles.messageContainer}>
           <View style={styles.leftContainer}>
             {item.Rowno == null ? (
@@ -173,11 +203,11 @@ const Inbox = () => {
             <View style={styles.info}>
               {item.Rowno == null ? (
                 <Text allowFontScaling style={styles.infoHead}>
-                  {item.First_name} {item.Last_name}
+                  {item.first_name} {item.last_name}
                 </Text>
               ) : (
                 <Text allowFontScaling style={styles.infoHead}>
-                  Dr. {item.First_name} {item.Last_name}
+                  Dr. {item.first_name} {item.last_name}
                 </Text>
               )}
               <Text allowFontScaling numberOfLines={1} style={styles.infoText}>
@@ -203,16 +233,22 @@ const Inbox = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <StatusBar backgroundColor="#00415e" barStyle="light-content" />
-      <HeaderComponent title="Inbox" />
-      <FlatList
-        data={data}
-        style={{width: '100%'}}
-        renderItem={renderMessage}
-        key={Math.random() * 1000}
-      />
-    </View>
+    <>
+      {isLoaded ? (
+        <View style={styles.container}>
+          <StatusBar backgroundColor="#00415e" barStyle="light-content" />
+          <HeaderComponent title="Inbox" />
+          <FlatList
+            data={data}
+            style={{width: '100%'}}
+            renderItem={renderMessage}
+            key={Math.random() * 1000}
+          />
+        </View>
+      ) : (
+        <ContentLoader />
+      )}
+    </>
   );
 };
 

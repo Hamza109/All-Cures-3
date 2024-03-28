@@ -43,7 +43,7 @@ const ResetPassword = ({navigation}) => {
     setShowPassword(!showPassword);
   };
   const [number, setNumber] = useState();
-//Hamza Sir Please add and check this mail part
+  //Hamza Sir Please add and check this mail part
   //   useEffect(() => {
   //     getMail();
   //     // const params = new URLSearchParams(location.search);
@@ -125,8 +125,6 @@ const ResetPassword = ({navigation}) => {
             }}>
             Reset Password
           </Text>
-
-         
 
           <View style={[styles.passwordContainer]}>
             <TextInput

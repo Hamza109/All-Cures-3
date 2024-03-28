@@ -1,4 +1,3 @@
-
 import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import BottomTab from './screens/Tab/BottomTab';
@@ -7,19 +6,16 @@ import RootStack from './screens/Stacks/RootStack';
 import {store} from './Redux/Store';
 import {NativeBaseProvider} from 'native-base';
 import messaging from '@react-native-firebase/messaging';
-import PushNotificationIOS from "@react-native-community/push-notification-ios";
-import PushNotification from "react-native-push-notification";
-import { backendHost } from './Components/apiConfig';
-
-import { articleId } from './Redux/Slice/ArticleIdSlice';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import PushNotification from 'react-native-push-notification';
+import {backendHost} from './Components/apiConfig';
+import DeviceInfo from 'react-native-device-info';
+import {Linking,Text} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import {articleId} from './Redux/Slice/ArticleIdSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Route } from './routes';
 const App = () => {
-
-
-  
-
-
-
   const articeId = async id => {
     try {
       await AsyncStorage.setItem('artId', JSON.stringify(id));
@@ -27,6 +23,7 @@ const App = () => {
       throw error;
     }
   };
+ 
 
   const checkApplicationPermission = async () => {
     if (Platform.OS == 'android') {
@@ -39,30 +36,32 @@ const App = () => {
       }
     }
   };
-
-  const handleInitialNotification = async () => {
-    const initialNotification = await messaging().getInitialNotification();
-console.log('notification-->',initialNotification)
- if(initialNotification){
-console.log('you have a notification')
-
-
-  const {notification} = initialNotification;
-  const {action, id} = initialNotification.data;
-  if (action === 'tip') {
-   
-  }
-
-  if (action === 'article') {
-    articeId({id: id, title: notification.body});
-  }
- }
-   
+  
+  const setDeviceInfo = async dev => {
+    try {
+      await AsyncStorage.setItem('device', dev);
+    } catch (error) {
+      error;
+    }
   };
 
 
+  const handleInitialNotification = async () => {
+    const initialNotification = await messaging().getInitialNotification();
+    console.log('notification-->', initialNotification);
+    if (initialNotification) {
+      console.log('you have a notification');
 
+      const {notification} = initialNotification;
+      const {action, id} = initialNotification.data;
+      if (action === 'tip') {
+      }
 
+      if (action === 'article') {
+        articeId({id: id, title: notification.body});
+      }
+    }
+  };
 
   // Request permission for push notifications
   const requestPermission = async () => {
@@ -86,17 +85,15 @@ console.log('you have a notification')
 
   // Get token for push notifications
   const getToken = async () => {
-
     try {
       const token = await messaging().getToken();
-    
+
       fetch(`${backendHost}/notification/token/"${token}"`, {
         method: 'POST',
-      })
-      .then((res)=>{
-        console.log('post',res)
-      })
-   
+      }).then(res => {
+        console.log('post', res);
+      });
+
       console.log('FCM', token);
       // Send the token to your server for further processing if needed.
 
@@ -104,7 +101,6 @@ console.log('you have a notification')
     } catch (error) {
       console.error('Error getting token:', error);
     }
-
   };
 
   const configPush = () => {
@@ -195,11 +191,109 @@ console.log('you have a notification')
     messaging().registerDeviceForRemoteMessages();
     checkApplicationPermission();
     requestPermission();
-    handleInitialNotification()
+    handleInitialNotification();
   }, []);
 
   useEffect(() => {
     configPush();
+  });
+  const setMail = async mail => {
+    try {
+      await AsyncStorage.setItem('mail1', mail);
+    } catch (error) {
+      error;
+    }
+  };
+
+  useEffect(() => {
+    const handleDeepLink = async url => {
+      // Process the deep link URL and perform the desired action
+
+      if (url.includes('/ResetPass')) {
+        const newUrl = url.split('em=')[1];
+
+        setMail(newUrl);
+
+        setTimeout(() => {
+          navigationRef.current?.navigate(Route.FORGETPASSWORD);
+        }, 2000);
+      }
+    };
+
+    const initializeDeepLinking = () => {
+      // Add an event listener to handle incoming deep links
+      Linking.addEventListener('url', handleOpenURL);
+    };
+
+    const cleanUpDeepLinking = () => {
+      // Remove the event listener when the component is unmounted or the app is backgrounded
+      Linking.removeEventListener('url', handleOpenURL);
+    };
+
+    const handleOpenURL = event => {
+      // Handle the deep link when it is received
+      const url = event.url;
+
+      handleDeepLink(url);
+    };
+
+    initializeDeepLinking();
+
+    Text.defaultProps = Text.defaultProps || {};
+    Text.defaultProps.allowFontScaling = false;
+
+    let deviceId = DeviceInfo.getUniqueId();
+
+    setDeviceInfo(deviceId);
+    // Get the deep link used to open the app
+    const getUrl = async () => {
+      const initialUrl = await Linking.getInitialURL();
+
+      if (initialUrl === null) {
+        return;
+      }
+
+      if (initialUrl.includes('/view')) {
+        tipArticle(true);
+      } else {
+      }
+
+      if (initialUrl.includes('/cure')) {
+        const url = await initialUrl.split('/').pop();
+
+        const id = await url.split('-')[0];
+        const regex = await /\/cure\/\d+-(.*)$/;
+        const match = await regex.exec(initialUrl);
+        const string = (await match) ? match[1].replace(/-/g, ' ') : null;
+        const title = await string.replace('?whatsapp', '');
+
+        articeId({id: id, title: title});
+      }
+
+      if (initialUrl.includes('/notification')) {
+        const url = initialUrl.split('/').slice(-2).join('/');
+
+        navigationRef.current?.navigate(Route.VIDEOCALL, {url: ` https://${url}`});
+
+        console.log('url', url);
+      }
+
+      if (initialUrl.includes('/ResetPass')) {
+        const url = initialUrl.split('em=')[1];
+
+        setMail(url);
+        setTimeout(() => {
+          navigationRef.current?.navigate('Forgetpass');
+        }, 2000);
+      }
+    };
+
+    getUrl();
+
+    return () => {
+      getUrl();
+      cleanUpDeepLinking();
+    };
   });
 
   return (
