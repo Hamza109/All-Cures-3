@@ -31,7 +31,7 @@ import axios from 'axios';
 import LottieView from 'lottie-react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {screenName} from '../Redux/Action';
-import {backendHost, imageHost} from '../../Components/apiConfig';
+import {backendHost, headers, imageHost} from '../../Components/apiConfig';
 import ImagePicker from 'react-native-image-crop-picker';
 import InputBox from '../../Components/InputBox';
 import {Color} from '../../config/GlobalStyles';
@@ -80,22 +80,34 @@ const EditProfile = ({route}) => {
 
   const fetchTables = () => {
     Promise.all([
-      fetch(`${backendHost}/article/all/table/specialties`)
+      fetch(`${backendHost}/article/all/table/specialties`, {
+        headers: headers,
+      })
         .then(res => res.json())
         .catch(err => err),
-      fetch(`${backendHost}/article/all/table/hospital`)
+      fetch(`${backendHost}/article/all/table/hospital`, {
+        headers: headers,
+      })
         .then(res => res.json())
         .catch(err => err),
-      fetch(`${backendHost}/article/all/table/states`)
+      fetch(`${backendHost}/article/all/table/states`, {
+        headers: headers,
+      })
         .then(res => res.json())
         .catch(err => err),
-      fetch(`${backendHost}/article/all/table/city`)
+      fetch(`${backendHost}/article/all/table/city`, {
+        headers: headers,
+      })
         .then(res => res.json())
         .catch(err => err),
-      fetch(`${backendHost}/article/all/table/countries`)
+      fetch(`${backendHost}/article/all/table/countries`, {
+        headers: headers,
+      })
         .then(res => res.json())
         .catch(err => err),
-      fetch(`${backendHost}/data/medicines`)
+      fetch(`${backendHost}/data/medicines`, {
+        headers: headers,
+      })
         .then(res => res.json())
         .catch(err => err),
     ])

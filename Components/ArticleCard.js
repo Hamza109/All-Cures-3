@@ -74,6 +74,7 @@ const ArticleCard = ({
         await axios
           .post(
             `${backendHost}/favourite/userid/${profile.registration_id}/articleid/${articleId}/status/1/create`,
+            
           )
           .then(res => {
             console.log('added');
@@ -178,7 +179,7 @@ const ArticleCard = ({
         </Text>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text style={styles.time}>
-            10 min ago <Dot height={5} width={5} /> {createdAt}{' '}
+            10 min read <Dot height={5} width={5} /> {createdAt}{' '}
           </Text>
         </View>
       </Pressable>

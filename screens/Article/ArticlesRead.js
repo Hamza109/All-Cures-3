@@ -12,7 +12,7 @@ import {
 import React, {useEffect, useState, memo, useRef} from 'react';
 import NetInfo from '@react-native-community/netinfo';
 import {Image} from '@rneui/themed';
-import {backendHost} from '../../Components/apiConfig';
+import {backendHost, headers} from '../../Components/apiConfig';
 import {Route} from '../../routes';
 import {Border, Color, FontFamily} from '../../config/GlobalStyles';
 import moment from 'moment';
@@ -61,6 +61,7 @@ const ArticlesRead = ({route, navigation}) => {
         if (isConnected) {
           const response = await fetch(`${backendHost}/article/${id}`, {
             signal: signal,
+            headers: headers,
           });
           const json = await response.json();
           console.log(json);

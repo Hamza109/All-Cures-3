@@ -6,7 +6,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {backendHost} from '../../Components/apiConfig';
+import {backendHost, headers} from '../../Components/apiConfig';
 import {FlashList} from '@shopify/flash-list';
 import ArticleCard from '../../Components/ArticleCard';
 import {Route} from '../../routes';
@@ -30,6 +30,7 @@ const DocCures = ({route, navigation}) => {
         `${backendHost}/article/authallkv/reg_type/1/reg_doc_pat_id/${id}`,
         {
           signal: abortController.signal,
+          headers:headers
         },
       );
 

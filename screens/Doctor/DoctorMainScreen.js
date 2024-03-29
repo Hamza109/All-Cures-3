@@ -5,10 +5,10 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {backendHost} from '../../Components/apiConfig';
+import {backendHost, headers} from '../../Components/apiConfig';
 import {Image} from '@rneui/themed';
 import {useDispatch, useSelector} from 'react-redux';
 import {FontFamily, Color, width} from '../../config/GlobalStyles';
@@ -18,7 +18,6 @@ import OutButton from '../../Components/outButton';
 import RelatedCard from '../../Components/RelatedCard';
 import Right from '../../assets/images/RIGHT.svg';
 import {Route} from '../../routes';
-
 
 const DoctorMainScreen = ({route, navigation}) => {
   const doc = useSelector(state => state.doc.data);
@@ -81,6 +80,7 @@ const DoctorMainScreen = ({route, navigation}) => {
           ),
           fetch(
             `${backendHost}/article/authallkv/reg_type/1/reg_doc_pat_id/${id}`,
+            {headers: headers},
           ),
           fetch(`${backendHost}/appointments/get/1`),
         ];
@@ -113,7 +113,7 @@ const DoctorMainScreen = ({route, navigation}) => {
   }, []); // Empty dependency array to ensure the effect runs only once on mount
 
   return (
-    <SafeAreaView style={{flex:1,color:'#fff'}}>
+    <SafeAreaView style={{flex: 1, color: '#fff'}}>
       {isLoaded ? (
         <ScrollView style={{backgroundColor: '#fff', paddingHorizontal: 26}}>
           <View style={{backgroundColor: '#fff'}}>
@@ -145,62 +145,54 @@ const DoctorMainScreen = ({route, navigation}) => {
             )}
 
             <View style={styles.positions}>
-           
-                <View style={{flex: 1}}>
-                  <Text
-                    style={[styles.mainTextTitle, {alignSelf: 'flex-start'}]}>
-                    Specialization
-                  </Text>
-                  <Text style={[styles.mainText, {alignSelf: 'flex-start'}]}>
-                    {item?.medicineType === ""?"-NA-": item?.medicineType}
-                  </Text>
-                </View>
-          
+              <View style={{flex: 1}}>
+                <Text style={[styles.mainTextTitle, {alignSelf: 'flex-start'}]}>
+                  Specialization
+                </Text>
+                <Text style={[styles.mainText, {alignSelf: 'flex-start'}]}>
+                  {item?.medicineType === '' ? '-NA-' : item?.medicineType}
+                </Text>
+              </View>
 
-       
-                <View style={{flex: 1}}>
-                  <Text style={[styles.mainTextTitle, {alignSelf: 'flex-end'}]}>
-                    Positions
-                  </Text>
-                  <Text style={[styles.mainText, {alignSelf: 'flex-end'}]}>
-                    {item?.degDesc === ""?"-NA-": item?.degDesc}
-                  </Text>
-                </View>
-         
+              <View style={{flex: 1}}>
+                <Text style={[styles.mainTextTitle, {alignSelf: 'flex-end'}]}>
+                  Positions
+                </Text>
+                <Text style={[styles.mainText, {alignSelf: 'flex-end'}]}>
+                  {item?.degDesc === '' ? '-NA-' : item?.degDesc}
+                </Text>
+              </View>
             </View>
 
             <View style={styles.positions}>
-       
-                <View style={{flex: 1}}>
-                  <Text
-                    style={[styles.mainTextTitle, {alignSelf: 'flex-start'}]}>
-                    Organisation
-                  </Text>
-                  <Text style={[styles.mainText, {alignSelf: 'flex-start'}]}>
-                    {item?.hospitalAffiliated === ""?"-NA-":item?.hospitalAffiliated}
-                  </Text>
-                </View>
-       
-
-                <View style={{flex: 1}}>
-                  <Text style={[styles.mainTextTitle, {alignSelf: 'flex-end'}]}>
-                    Location
-                  </Text>
-                  <Text style={[styles.mainText, {alignSelf: 'flex-end'}]}>
-                    {item?.state === ""?"-NA-":item?.state}
-                  </Text>
-                </View>
-      
-            </View>
-      
-              <View style={[styles.positions, {flexDirection: 'column'}]}>
-                <Text style={styles.mainTextTitle}>Bio</Text>
-
-                <Text style={[styles.mainText, {maxWidth: width}]}>
-                  {item?.about === ""?"-NA-": item?.about}
+              <View style={{flex: 1}}>
+                <Text style={[styles.mainTextTitle, {alignSelf: 'flex-start'}]}>
+                  Organisation
+                </Text>
+                <Text style={[styles.mainText, {alignSelf: 'flex-start'}]}>
+                  {item?.hospitalAffiliated === ''
+                    ? '-NA-'
+                    : item?.hospitalAffiliated}
                 </Text>
               </View>
-         
+
+              <View style={{flex: 1}}>
+                <Text style={[styles.mainTextTitle, {alignSelf: 'flex-end'}]}>
+                  Location
+                </Text>
+                <Text style={[styles.mainText, {alignSelf: 'flex-end'}]}>
+                  {item?.state === '' ? '-NA-' : item?.state}
+                </Text>
+              </View>
+            </View>
+
+            <View style={[styles.positions, {flexDirection: 'column'}]}>
+              <Text style={styles.mainTextTitle}>Bio</Text>
+
+              <Text style={[styles.mainText, {maxWidth: width}]}>
+                {item?.about === '' ? '-NA-' : item?.about}
+              </Text>
+            </View>
           </View>
           {item?.chatService == 1 ? (
             <View
@@ -214,7 +206,8 @@ const DoctorMainScreen = ({route, navigation}) => {
             </View>
           ) : null}
           {item?.videoService == 1 ? (
-            <View style={{alignSelf: 'center', width: '100%', marginBottom: 10}}>
+            <View
+              style={{alignSelf: 'center', width: '100%', marginBottom: 10}}>
               <OutButton
                 name="Video Call"
                 docID={item.docID}

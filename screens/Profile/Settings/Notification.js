@@ -90,6 +90,7 @@ const Notification = () => {
         data={data}
         renderItem={renderTipItem}
         removeClippedSubviews
+        
         estimatedItemSize={80} // Replace 80 with the estimated height of your items
       />
     </SafeAreaView>
