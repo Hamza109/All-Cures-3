@@ -37,13 +37,7 @@ const App = () => {
     }
   };
   
-  const setDeviceInfo = async dev => {
-    try {
-      await AsyncStorage.setItem('device', dev);
-    } catch (error) {
-      error;
-    }
-  };
+ 
 
 
   const handleInitialNotification = async () => {
@@ -244,7 +238,7 @@ const App = () => {
 
     let deviceId = DeviceInfo.getUniqueId();
 
-    setDeviceInfo(deviceId);
+   
     // Get the deep link used to open the app
     const getUrl = async () => {
       const initialUrl = await Linking.getInitialURL();

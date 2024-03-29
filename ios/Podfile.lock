@@ -1016,6 +1016,10 @@ PODS:
     - React-Core
   - react-native-netinfo (9.5.0):
     - React-Core
+  - react-native-pager-view (6.2.3):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
+    - React-Core
   - react-native-render-html (6.3.4):
     - React-Core
   - react-native-safe-area-context (4.9.0):
@@ -1204,6 +1208,8 @@ PODS:
     - React-Core
   - RNDateTimePicker (7.6.2):
     - React-Core
+  - RNDeviceInfo (10.13.1):
+    - React-Core
   - RNFBApp (19.0.1):
     - Firebase/CoreOnly (= 10.22.0)
     - React-Core
@@ -1286,6 +1292,7 @@ DEPENDENCIES:
   - "react-native-daily-js (from `../node_modules/@daily-co/react-native-daily-js`)"
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
+  - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-render-html (from `../node_modules/react-native-render-html`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-webrtc (from `../node_modules/@daily-co/react-native-webrtc`)"
@@ -1315,6 +1322,7 @@ DEPENDENCIES:
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
+  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBCrashlytics (from `../node_modules/@react-native-firebase/crashlytics`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
@@ -1422,6 +1430,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-get-random-values"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
+  react-native-pager-view:
+    :path: "../node_modules/react-native-pager-view"
   react-native-render-html:
     :path: "../node_modules/react-native-render-html"
   react-native-safe-area-context:
@@ -1480,6 +1490,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/push-notification-ios"
   RNDateTimePicker:
     :path: "../node_modules/@react-native-community/datetimepicker"
+  RNDeviceInfo:
+    :path: "../node_modules/react-native-device-info"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBCrashlytics:
@@ -1559,6 +1571,7 @@ SPEC CHECKSUMS:
   react-native-daily-js: 42790428a4a0925bfc509b9cd57ea60ce033143f
   react-native-get-random-values: dee677497c6a740b71e5612e8dbd83e7539ed5bb
   react-native-netinfo: 48c5f79a84fbc3ba1d28a8b0d04adeda72885fa8
+  react-native-pager-view: 33c56e3b547d2f29d224255d82e796942e0918b8
   react-native-render-html: 984dfe2294163d04bf5fe25d7c9f122e60e05ebe
   react-native-safe-area-context: b97eb6f9e3b7f437806c2ce5983f479f8eb5de4b
   react-native-webrtc: f0863a670c08895cebfd74d7790e499397d5be1a
@@ -1589,6 +1602,7 @@ SPEC CHECKSUMS:
   RNCPicker: b18aaf30df596e9b1738e7c1f9ee55402a229dca
   RNCPushNotificationIOS: 64218f3c776c03d7408284a819b2abfda1834bc8
   RNDateTimePicker: fc2e4f2795877d45e84d85659bebe627eba5c931
+  RNDeviceInfo: 4f9c7cfd6b9db1b05eb919620a001cf35b536423
   RNFBApp: d0be9224f318cfd6501f1f83809453800cd04868
   RNFBCrashlytics: 04e4be5ff216fc55c02d61afd4a9a09f26dbf708
   RNFBMessaging: fcbca7e4158d528415b445c5c8b3ffb9027f0d27

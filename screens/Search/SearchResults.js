@@ -65,11 +65,13 @@ const SearchResults = ({navigation, route}) => {
       }
     } else if (key == 'city') {
       try {
-        console.log('key-->', key);
+      
         const response = await fetch(
-          `${backendHost}/SearchActionController?cmd=getResults&city=${text}=&doctors=&Latitude=32.7266&Longitude=74.8570`,
+          `${backendHost}/SearchActionController?cmd=getResults&city=${text}&Latitude=undefined&Longitude=undefined`,
         );
         const doctorByCity = await response.json();
+        console.log('key-->', text);
+        console.log(doctorByCity.map.DoctorDetails.myArrayList)
         setData(doctorByCity.map.DoctorDetails.myArrayList);
         setLoaded(true);
       } catch (error) {

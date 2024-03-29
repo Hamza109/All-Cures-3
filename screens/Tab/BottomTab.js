@@ -135,7 +135,7 @@ const BottomTab = () => {
                     bgColor={Color.appDefaultColor}
                   />
                 ) : (
-                  <Icon name="user" size={25} color={Color.lightpurple} />
+                  <Icon name="user-o" size={25} color={'#828282'} />
                 )}
               </View>
             ),
