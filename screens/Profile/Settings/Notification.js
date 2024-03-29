@@ -50,7 +50,9 @@ const Notification = () => {
                   style={{marginRight: 6}}
                 />
 
-                <Text numberOfLines={2} style={styles.tipTitle}>{item.tip_title}</Text>
+                <Text numberOfLines={2} style={styles.tipTitle}>
+                  {item.tip_title}
+                </Text>
               </View>
               <View style={styles.date}>
                 <MaterialIcons
@@ -59,7 +61,7 @@ const Notification = () => {
                   color={Color.appDefaultColor}
                 />
                 <Text> </Text>
-                <Text style={styles.tipDate} >
+                <Text style={styles.tipDate}>
                   {item.tip_date.split('T')[0]}
                 </Text>
               </View>
@@ -82,7 +84,6 @@ const Notification = () => {
             marginLeft: 5,
           }}>
           <Text style={styles.read}>Tip of the Day</Text>
-        
         </View>
       </View>
       <FlashList
