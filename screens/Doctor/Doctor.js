@@ -34,8 +34,8 @@ const Doctor = () => {
   };
 
   useEffect(() => {
+    setLoaded(false);
     const fetchData = async () => {
-      setLoaded(false);
       try {
         const promises = [
           fetch(
@@ -114,21 +114,21 @@ const Doctor = () => {
 
   return (
     <>
-      <SafeAreaView style={styles.feedContainer}>
-        <View style={styles.feedHeader}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginTop: 36,
-              marginLeft: 5,
-            }}>
-            <Text style={styles.read}>Practitioners</Text>
-            <NotificationIcon width={16} height={18} style={{marginTop: 5}} />
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            {Loaded ? (
+      {Loaded ? (
+        <SafeAreaView style={styles.feedContainer}>
+          <View style={styles.feedHeader}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginTop: 36,
+                marginLeft: 5,
+              }}>
+              <Text style={styles.read}>Practitioners</Text>
+              <NotificationIcon width={16} height={18} style={{marginTop: 5}} />
+            </View>
+            <View style={{flexDirection: 'row'}}>
               <ScrollView
                 horizontal
                 style={{padding: 5, flex: 1, marginTop: 20}}
@@ -186,22 +186,18 @@ const Doctor = () => {
                   );
                 })}
               </ScrollView>
-            ) : (
-              <ContentLoader />
-            )}
+            </View>
           </View>
-        </View>
 
-        {Loaded ? (
           <FlashList
             estimatedItemSize={100}
             data={medicineId == 'Featured' ? featuredDoctors : sortedDoc}
             renderItem={renderItem}
           />
-        ) : (
-          <ContentLoader />
-        )}
-      </SafeAreaView>
+        </SafeAreaView>
+      ) : (
+        <ContentLoader />
+      )}
     </>
   );
 };
