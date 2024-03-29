@@ -126,17 +126,20 @@ const Inbox = () => {
       dispatch(screen(Route.LOGIN));
     }
   };
-  const [isLoaded, setIsLoaded] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
+    if (profile.docID != 0) {
+      setUser(profile.docID);
+    } else {
+      setUser(profile.registration_id);
+    }
     try {
       console.log('user1', user);
-      setIsLoaded(false);
       const fetchData = async () => {
         fetch(`${backendHost}/chat/list/${user}`)
           .then(res => res.json())
 
           .then(json => {
-            setIsLoaded(true);
             setData(json);
             console.log('json', json);
             setIsLoaded(true);

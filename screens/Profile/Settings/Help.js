@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, TouchableOpacity, SafeAreaView} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, SafeAreaView,Linking} from 'react-native';
 import React from 'react';
 import {Color, FontFamily, width} from '../../../config/GlobalStyles';
 import NotificationIcon from '../../../assets/images/Notification.svg';

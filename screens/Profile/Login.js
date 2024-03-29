@@ -166,6 +166,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
             keyboardType="email-address" // Or 'phone-pad' if appropriate
             onChangeText={setEmail}
             value={email}
+            placeholderTextColor={Color.colorDarkslategray}
           />
           {loginError && <Text style={styles.errorText}>{loginError}</Text>}
 
@@ -177,6 +178,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
               secureTextEntry={!showPassword}
               onChangeText={setPassword}
               value={password}
+              placeholderTextColor={Color.colorDarkslategray}
             />
             <TouchableOpacity onPress={togglePasswordVisibility}>
               <Ionicons

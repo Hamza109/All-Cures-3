@@ -11,6 +11,7 @@ import {width, height, Color, FontFamily} from '../config/GlobalStyles';
 import Dot from '../assets/images/dot.svg';
 
 import {imageHost} from './apiConfig';
+import {User} from './profile/UserPic';
 
 const cardItemHeight = 136;
 const DoctorsCard = ({
@@ -35,7 +36,7 @@ const DoctorsCard = ({
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           {hospitalAffiliated ? (
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={[styles.time, {maxWidth: 160}]}>
+              <Text style={[styles.time, {maxWidth: 160}]} numberOfLines={1}>
                 {hospitalAffiliated}{' '}
               </Text>
               <Dot height={5} width={5} />
@@ -46,13 +47,19 @@ const DoctorsCard = ({
       </View>
       <View style={{justifyContent: 'center'}}>
         <View
-          style={{width: 100, height: 100, backgroundColor: Color.colorSilver}}>
-          <Image
-            style={styles.image}
-            source={{
-              uri: `${imageHost}${imgLoc}`,
-            }}
-          />
+          style={{width: 100, height: 100, backgroundColor: '#fff'}}>
+          {imgLoc ? (
+            <Image
+              style={styles.image}
+              source={{
+                uri: `${imageHost}${imgLoc}`,
+              }}
+            />
+          ) : (
+            <View style= {{backgroundColor:'#fff',justifyContent:'center',alignItems:'center'}}>
+              <User />
+            </View>
+          )}
         </View>
       </View>
     </View>

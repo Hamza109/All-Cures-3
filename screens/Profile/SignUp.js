@@ -7,9 +7,12 @@ import {
   TouchableOpacity,
   Pressable,
   StatusBar,
+  ScrollView
 } from 'react-native';
+import RenderHTML from 'react-native-render-html';
 import {useForm, Controller} from 'react-hook-form';
 import React, {useState} from 'react';
+import {Modal} from 'native-base';
 import SignUpImg from '../../assets/images/signUpImg.svg';
 import CheckBox from '@react-native-community/checkbox';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -196,6 +199,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
       console.log(err);
     }
   };
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <>
@@ -219,12 +223,14 @@ These Terms and Conditions are governed by the internal substantive laws of the 
             placeholder="enter first Name"
             onChangeText={setFirstName}
             value={firstName}
+            placeholderTextColor={Color.colorDarkslategray}
           />
           <TextInput
             style={[styles.input, {borderBottomWidth: 1}]}
             placeholder="enter last name"
             onChangeText={setLastName}
             value={lastName}
+            placeholderTextColor={Color.colorDarkslategray}
           />
           <TextInput
             style={[styles.input, {borderBottomWidth: 1}]}
@@ -232,6 +238,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
             keyboardType="email-address" // Or 'phone-pad' if appropriate
             onChangeText={setEmail}
             value={email}
+            placeholderTextColor={Color.colorDarkslategray}
           />
           {/* {loginError.error.mail && (
             <Text style={styles.errorText}>{loginError.error.mail}</Text>
@@ -242,6 +249,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
             keyboardType="phone-pad" // Or 'phone-pad' if appropriate
             onChangeText={setNumber}
             value={number}
+            placeholderTextColor={Color.colorDarkslategray}
           />
 
           <View style={[styles.passwordContainer]}>
@@ -251,6 +259,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
               secureTextEntry={!showPassword}
               onChangeText={setPassword}
               value={password}
+              placeholderTextColor={Color.colorDarkslategray}
             />
             {loginError && (
               <Text style={styles.errorText}>{loginError.error.password}</Text>
@@ -279,11 +288,34 @@ These Terms and Conditions are governed by the internal substantive laws of the 
                 style={styles.termsLink}
                 onPress={() => {
                   /* Implement link to your T&C */
+                  setShowModal(true)
                 }}>
                 Terms and Conditions
               </Text>
             </Text>
           </View>
+          <Modal
+            size="full"
+            isOpen={showModal}
+            onClose={() => setShowModal(false)}>
+            <Modal.Content maxWidth="400px">
+              <Modal.CloseButton />
+              <Modal.Header>{'Terms and Conditions'}</Modal.Header>
+              <Modal.Body>
+                <ScrollView>
+                  <RenderHTML
+                    contentWidth={'100%'}
+                    source={source}
+                    tagsStyles={{
+                      adjustsFontSizeToFit: true,
+
+                      body: {color: Color.appDefaultColor},
+                    }}
+                  />
+                </ScrollView>
+              </Modal.Body>
+            </Modal.Content>
+          </Modal>
 
           <TouchableOpacity style={styles.login} onPress={handleSubmit}>
             <Text style={styles.loginText}>Sign Up</Text>
@@ -291,7 +323,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
 
           <Pressable
             onPress={() => {
-              navigation.navigate(Route.SIGNUP);
+              navigation.navigate(Route.LOGIN);
             }}>
             <Text
               style={[styles.termsLink, {textAlign: 'center', marginTop: 5}]}>
@@ -386,6 +418,7 @@ const styles = StyleSheet.create({
   termsText: {
     fontSize: 14,
     color: '#000',
+    marginLeft:15
   },
   termsLink: {
     color: Color.appDefaultColor,

@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   Share,
   Alert,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {FontFamily, Color} from '../../config/GlobalStyles';
@@ -41,7 +41,7 @@ const CustomHeader = ({title, id}) => {
     if (Object.keys(profile).length !== 0) {
       try {
         const {data} = await axios.get(
-          `${backendHost}/favourite/userid/${profile.registration_id}/articleid/${articleId}/favourite`,
+          `${backendHost}/favourite/userid/${profile.registration_id}/articleid/${id}/favourite`,
         );
         console.log('data', data);
         if (data.length == 0) {
@@ -82,7 +82,7 @@ const CustomHeader = ({title, id}) => {
         console.log('addFav');
         await axios
           .post(
-            `${backendHost}/favourite/userid/${profile.registration_id}/articleid/${articleId}/status/1/create`,
+            `${backendHost}/favourite/userid/${profile.registration_id}/articleid/${id}/status/1/create`,
           )
           .then(res => {
             console.log('added');
@@ -99,7 +99,7 @@ const CustomHeader = ({title, id}) => {
         console.log('deleted');
         axios
           .delete(
-            `${backendHost}/favourite/userid/${profile.registration_id}/articleid/${articleId}/status/1/delete`,
+            `${backendHost}/favourite/userid/${profile.registration_id}/articleid/${id}/status/1/delete`,
           )
           .then(res => {
             console.log(res.data);

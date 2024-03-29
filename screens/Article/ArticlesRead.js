@@ -144,12 +144,11 @@ const ArticlesRead = ({route, navigation}) => {
 
   return (
     <SafeAreaView style={styles.readContainer}>
-         <View style={styles.content}>
-      <Animated.View style={[styles.animatedHeader, {opacity: headerOpacity}]}>
-  
-        <CustomHeader title={title} id={id} />
-     
-      </Animated.View>
+      <View style={styles.content}>
+        <Animated.View
+          style={[styles.animatedHeader, {opacity: headerOpacity}]}>
+          <CustomHeader title={title} id={id} />
+        </Animated.View>
       </View>
 
       {isLoaded ? (
@@ -332,7 +331,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   content: {
-    flex: 1, // Ensure the content stretches to fill the safe area
+    // Ensure the content stretches to fill the safe area
     justifyContent: 'center', // Center content vertically
     alignItems: 'center', // Center content horizontally
   },

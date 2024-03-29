@@ -19,7 +19,7 @@ const RelatedCard = ({author,image,published_date,title}) => {
           {title}
         </Text>
         <Text style={styles.time}>
-            10 min ago    <Dot height={5} width={5} />    {createdAt}{' '}
+            10 min read    <Dot height={5} width={5} />    {createdAt}{' '}
           </Text>
         </View>
  
