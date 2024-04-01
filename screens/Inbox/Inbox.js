@@ -129,34 +129,38 @@ const Inbox = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     if (profile.docID != 0) {
+      console.log(profile.docID);
       setUser(profile.docID);
     } else {
+      console.log('else statenet', profile.registration_id);
       setUser(profile.registration_id);
     }
-    try {
-      console.log('user1', user);
-      const fetchData = async () => {
-        fetch(`${backendHost}/chat/list/${user}`)
-          .then(res => res.json())
-
-          .then(json => {
-            setData(json);
-            console.log('json', json);
-            setIsLoaded(true);
-          })
-
-          .catch(err => {
-            err;
-            throw err;
-          });
-      };
-
-      fetchData();
-    } catch (error) {
-      setIsLoaded(true);
-      Alert.alert(error);
-    }
   }, []);
+
+  useEffect(() => {
+    console.log(profile);
+if(user){ const fetchData = async () => {
+  console.log(typeof user);
+  console.log(user);
+  try {
+    const response = await fetch(`${backendHost}/chat/list/${user}`);
+    console.log(response);
+    if (!response.ok) {
+      throw new Error(`Network response was not ok (${response.status})`);
+    }
+
+    const json = await response.json();
+    setData(json);
+    setIsLoaded(true);
+  } catch (error) {
+    setIsLoaded(true);
+    Alert.alert('Error Fetching Data', error.message); // More informative message
+  }
+};
+
+fetchData();}
+   
+  }, [user]);
 
   const renderMessage = ({item}) => {
     const now = moment();
