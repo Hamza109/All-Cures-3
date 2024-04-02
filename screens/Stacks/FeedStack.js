@@ -7,10 +7,9 @@ import {FontFamily} from '../../config/GlobalStyles';
 import {TouchableOpacity} from 'react-native';
 import ArticlesByMedicine from '../Article/ArticlesByMedicine';
 import Back from '../../assets/images/BACK.svg';
-import {useNavigation} from '@react-navigation/native';
 import Notification from '../Profile/Settings/Notification';
-const FeedStack = () => {
-  const navigation = useNavigation();
+const FeedStack = ({navigation}) => {
+
   const handleBack = () => {
     console.log('back');
     navigation.goBack();
@@ -33,7 +32,7 @@ const FeedStack = () => {
           headerTitleAlign: 'center',
           headerTitleStyle: {
             fontFamily: FontFamily.poppinsBold, // Replace with your custom font
-            fontSize: 18, // Adjust the font size as needed
+            fontSize: 20, // Adjust the font size as needed
           },
           headerLeft: () => {
             return (

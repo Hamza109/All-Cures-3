@@ -1,4 +1,6 @@
 import React from 'react';
+import {TouchableOpacity} from 'react-native';
+import Back from '../../assets/images/BACK.svg';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Route} from '../../routes';
 import Doctor from '../Doctor/Doctor';
@@ -11,13 +13,20 @@ import Chat from '../Inbox/Chat';
 import {FontFamily} from '../../config/GlobalStyles';
 import Notification from '../Profile/Settings/Notification';
 
-const DoctorStack = () => {
+const DoctorStack = ({navigation}) => {
+  const handleBack = () => {
+    console.log('back');
+    navigation.goBack();
+  };
+
   const Stack = createStackNavigator();
   return (
     <Stack.Navigator
       initialRouteName={Route.DOCTOR}
       screenOptions={{
         headerShown: false,
+        headerLeftLabelVisible:false,
+     
       }}>
       <Stack.Screen name={Route.DOCTOR} component={Doctor} />
       <Stack.Screen
@@ -29,7 +38,14 @@ const DoctorStack = () => {
           headerTitleAlign: 'center',
           headerTitleStyle: {
             fontFamily: FontFamily.poppinsBold,
-            fontSize: 25,
+            fontSize: 20,
+          },
+          headerLeft: () => {
+            return (
+              <TouchableOpacity style={{padding: 10}} onPress={handleBack}>
+                <Back />
+              </TouchableOpacity>
+            );
           },
         }}
       />
@@ -43,7 +59,14 @@ const DoctorStack = () => {
           headerTitleAlign: 'center',
           headerTitleStyle: {
             fontFamily: FontFamily.poppinsBold,
-            fontSize: 22,
+            fontSize: 20,
+          },
+          headerLeft: () => {
+            return (
+              <TouchableOpacity style={{padding: 10}} onPress={handleBack}>
+                <Back />
+              </TouchableOpacity>
+            );
           },
         }}
       />

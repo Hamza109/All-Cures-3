@@ -21,13 +21,14 @@ const ProfileStack = () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
+        
       }}>
       <Stack.Screen name={Route.PROFILE} component={Profile} />
       <Stack.Screen name={Route.LOGIN} component={Login} />
       <Stack.Screen name={Route.ABOUT} component={About} />
       <Stack.Screen name={Route.HELP} component={Help} />
       <Stack.Screen name={Route.FAVOURITE} component={Favourite} />
-      <Stack.Screen name={Route.EDITPROFILE} component={EditProfile} />
+      <Stack.Screen name={Route.EDITPROFILE} component={EditProfile}  />
       <Stack.Screen name={Route.INBOX} component={Inbox} />
       <Stack.Screen name={Route.FORGETPASSWORD} component={ForgetPassword} />
       <Stack.Screen name={Route.CHAT} component={Chat} />

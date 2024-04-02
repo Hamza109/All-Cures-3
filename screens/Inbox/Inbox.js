@@ -22,6 +22,7 @@ import {StackActions} from '@react-navigation/native';
 import {Route} from '../../routes';
 import HeaderComponent from '../../Components/HeaderComponent';
 import ContentLoader from '../../Components/ContentLoader';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Inbox = () => {
   const [messages, setMessages] = useState([]);
@@ -242,7 +243,7 @@ fetchData();}
   return (
     <>
       {isLoaded ? (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
           <StatusBar backgroundColor="#00415e" barStyle="light-content" />
           <HeaderComponent title="Inbox" />
           <FlatList
@@ -251,7 +252,7 @@ fetchData();}
             renderItem={renderMessage}
             key={Math.random() * 1000}
           />
-        </View>
+        </SafeAreaView>
       ) : (
         <ContentLoader />
       )}

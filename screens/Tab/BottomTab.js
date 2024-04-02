@@ -21,14 +21,9 @@ import {User} from '../../Components/profile/UserPic';
 const BottomTab = () => {
   const Tab = createBottomTabNavigator();
   const profile = useSelector(state => state.profile.data);
-  const [name, setName] = useState();
-  useEffect(() => {
-    if (Object.keys(profile).length !== 0) {
-      const name = `${profile.first_name} ${profile.last_name}`;
-      console.log(name);
-      setName(name);
-    }
-  }, []);
+ 
+  const name = `${profile.first_name} ${profile.last_name}`;
+
 
   return (
     <Tab.Navigator

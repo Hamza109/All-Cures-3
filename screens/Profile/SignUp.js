@@ -220,21 +220,21 @@ These Terms and Conditions are governed by the internal substantive laws of the 
           </Text>
           <TextInput
             style={[styles.input, {borderBottomWidth: 1}]}
-            placeholder="enter first Name"
+            placeholder="Enter first name"
             onChangeText={setFirstName}
             value={firstName}
             placeholderTextColor={Color.colorDarkslategray}
           />
           <TextInput
             style={[styles.input, {borderBottomWidth: 1}]}
-            placeholder="enter last name"
+            placeholder="Enter last name"
             onChangeText={setLastName}
             value={lastName}
             placeholderTextColor={Color.colorDarkslategray}
           />
           <TextInput
             style={[styles.input, {borderBottomWidth: 1}]}
-            placeholder="email"
+            placeholder="Email"
             keyboardType="email-address" // Or 'phone-pad' if appropriate
             onChangeText={setEmail}
             value={email}
@@ -245,7 +245,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
           )} */}
           <TextInput
             style={[styles.input, {borderBottomWidth: 1}]}
-            placeholder="phone number"
+            placeholder="Phone number"
             keyboardType="phone-pad" // Or 'phone-pad' if appropriate
             onChangeText={setNumber}
             value={number}
@@ -255,7 +255,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
           <View style={[styles.passwordContainer]}>
             <TextInput
               style={[styles.input, {width: 180}]}
-              placeholder="password"
+              placeholder="Password"
               secureTextEntry={!showPassword}
               onChangeText={setPassword}
               value={password}
