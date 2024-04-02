@@ -37,6 +37,8 @@
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Daily Playground needs microphone access to work</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+	<string>AllCures requires access to your photo library</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Ionicons.ttf</string>

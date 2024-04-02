@@ -47,8 +47,7 @@ const Doctor = () => {
 
         const data1 = await response1.json();
         const data2 = await response2.json();
-        console.log(data1.map.DoctorDetails.myArrayList);
-        console.log(data2);
+    
 
         setFeaturedDoctors(data1.map.DoctorDetails.myArrayList);
 
@@ -71,7 +70,7 @@ const Doctor = () => {
       return i.map.medicineType === medicineId;
     });
     setSortedDoc(data);
-    console.log('new data', data);
+
   }, [medicineId]);
 
   const renderItem = ({item}) => {
@@ -137,18 +136,18 @@ const Doctor = () => {
                   <TouchableOpacity
                     style={
                       Platform.OS === 'ios'
-                        ? medicineId === null
+                        ? medicineId === 'Featured'
                           ? styles.activeLabel
                           : styles.inactiveLabel
                         : null
                     }
                     onPress={() => {
-                      selectItem({med_id: 0, med_type: 'Featured'});
+                      selectItem({med_id: 0, med_type:'Featured'});
                     }}>
                     <Text
                       style={[
                         styles.featured,
-                        medicineId == 'Featured'
+                        medicineId === 'Featured'
                           ? styles.activeLabel
                           : styles.inactiveLabel,
                       ]}>
