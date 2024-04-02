@@ -35,7 +35,7 @@ const ProfileStack = () => {
 
       <Stack.Screen name={Route.NOTIFICATION} component={Notification} />
       <Stack.Screen name={Route.SUBMITARTICLE} component={SubmitArticle} />
-      <Stack.Screen name={Route.TIPOFTHEDAY} component={TipOfTheDay} />
+
     </Stack.Navigator>
   );
 };

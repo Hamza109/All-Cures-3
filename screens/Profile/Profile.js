@@ -115,27 +115,34 @@ const Profile = ({navigation}) => {
     };
   };
   const getProfile = userId => {
-    const data = new Promise((resolve, reject) => {
-      if (isConnected) {
-        setIsLoaded(false);
-        axios
-          .get(`${backendHost}/profile/${userId}`, {
-            signal: abort.signal,
-          })
-          .then(res => {
-            console.log('fetched Data', res);
-            resolve(setFirstName(res.data.first_name));
-            resolve(setLastName(res.data.last_name));
-            resolve(setEmail(res.data.email_address));
-          })
-          .catch(err => {
-            return;
-          });
-      }
-    });
-    data.then(() => {
-      setIsLoaded(true);
-    });
+    try {
+      const data = new Promise((resolve, reject) => {
+        if (isConnected) {
+          setIsLoaded(false);
+          axios
+            .get(`${backendHost}/profile/${userId}`, {
+              signal: abort.signal,
+            })
+            .then(res => {
+              console.log('fetched Data', res);
+              resolve(setFirstName(res.data.first_name));
+              resolve(setLastName(res.data.last_name));
+              resolve(setEmail(res.data.email_address));
+            })
+            .catch(err => {
+              return;
+            });
+        }
+      });
+      data.then(() => {
+        setIsLoaded(true);
+      });
+      
+    } catch (error) {
+      console.log("Error Occur",error);
+      
+    }
+    
   };
   const handleProfile = item => {
     if (item.title === 'Logout') {

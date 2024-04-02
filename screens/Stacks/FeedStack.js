@@ -8,6 +8,7 @@ import {TouchableOpacity} from 'react-native';
 import ArticlesByMedicine from '../Article/ArticlesByMedicine';
 import Back from '../../assets/images/BACK.svg';
 import {useNavigation} from '@react-navigation/native';
+import Notification from '../Profile/Settings/Notification';
 const FeedStack = () => {
   const navigation = useNavigation();
   const handleBack = () => {
@@ -22,6 +23,7 @@ const FeedStack = () => {
       }}>
       <Stack.Screen name={Route.FEED} component={Feed} />
       <Stack.Screen name={Route.ARTICLES_READ} component={ArticlesRead} />
+      <Stack.Screen name = {Route.NOTIFICATION} component={Notification}/>
       <Stack.Screen
         name={Route.ARTICLES_BY_MEDICINE}
         component={ArticlesByMedicine}

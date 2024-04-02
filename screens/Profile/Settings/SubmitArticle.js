@@ -9,7 +9,7 @@ import {
   StatusBar,
   Alert,
   Pressable,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native';
 import {Spinner, useToast, Modal, Checkbox} from 'native-base';
 import axios from 'axios';
@@ -244,7 +244,9 @@ These Terms and Conditions are governed by the internal substantive laws of the 
           }
         })
         .catch(err => {
+          setLoading(false);
           err;
+          Alert.alert(err);
         });
     } else {
       setLoading(false);
@@ -308,107 +310,115 @@ These Terms and Conditions are governed by the internal substantive laws of the 
     );
   };
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <View style={styles.feedHeader}>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginTop: 36,
-            marginLeft: 5,
-          }}>
-          <Text style={styles.read}>Submit Article</Text>
-        </View>
-      </View>
-      <ScrollView>
-        <View>
-          <Text style={styles.title}>Title</Text>
-          {titleValue()}
-        </View>
-        <View space={2}>
-          <Text style={styles.title}>Remarks</Text>
-          {remarks()}
-        </View>
-        <View space={2}>
-          <Text style={styles.title}>Write cure here</Text>
-          {articles()}
-        </View>
-        <View style={styles.privacy}>
-          <Checkbox
-            shadow={2}
-            value="test"
-            isDisabled
-            accessibilityLabel="This is a dummy checkbox"
-            colorScheme="purple"
-            defaultIsChecked>
-            <Text style={styles.privacyText}>
-              I certify that i am at least 13 years old and I have read and
-            </Text>
-          </Checkbox>
+    <>
+      {!loading ? (
+        <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+          <View style={styles.feedHeader}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginTop: 36,
+                marginLeft: 5,
+              }}>
+              <Text style={styles.read}>Submit Article</Text>
+            </View>
+          </View>
+          <ScrollView>
+            <View>
+              <Text style={styles.title}>Title</Text>
+              {titleValue()}
+            </View>
+            <View space={2}>
+              <Text style={styles.title}>Remarks</Text>
+              {remarks()}
+            </View>
+            <View space={2}>
+              <Text style={styles.title}>Write cure here</Text>
+              {articles()}
+            </View>
+            <View style={styles.privacy}>
+              <Checkbox
+                shadow={2}
+                value="test"
+                isDisabled
+                accessibilityLabel="This is a dummy checkbox"
+                colorScheme="purple"
+                defaultIsChecked>
+                <Text style={styles.privacyText}>
+                  I certify that i am at least 13 years old and I have read and
+                </Text>
+              </Checkbox>
 
-          <Checkbox
-            shadow={2}
-            value="test"
-            isDisabled
-            accessibilityLabel="This is a dummy checkbox"
-            colorScheme="purple"
-            defaultIsChecked>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => setTerms(true) & setShowModal(true)}>
-              <Text style={styles.privacyText}>Accept Terms & Conditions</Text>
-            </TouchableOpacity>
-          </Checkbox>
-          <Checkbox
-            shadow={2}
-            value="test"
-            isDisabled
-            accessibilityLabel="This is a dummy checkbox"
-            defaultIsChecked
-            colorScheme="purple"
-            isReadOnly>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => setPrivacy(true) & setShowModal(true)}>
-              <Text style={styles.privacyText}>Privacy Policy</Text>
-            </TouchableOpacity>
-          </Checkbox>
-        </View>
+              <Checkbox
+                shadow={2}
+                value="test"
+                isDisabled
+                accessibilityLabel="This is a dummy checkbox"
+                colorScheme="purple"
+                defaultIsChecked>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  onPress={() => setTerms(true) & setShowModal(true)}>
+                  <Text style={styles.privacyText}>
+                    Accept Terms & Conditions
+                  </Text>
+                </TouchableOpacity>
+              </Checkbox>
+              <Checkbox
+                shadow={2}
+                value="test"
+                isDisabled
+                accessibilityLabel="This is a dummy checkbox"
+                defaultIsChecked
+                colorScheme="purple"
+                isReadOnly>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  onPress={() => setPrivacy(true) & setShowModal(true)}>
+                  <Text style={styles.privacyText}>Privacy Policy</Text>
+                </TouchableOpacity>
+              </Checkbox>
+            </View>
 
-        <Pressable style={styles.btn} onPress={e => submitArticleForm(e)}>
-          <Text style={styles.textBtn}>Submit</Text>
-        </Pressable>
-      </ScrollView>
-      <Modal
-        size="full"
-        isOpen={showModal}
-        onClose={() =>
-          terms
-            ? setTerms(false) & setPrivacy(false) & setShowModal(false)
-            : setShowModal(false)
-        }>
-        <Modal.Content maxWidth="400px">
-          <Modal.CloseButton />
-          <Modal.Header>
-            {terms ? 'Terms and Conditions' : 'Privacy Policy'}
-          </Modal.Header>
-          <Modal.Body>
-            <ScrollView>
-              <RenderHTML
-                contentWidth={'100%'}
-                source={terms ? source : source1}
-                tagsStyles={{
-                  adjustsFontSizeToFit: true,
+            <Pressable style={styles.btn} onPress={e => submitArticleForm(e)}>
+              <Text style={styles.textBtn}>Submit</Text>
+            </Pressable>
+          </ScrollView>
+          <Modal
+            size="full"
+            isOpen={showModal}
+            onClose={() =>
+              terms
+                ? setTerms(false) & setPrivacy(false) & setShowModal(false)
+                : setShowModal(false)
+            }>
+            <Modal.Content maxWidth="400px">
+              <Modal.CloseButton />
+              <Modal.Header>
+                {terms ? 'Terms and Conditions' : 'Privacy Policy'}
+              </Modal.Header>
+              <Modal.Body>
+                <ScrollView>
+                  <RenderHTML
+                    contentWidth={'100%'}
+                    source={terms ? source : source1}
+                    tagsStyles={{
+                      adjustsFontSizeToFit: true,
 
-                  body: {color: '#00415e'},
-                }}
-              />
-            </ScrollView>
-          </Modal.Body>
-        </Modal.Content>
-      </Modal>
-    </SafeAreaView>
+                      body: {color: '#00415e'},
+                    }}
+                  />
+                </ScrollView>
+              </Modal.Body>
+            </Modal.Content>
+          </Modal>
+        </SafeAreaView>
+      ) : (
+        <ContentLoader />
+      )}
+    </>
   );
 };
 

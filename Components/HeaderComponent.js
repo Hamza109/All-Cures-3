@@ -1,7 +1,11 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import { width,height,Color } from '../config/GlobalStyles';
+import {width, height, Color} from '../config/GlobalStyles';
+import NotificationIcon from '../assets/images/Notification.svg';
+import {useNavigation} from '@react-navigation/native';
+import { Route } from '../routes';
 const HeaderComponent = ({title}) => {
+  const navigation = useNavigation();
   return (
     <View style={styles.feedHeader}>
       <View
@@ -13,6 +17,9 @@ const HeaderComponent = ({title}) => {
           marginLeft: 5,
         }}>
         <Text style={styles.read}>{title}</Text>
+        <Pressable onPress={() => {navigation.navigate(Route.NOTIFICATION)}}>
+          <NotificationIcon width={16} height={18} style={{marginTop: 5}} />
+        </Pressable>
       </View>
     </View>
   );

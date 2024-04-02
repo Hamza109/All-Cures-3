@@ -12,6 +12,7 @@ import {width, height, FontFamily, Color} from '../../config/GlobalStyles';
 import {backendHost} from '../../Components/apiConfig';
 import NotificationIcon from '../../assets/images/Notification.svg';
 import {Route} from '../../routes';
+import HeaderComponent from '../../Components/HeaderComponent';
 
 const Search = ({navigation}) => {
   const handleNavigation = (title, placeholder, key) => {
@@ -40,19 +41,7 @@ const Search = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.feedHeader}>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginTop: 36,
-            marginLeft: 5,
-          }}>
-          <Text style={styles.read}>Search</Text>
-          <NotificationIcon width={16} height={18} style={{marginTop: 5}} />
-        </View>
-      </View>
+      <HeaderComponent title = "Search"/>
 
       <ScrollView  style={{paddingHorizontal: 26,width:'100%',height:'100%'}}>
         <View style={{marginBottom: 22}}>
