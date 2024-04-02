@@ -11,7 +11,7 @@ import {
   RefreshControl,
   Pressable,
   PermissionsAndroid,
-  
+  Animated,
 } from 'react-native';
 import {FontFamily, Color} from '../../config/GlobalStyles';
 import ContentLoader from '../../Components/ContentLoader';
@@ -29,6 +29,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {option} from '../../Redux/Slice/OptionSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import HeaderComponent from '../../Components/HeaderComponent';
+import Reload from '../../Components/Reload';
 const Feed = ({navigation}) => {
   const [isConnected, setIsConnected] = useState(true);
   const [diseaseId, setDiseaseId] = useState(null);
@@ -82,45 +83,7 @@ const Feed = ({navigation}) => {
   useEffect(() => {
     getValue();
   });
-  // function Reload() {
-  //   return (
-  //     <TouchableOpacity onPress={onRefresh}>
-  //       <Animatable.View
-  //         style={{
-  //           width: '100%',
-  //           height: 55,
-  //           justifyContent: 'center',
-  //           alignItems: 'center',
-  //           backgroundColor: '#ffedd5',
-  //         }}
-  //         animation="slideInDown"
-  //         iterationCount={1}>
-  //         <View style={{position: 'absolute', left: 12}}>
-  //           <IonIcon name="information-circle" size={30} color={'#f27938'} />
-  //         </View>
 
-  //         <Text
-  //           style={{
-  //             color: 'black',
-  //             fontFamily: 'Raleway-Medium',
-  //             fontSize: 15,
-  //           }}>
-  //           {' '}
-  //           Check your connection
-  //         </Text>
-  //         <Text
-  //           style={{
-  //             color: 'black',
-  //             fontFamily: 'Raleway-Regular',
-  //             fontSize: 12,
-  //           }}>
-  //           {' '}
-  //           you are offline
-  //         </Text>
-  //       </Animatable.View>
-  //     </TouchableOpacity>
-  //   );
-  // }
   useEffect(() => {
     NetInfo.addEventListener(state => {
       setIsConnected(state.isConnected);
@@ -280,7 +243,7 @@ const Feed = ({navigation}) => {
   return (
     // feed container
     <SafeAreaView style={styles.feedContainer}>
-     
+      {!isConnected ? <Reload /> : null}
       {/* header component */}
 
       <View style={styles.feedHeader}>
@@ -300,7 +263,6 @@ const Feed = ({navigation}) => {
             <NotificationIcon width={16} height={18} style={{marginTop: 5}} />
           </Pressable>
         </View>
-
 
         <ScrollView
           horizontal
