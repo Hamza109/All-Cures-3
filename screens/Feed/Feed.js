@@ -8,6 +8,10 @@ import {
   SafeAreaView,
   StatusBar,
   Platform,
+  RefreshControl,
+  Pressable,
+  PermissionsAndroid,
+  
 } from 'react-native';
 import {FontFamily, Color} from '../../config/GlobalStyles';
 import ContentLoader from '../../Components/ContentLoader';
@@ -19,10 +23,12 @@ import NotificationIcon from '../../assets/images/Notification.svg';
 import ArticlesCard from '../../Components/ArticleCard';
 import {backendHost, headers} from '../../Components/apiConfig';
 import {FlashList} from '@shopify/flash-list';
+
 import {Route} from '../../routes';
 import {useDispatch, useSelector} from 'react-redux';
 import {option} from '../../Redux/Slice/OptionSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import HeaderComponent from '../../Components/HeaderComponent';
 const Feed = ({navigation}) => {
   const [isConnected, setIsConnected] = useState(true);
   const [diseaseId, setDiseaseId] = useState(null);
@@ -76,10 +82,50 @@ const Feed = ({navigation}) => {
   useEffect(() => {
     getValue();
   });
+  // function Reload() {
+  //   return (
+  //     <TouchableOpacity onPress={onRefresh}>
+  //       <Animatable.View
+  //         style={{
+  //           width: '100%',
+  //           height: 55,
+  //           justifyContent: 'center',
+  //           alignItems: 'center',
+  //           backgroundColor: '#ffedd5',
+  //         }}
+  //         animation="slideInDown"
+  //         iterationCount={1}>
+  //         <View style={{position: 'absolute', left: 12}}>
+  //           <IonIcon name="information-circle" size={30} color={'#f27938'} />
+  //         </View>
+
+  //         <Text
+  //           style={{
+  //             color: 'black',
+  //             fontFamily: 'Raleway-Medium',
+  //             fontSize: 15,
+  //           }}>
+  //           {' '}
+  //           Check your connection
+  //         </Text>
+  //         <Text
+  //           style={{
+  //             color: 'black',
+  //             fontFamily: 'Raleway-Regular',
+  //             fontSize: 12,
+  //           }}>
+  //           {' '}
+  //           you are offline
+  //         </Text>
+  //       </Animatable.View>
+  //     </TouchableOpacity>
+  //   );
+  // }
   useEffect(() => {
     NetInfo.addEventListener(state => {
       setIsConnected(state.isConnected);
     });
+    console.log('network chanf', isConnected);
   }, [isConnected]);
 
   async function getFeaturedArticle() {
@@ -222,10 +268,19 @@ const Feed = ({navigation}) => {
       </TouchableOpacity>
     );
   };
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   return (
     // feed container
     <SafeAreaView style={styles.feedContainer}>
+     
       {/* header component */}
 
       <View style={styles.feedHeader}>
@@ -238,8 +293,14 @@ const Feed = ({navigation}) => {
             marginLeft: 5,
           }}>
           <Text style={styles.read}>Read</Text>
-          <NotificationIcon width={16} height={18} style={{marginTop: 5}} />
+          <Pressable
+            onPress={() => {
+              navigation.navigate(Route.NOTIFICATION);
+            }}>
+            <NotificationIcon width={16} height={18} style={{marginTop: 5}} />
+          </Pressable>
         </View>
+
 
         <ScrollView
           horizontal
@@ -303,6 +364,9 @@ const Feed = ({navigation}) => {
           keyExtractor={item => item.article_id.toString()}
           data={item}
           renderItem={renderItem}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
           onScroll={() => {
             dispatch(option(-100));
           }}

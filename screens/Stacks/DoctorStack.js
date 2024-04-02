@@ -9,6 +9,7 @@ import EditProfile from '../Profile/EditProfile';
 import DocCures from '../Doctor/DocCures';
 import Chat from '../Inbox/Chat';
 import {FontFamily} from '../../config/GlobalStyles';
+import Notification from '../Profile/Settings/Notification';
 
 const DoctorStack = () => {
   const Stack = createStackNavigator();
@@ -47,6 +48,7 @@ const DoctorStack = () => {
         }}
       />
       <Stack.Screen name={Route.CHAT} component={Chat} />
+      <Stack.Screen name = {Route.NOTIFICATION} component={Notification}/>
 
       <Stack.Screen name={Route.EDITPROFILE} component={EditProfile} />
     </Stack.Navigator>

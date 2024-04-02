@@ -79,48 +79,54 @@ const EditProfile = ({route}) => {
   );
 
   const fetchTables = () => {
-    Promise.all([
-      fetch(`${backendHost}/article/all/table/specialties`, {
-        headers: headers,
-      })
-        .then(res => res.json())
-        .catch(err => err),
-      fetch(`${backendHost}/article/all/table/hospital`, {
-        headers: headers,
-      })
-        .then(res => res.json())
-        .catch(err => err),
-      fetch(`${backendHost}/article/all/table/states`, {
-        headers: headers,
-      })
-        .then(res => res.json())
-        .catch(err => err),
-      fetch(`${backendHost}/article/all/table/city`, {
-        headers: headers,
-      })
-        .then(res => res.json())
-        .catch(err => err),
-      fetch(`${backendHost}/article/all/table/countries`, {
-        headers: headers,
-      })
-        .then(res => res.json())
-        .catch(err => err),
-      fetch(`${backendHost}/data/medicines`, {
-        headers: headers,
-      })
-        .then(res => res.json())
-        .catch(err => err),
-    ])
-      .then(([diseaseData, hospitalData, stateData, cityData, countryData]) => {
-        setDiseaseList(diseaseData);
-        setHospitalList(hospitalData);
-        setStateList(stateData);
-        setCityList(cityData);
-        setCountryList(countryData);
-      })
-      .catch(err => {
-        err;
-      });
+    try {
+      Promise.all([
+        fetch(`${backendHost}/article/all/table/specialties`, {
+          headers: headers,
+        })
+          .then(res => res.json())
+          .catch(err => err),
+        fetch(`${backendHost}/article/all/table/hospital`, {
+          headers: headers,
+        })
+          .then(res => res.json())
+          .catch(err => err),
+        fetch(`${backendHost}/article/all/table/states`, {
+          headers: headers,
+        })
+          .then(res => res.json())
+          .catch(err => err),
+        fetch(`${backendHost}/article/all/table/city`, {
+          headers: headers,
+        })
+          .then(res => res.json())
+          .catch(err => err),
+        fetch(`${backendHost}/article/all/table/countries`, {
+          headers: headers,
+        })
+          .then(res => res.json())
+          .catch(err => err),
+        fetch(`${backendHost}/data/medicines`, {
+          headers: headers,
+        })
+          .then(res => res.json())
+          .catch(err => err),
+      ])
+        .then(
+          ([diseaseData, hospitalData, stateData, cityData, countryData]) => {
+            setDiseaseList(diseaseData);
+            setHospitalList(hospitalData);
+            setStateList(stateData);
+            setCityList(cityData);
+            setCountryList(countryData);
+          },
+        )
+        .catch(err => {
+          err;
+        });
+    } catch (error) {
+      console.error('Error fetching data:', err);
+    }
   };
   const medicine = [
     {

@@ -8,6 +8,7 @@ import {
   Button,
   SafeAreaView,
   ScrollView,
+  RefreshControl,
 } from 'react-native';
 import {width, height, FontFamily, Color} from '../../config/GlobalStyles';
 import NotificationIcon from '../../assets/images/Notification.svg';
@@ -20,6 +21,7 @@ import {Route} from '../../routes';
 import ContentLoader from '../../Components/ContentLoader';
 
 import {useNavigation} from '@react-navigation/native';
+import HeaderComponent from '../../Components/HeaderComponent';
 const Doctor = () => {
   const [featuredDoctors, setFeaturedDoctors] = useState([]);
   const [Loaded, setLoaded] = useState(false);
@@ -110,7 +112,14 @@ const Doctor = () => {
       </TouchableOpacity>
     );
   };
+  const [refreshing, setRefreshing] = React.useState(false);
 
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
   return (
     <>
       {Loaded ? (
@@ -192,6 +201,9 @@ const Doctor = () => {
             estimatedItemSize={100}
             data={medicineId == 'Featured' ? featuredDoctors : sortedDoc}
             renderItem={renderItem}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
           />
         </SafeAreaView>
       ) : (

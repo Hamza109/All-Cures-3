@@ -271,10 +271,7 @@ const Appointment = ({route}) => {
           </View>
         </SafeAreaView>
       ) : (
-        
-          <ContentLoader />
-          
-       
+        <ContentLoader />
       )}
     </>
   );

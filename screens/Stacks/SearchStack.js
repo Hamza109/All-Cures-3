@@ -9,6 +9,7 @@ import DoctorMainScreen from '../Doctor/DoctorMainScreen.js';
 import Chat from '../Inbox/Chat.js';
 import Appointment from '../Doctor/Appointment.js';
 import VideoCall from '../VideoCall/VideoCall.js';
+import Notification from '../Profile/Settings/Notification.js';
 const SearchStack = () => {
   const Stack = createStackNavigator();
   return (
@@ -32,6 +33,7 @@ const SearchStack = () => {
       <Stack.Screen name={Route.ARTICLES_READ} component={ArticlesRead} />
       <Stack.Screen name={Route.APPOINTMENT} component={Appointment} />
       <Stack.Screen name={Route.VIDEOCALL} component={VideoCall} />
+      <Stack.Screen name={Route.NOTIFICATION} component={Notification} />
     </Stack.Navigator>
   );
 };

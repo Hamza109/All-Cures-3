@@ -4,6 +4,7 @@ import {Route} from '../../routes';
 import Login from '../Profile/Login';
 import SignUp from '../Profile/SignUp';
 import ForgetPassword from '../Profile/ForgetPassword';
+import Notification from '../Profile/Settings/Notification';
 
 const LoginStack = () => {
   const Stack = createStackNavigator();
@@ -16,6 +17,7 @@ const LoginStack = () => {
       <Stack.Screen name={Route.LOGIN} component={Login} />
       <Stack.Screen name={Route.SIGNUP} component={SignUp} />
       <Stack.Screen name={Route.FORGETPASSWORD} component={ForgetPassword} />
+      <Stack.Screen name = {Route.NOTIFICATION} component={Notification}/>
     </Stack.Navigator>
   );
 };

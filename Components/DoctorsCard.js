@@ -28,7 +28,7 @@ const DoctorsCard = ({
     <View style={styles.cardContainer}>
       <View style={styles.detailsCardContainer}>
         <Text style={styles.article_title}>
-          Dr.{firstName} {secondName}
+          Dr. {firstName} {secondName}
         </Text>
         <Text style={styles.title} numberOfLines={2}>
           {primarySpl}
@@ -46,8 +46,7 @@ const DoctorsCard = ({
         </View>
       </View>
       <View style={{justifyContent: 'center'}}>
-        <View
-          style={{width: 100, height: 100, backgroundColor: '#fff'}}>
+        <View style={{width: 100, height: 100, backgroundColor: '#fff'}}>
           {imgLoc ? (
             <Image
               style={styles.image}
@@ -56,7 +55,12 @@ const DoctorsCard = ({
               }}
             />
           ) : (
-            <View style= {{backgroundColor:'#fff',justifyContent:'center',alignItems:'center'}}>
+            <View
+              style={{
+                backgroundColor: '#fff',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
               <User />
             </View>
           )}

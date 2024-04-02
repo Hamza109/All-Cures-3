@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Animated,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import React, {useEffect, useState, memo, useRef} from 'react';
 import NetInfo from '@react-native-community/netinfo';
@@ -87,11 +88,12 @@ const ArticlesRead = ({route, navigation}) => {
             const contentBlocks = await JSON.parse(
               decodeURIComponent(json.content),
             ).blocks;
-            setIsLoaded(true);
 
             setItems(contentBlocks);
+            setIsLoaded(true);
           } catch (error) {
             console.log(error);
+            Alert.alert('Error Occured', error);
           }
         }
       } catch (err) {
