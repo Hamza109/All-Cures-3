@@ -137,12 +137,9 @@ const Profile = ({navigation}) => {
       data.then(() => {
         setIsLoaded(true);
       });
-      
     } catch (error) {
-      console.log("Error Occur",error);
-      
+      console.log('Error Occur', error);
     }
-    
   };
   const handleProfile = item => {
     if (item.title === 'Logout') {
@@ -151,7 +148,7 @@ const Profile = ({navigation}) => {
     } else if (
       item.title === 'Submit Articles' ||
       item.title === 'Inbox' ||
-      item.title === 'favourite'
+      item.title === 'Favourite'
     ) {
       if (Object.keys(profileInfo).length) {
         navigation.navigate(item.route);

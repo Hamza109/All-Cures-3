@@ -17,7 +17,7 @@ const Notification = () => {
 
       .then(res => {
         setData(res.data.reverse());
-        console.log(res.data);
+        console.log('notification data', res.data);
         setLoading(true);
       })
       .catch(error => {});
@@ -87,10 +87,10 @@ const Notification = () => {
         </View>
       </View>
       <FlashList
-        data={data}
+        data={data.slice(0, 10)}
         renderItem={renderTipItem}
         removeClippedSubviews
-        
+        showsVerticalScrollIndicator={false}
         estimatedItemSize={80} // Replace 80 with the estimated height of your items
       />
     </SafeAreaView>

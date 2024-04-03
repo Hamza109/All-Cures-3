@@ -6,6 +6,7 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSelector, useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import HeaderComponent from '../../../Components/HeaderComponent';
 const Help = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -28,19 +29,7 @@ const Help = () => {
   };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <View style={styles.feedHeader}>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginTop: 36,
-            marginLeft: 5,
-          }}>
-          <Text style={styles.read}>Help</Text>
-          <NotificationIcon width={16} height={18} style={{marginTop: 5}} />
-        </View>
-      </View>
+      <HeaderComponent title={'Help'}/>
 
       <View style={styles.header}>
         <Text style={styles.headerText}>Contact Us</Text>

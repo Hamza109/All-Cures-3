@@ -53,7 +53,7 @@ const Chat = ({route}) => {
   const [selectedMessageId, setSelectedMessageId] = useState(null);
 
   useEffect(() => {
-    console.log("name:",FIRST_NAME);
+
     navigation.setOptions({
       title: `Dr. ${FIRST_NAME} ${LAST_NAME}`,
     });

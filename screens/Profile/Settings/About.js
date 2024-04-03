@@ -3,22 +3,11 @@ import React from 'react';
 import {Color, width} from '../../../config/GlobalStyles';
 import NotificationIcon from '../../../assets/images/Notification.svg';
 import IonIcons from 'react-native-vector-icons/Ionicons';
+import HeaderComponent from '../../../Components/HeaderComponent';
 const About = () => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <View style={styles.feedHeader}>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginTop: 36,
-            marginLeft: 5,
-          }}>
-          <Text style={styles.read}>About us</Text>
-          <NotificationIcon width={16} height={18} style={{marginTop: 5}} />
-        </View>
-      </View>
+      <HeaderComponent/>
       <View style={styles.setting}>
         <Text style={{color: Color.colorDarkslategray, fontSize: 18}}>
           All Cures is a product developed, managed and owned by Etherium

@@ -23,6 +23,7 @@ import {useSelector} from 'react-redux';
 import RenderHTML from 'react-native-render-html';
 import NotificationIcon from '../../../assets/images/Notification.svg';
 import ContentLoader from '../../../Components/ContentLoader';
+import HeaderComponent from '../../../Components/HeaderComponent';
 const SubmitArticle = () => {
   const userData = useSelector(state => state.profile.data);
   const user = userData.registration_id;
@@ -313,18 +314,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
     <>
       {!loading ? (
         <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-          <View style={styles.feedHeader}>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginTop: 36,
-                marginLeft: 5,
-              }}>
-              <Text style={styles.read}>Submit Article</Text>
-            </View>
-          </View>
+          <HeaderComponent />
           <ScrollView>
             <View>
               <Text style={styles.title}>Title</Text>

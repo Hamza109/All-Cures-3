@@ -21,9 +21,11 @@ import {Route} from '../../routes';
 import axios from 'axios';
 import {useToast} from 'native-base';
 import {screen} from '../../Redux/Slice/screenNameSlice';
+import {useSelector} from 'react-redux';
 import ContentLoader from '../../Components/ContentLoader';
 const ResetPassword = ({navigation}) => {
-  const [email, setEmail] = useState('');
+  const profile = useSelector(state => state.profile.data);
+  const [email, setEmail] = useState(profile.email_address);
 
   const [password, setPassword] = useState('');
 
@@ -78,7 +80,7 @@ const ResetPassword = ({navigation}) => {
     }, 3000);
     var res;
 
-    if (upperCase && lowerCase && match) {
+    if (password) {
       axios.defaults.withCredentials = true;
       axios
         .put(`${backendHost}/users/updatepassword`, {

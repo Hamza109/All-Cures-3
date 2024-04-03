@@ -14,7 +14,7 @@ const RootStack = () => {
 
   switch (navigation) {
     case Route.MAIN:
-      return <BottomTab  />;
+      return <BottomTab />;
     case Route.LOGIN:
       return <LoginStack />;
     case Route.PROFILE:
