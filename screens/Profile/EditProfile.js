@@ -269,7 +269,7 @@ const EditProfile = ({route}) => {
         }, 3000);
       })
       .catch(error => {
-        return;
+      throw error
       });
   };
   const choosePhotoFromLibrary = () => {

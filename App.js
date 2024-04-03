@@ -86,7 +86,10 @@ const App = () => {
         method: 'POST',
       }).then(res => {
         console.log('post', res);
-      });
+      })
+      .catch(err=>{
+        console.log(err)
+      })
 
       console.log('FCM', token);
       // Send the token to your server for further processing if needed.

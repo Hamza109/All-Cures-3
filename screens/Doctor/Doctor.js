@@ -52,7 +52,7 @@ const Doctor = () => {
     
 
         setFeaturedDoctors(data1.map.DoctorDetails.myArrayList);
-
+        console.log(data2)
         setSpeciality(data2);
       } catch (error) {
         console.log(error);
@@ -167,8 +167,9 @@ const Doctor = () => {
 
                 {speciality.map((item, index) => {
                   return (
-                    <View key={item.dc_id} style={{paddingHorizontal: 11}}>
+                    <View key={item.med_id} style={{paddingHorizontal: 11}}>
                       <TouchableOpacity
+                 
                         style={
                           Platform.OS === 'ios'
                             ? item.med_type === medicineId
@@ -199,6 +200,7 @@ const Doctor = () => {
 
           <FlashList
             estimatedItemSize={100}
+            keyExtractor={item => item.map.docID.toString()}
             data={medicineId == 'Featured' ? featuredDoctors : sortedDoc}
             renderItem={renderItem}
             refreshControl={

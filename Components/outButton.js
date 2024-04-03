@@ -35,7 +35,7 @@ const OutButton = ({name, docID, firstName, lastName}) => {
             chatId: res.data[0].Chat_id,
             first_name: firstName,
             last_name: lastName,
-          });
+          }).catch(err=>console.log(err))
         } else {
           Alert.alert('Something went wrong,please try again');
         }

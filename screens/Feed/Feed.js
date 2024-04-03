@@ -43,7 +43,7 @@ const Feed = ({navigation}) => {
   const getValue = async () => {
     const myValue = await AsyncStorage.getItem('artId');
     const myObject = myValue != null ? JSON.parse(myValue) : null;
-    console.log('id', myObject.id);
+
     // Log the retrieved object
     if (myObject !== null) {
       console.log('id in if ', myObject.id);

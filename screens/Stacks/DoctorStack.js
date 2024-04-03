@@ -71,7 +71,21 @@ const DoctorStack = ({navigation}) => {
           },
         }}
       />
-      <Stack.Screen name={Route.CHAT} component={Chat} />
+      <Stack.Screen name={Route.CHAT} component={Chat}  options={{
+          headerShown: true,
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: FontFamily.poppinsBold,
+            fontSize: 20,
+          },
+          headerLeft: () => {
+            return (
+              <TouchableOpacity style={{padding: 10}} onPress={handleBack}>
+                <Back />
+              </TouchableOpacity>
+            );
+          },
+        }} />
       <Stack.Screen name = {Route.NOTIFICATION} component={Notification}/>
 
       <Stack.Screen name={Route.EDITPROFILE} component={EditProfile} />
