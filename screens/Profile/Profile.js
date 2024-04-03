@@ -151,7 +151,7 @@ const Profile = ({navigation}) => {
     } else if (
       item.title === 'Submit Articles' ||
       item.title === 'Inbox' ||
-      item.title === 'favourite'
+      item.title === 'Favourite'
     ) {
       if (Object.keys(profileInfo).length) {
         navigation.navigate(item.route);
@@ -249,22 +249,22 @@ const Profile = ({navigation}) => {
           {/* Commented out section; not relevant to map function focus */}
 
           {profileOptionsData.map((item, index) => (
-            <>
+            <View  key={item.title}>
               {Object.keys(profileInfo).length == 0 &&
               item.title == 'Logout' ? null : (
                 <TouchableOpacity
-                  key={index}
+               
                   onPress={() => {
                     handleProfile(item);
                   }}>
-                  <View style={styles.titleView}>
+                  <View  style={styles.titleView}>
                     <Text style={styles.titleText}>{item.title}</Text>
                     <Right width={7.5} height={15} />
                   </View>
                   <Divider />
                 </TouchableOpacity>
               )}
-            </>
+            </View>
           ))}
         </ScrollView>
       </SafeAreaView>

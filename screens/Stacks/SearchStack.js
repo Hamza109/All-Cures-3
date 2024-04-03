@@ -3,6 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {Route} from '../../routes';
 import Search from '../Search/Search.js';
 import SearchInput from '../Search/SearchInput.js';
+import {TouchableOpacity} from 'react-native';
 import SearchResults from '../Search/SearchResults.js';
 import ArticlesRead from '../Article/ArticlesRead.js';
 import DoctorMainScreen from '../Doctor/DoctorMainScreen.js';
@@ -10,13 +11,20 @@ import Chat from '../Inbox/Chat.js';
 import Appointment from '../Doctor/Appointment.js';
 import VideoCall from '../VideoCall/VideoCall.js';
 import Notification from '../Profile/Settings/Notification.js';
-const SearchStack = () => {
+import { FontFamily } from '../../config/GlobalStyles';
+import Back from '../../assets/images/BACK.svg';
+const SearchStack = ({navigation}) => {
+  const handleBack = () => {
+    console.log('back');
+    navigation.goBack();
+  };
   const Stack = createStackNavigator();
   return (
     <Stack.Navigator
       initialRouteName={Route.SEARCH}
       screenOptions={{
         headerShown: false,
+        headerLeftLabelVisible:false,
       }}>
       <Stack.Screen name={Route.SEARCH} component={Search} />
       <Stack.Screen name={Route.SEARCH_INPUT} component={SearchInput} />
@@ -28,7 +36,21 @@ const SearchStack = () => {
       <Stack.Screen
         name={Route.CHAT}
         component={Chat}
-        options={{headerShown: true}}
+        options={{
+          headerShown: true,
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: FontFamily.poppinsBold,
+            fontSize: 20,
+          },
+          headerLeft: () => {
+            return (
+              <TouchableOpacity style={{padding: 10}} onPress={handleBack}>
+                <Back />
+              </TouchableOpacity>
+            );
+          },
+        }}
       />
       <Stack.Screen name={Route.ARTICLES_READ} component={ArticlesRead} />
       <Stack.Screen name={Route.APPOINTMENT} component={Appointment} />

@@ -5,17 +5,22 @@ import Profile from '../Profile/Profile';
 import Login from '../Profile/Login';
 import About from '../Profile/Settings/About';
 import Help from '../Profile/Settings/Help';
-
+import Back from '../../assets/images/BACK.svg';
 import Notification from '../Profile/Settings/Notification';
 import SubmitArticle from '../Profile/Settings/SubmitArticle';
-import TipOfTheDay from '../Profile/Settings/TipOfTheDay';
+import {TouchableOpacity} from 'react-native';
 import EditProfile from '../Profile/EditProfile';
 import Favourite from '../Profile/favourite';
 import Inbox from '../Inbox/Inbox';
 import ForgetPassword from '../Profile/ForgetPassword';
 import Chat from '../Inbox/Chat';
 import MyCures from '../Profile/Settings/MyCures';
-const ProfileStack = () => {
+import { FontFamily } from '../../config/GlobalStyles';
+const ProfileStack = ({navigation}) => {
+  const handleBack = () => {
+    console.log('back');
+    navigation.goBack();
+  };
   const Stack = createStackNavigator();
   return (
     <Stack.Navigator
@@ -32,7 +37,21 @@ const ProfileStack = () => {
       <Stack.Screen name={Route.EDITPROFILE} component={EditProfile}  />
       <Stack.Screen name={Route.INBOX} component={Inbox} />
       <Stack.Screen name={Route.FORGETPASSWORD} component={ForgetPassword} />
-      <Stack.Screen name={Route.CHAT} component={Chat} options={{headerShown:true}} />
+      <Stack.Screen name={Route.CHAT} component={Chat}   options={{
+          headerShown: true,
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: FontFamily.poppinsBold,
+            fontSize: 20,
+          },
+          headerLeft: () => {
+            return (
+              <TouchableOpacity style={{padding: 10}} onPress={handleBack}>
+                <Back />
+              </TouchableOpacity>
+            );
+          },
+        }} />
       <Stack.Screen name={Route.MYCURES} component={MyCures} />
 
       <Stack.Screen name={Route.NOTIFICATION} component={Notification} />
