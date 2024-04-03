@@ -40,8 +40,9 @@ const Chat = ({route}) => {
   const navigation = useNavigation();
   const chatData = route.params.messages;
   const Id = route.params.id;
-  const FIRST_NAME = route.params.firstName;
-  const LAST_NAME = route.params.lastName;
+  const FIRST_NAME = route.params.first_name;
+  const LAST_NAME = route.params.last_name;
+  console.log(FIRST_NAME + LAST_NAME);
   const chatid = route.params.chatId;
   const [text, setText] = useState('');
   const [messages, setMessages] = useState([]);
@@ -52,6 +53,7 @@ const Chat = ({route}) => {
   const [selectedMessageId, setSelectedMessageId] = useState(null);
 
   useEffect(() => {
+    console.log("name:",FIRST_NAME);
     navigation.setOptions({
       title: `Dr. ${FIRST_NAME} ${LAST_NAME}`,
     });
@@ -114,7 +116,6 @@ const Chat = ({route}) => {
     console.log(payload);
 
     socket.send(payload);
-    
   };
 
   const renderSend = props => (

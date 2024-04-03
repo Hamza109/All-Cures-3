@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   Pressable,
   StatusBar,
-  ScrollView
+  ScrollView,
+  Alert,
 } from 'react-native';
 import RenderHTML from 'react-native-render-html';
 import {useForm, Controller} from 'react-hook-form';
@@ -184,15 +185,20 @@ These Terms and Conditions are governed by the internal substantive laws of the 
           });
         }, 2000);
       } else if (
-        response.data === 'Email Address already Exists in the System'
+        response.data == 'Email Address already Exists in the System'
       ) {
+        setIsLoaded(false);
+        console.log('Email exist');
         toast.show({
           title: 'Email already exists!',
           description: 'Try with another email',
           status: 'warning',
           placement: 'bottom',
-          style: {borderRadius: 20, width: wp('80%'), marginBottom: 20},
+          style: {borderRadius: 20, width: '80%', marginBottom: 20},
         });
+      } else {
+        setIsLoaded(false);
+        Alert.alert('Email already Exist');
       }
     } catch (err) {
       // Handle login error
@@ -288,7 +294,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
                 style={styles.termsLink}
                 onPress={() => {
                   /* Implement link to your T&C */
-                  setShowModal(true)
+                  setShowModal(true);
                 }}>
                 Terms and Conditions
               </Text>
@@ -418,7 +424,7 @@ const styles = StyleSheet.create({
   termsText: {
     fontSize: 14,
     color: '#000',
-    marginLeft:15
+    marginLeft: 15,
   },
   termsLink: {
     color: Color.appDefaultColor,

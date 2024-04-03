@@ -19,6 +19,7 @@ const FeedStack = ({navigation}) => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
+        headerLeftLabelVisible:false,
       }}>
       <Stack.Screen name={Route.FEED} component={Feed} />
       <Stack.Screen name={Route.ARTICLES_READ} component={ArticlesRead} />

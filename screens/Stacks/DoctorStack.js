@@ -26,6 +26,7 @@ const DoctorStack = ({navigation}) => {
       screenOptions={{
         headerShown: false,
         headerLeftLabelVisible:false,
+        
      
       }}>
       <Stack.Screen name={Route.DOCTOR} component={Doctor} />

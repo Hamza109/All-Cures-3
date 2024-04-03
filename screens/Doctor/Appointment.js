@@ -122,7 +122,9 @@ const Appointment = ({route}) => {
         // ... any further actions after success
       } else {
         // Appointment creation failed
-        console.error('Appointment creation failed:'); // Log any detailed error message from the server
+        console.error('Appointment creation failed:');
+        setIsLoaded(true);
+        Alert.alert("Error Creating Appointment") // Log any detailed error message from the server
         // ... handle failure
       }
     } catch (error) {

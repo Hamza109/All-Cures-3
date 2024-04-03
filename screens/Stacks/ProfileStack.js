@@ -21,6 +21,7 @@ const ProfileStack = () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
+        headerLeftLabelVisible:false,
         
       }}>
       <Stack.Screen name={Route.PROFILE} component={Profile} />
@@ -31,7 +32,7 @@ const ProfileStack = () => {
       <Stack.Screen name={Route.EDITPROFILE} component={EditProfile}  />
       <Stack.Screen name={Route.INBOX} component={Inbox} />
       <Stack.Screen name={Route.FORGETPASSWORD} component={ForgetPassword} />
-      <Stack.Screen name={Route.CHAT} component={Chat} />
+      <Stack.Screen name={Route.CHAT} component={Chat} options={{headerShown:true}} />
       <Stack.Screen name={Route.MYCURES} component={MyCures} />
 
       <Stack.Screen name={Route.NOTIFICATION} component={Notification} />

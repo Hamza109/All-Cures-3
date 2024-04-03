@@ -22,7 +22,8 @@ import {StackActions} from '@react-navigation/native';
 import {Route} from '../../routes';
 import HeaderComponent from '../../Components/HeaderComponent';
 import ContentLoader from '../../Components/ContentLoader';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {Color, FontFamily} from '../../config/GlobalStyles';
 
 const Inbox = () => {
   const [messages, setMessages] = useState([]);
@@ -73,7 +74,7 @@ const Inbox = () => {
       .catch(err => err);
   };
 
-  const initiateChat = userID => {
+  const initiateChat = (userID, first_name, second_name) => {
     if (profile.registration_id != 0) {
       console.log('hah', userID);
       if (profile.docID == 0) {
@@ -114,8 +115,8 @@ const Inbox = () => {
                     : [],
                 id: user,
                 chatId: res.data[0].Chat_id,
-                first_name: profile.firstName,
-                last_name: profile.lastName,
+                first_name: first_name,
+                last_name: second_name,
               });
             }
           } else {
@@ -140,27 +141,28 @@ const Inbox = () => {
 
   useEffect(() => {
     console.log(profile);
-if(user){ const fetchData = async () => {
-  console.log(typeof user);
-  console.log(user);
-  try {
-    const response = await fetch(`${backendHost}/chat/list/${user}`);
-    console.log(response);
-    if (!response.ok) {
-      throw new Error(`Network response was not ok (${response.status})`);
+    if (user) {
+      const fetchData = async () => {
+        console.log(typeof user);
+        console.log(user);
+        try {
+          const response = await fetch(`${backendHost}/chat/list/${user}`);
+          console.log(response);
+          if (!response.ok) {
+            throw new Error(`Network response was not ok (${response.status})`);
+          }
+
+          const json = await response.json();
+          setData(json);
+          setIsLoaded(true);
+        } catch (error) {
+          setIsLoaded(true);
+          Alert.alert('Error Fetching Data', error.message); // More informative message
+        }
+      };
+
+      fetchData();
     }
-
-    const json = await response.json();
-    setData(json);
-    setIsLoaded(true);
-  } catch (error) {
-    setIsLoaded(true);
-    Alert.alert('Error Fetching Data', error.message); // More informative message
-  }
-};
-
-fetchData();}
-   
   }, [user]);
 
   const renderMessage = ({item}) => {
@@ -191,7 +193,9 @@ fetchData();}
     return (
       <View style={{flex: 1, backgroundColor: '#fff'}}>
         <Pressable
-          onPress={() => initiateChat(item.userID)}
+          onPress={() =>
+            initiateChat(item.userID, item.first_name, item.last_name)
+          }
           style={styles.messageContainer}>
           <View style={styles.leftContainer}>
             {item.Rowno == null ? (
@@ -242,20 +246,23 @@ fetchData();}
 
   return (
     <>
-      {isLoaded ? (
-        <SafeAreaView style={styles.container}>
-          <StatusBar backgroundColor="#00415e" barStyle="light-content" />
-          <HeaderComponent title="Inbox" />
+      <SafeAreaView style={styles.container}>
+        <StatusBar backgroundColor="#00415e" barStyle="light-content" />
+        <HeaderComponent title="Inbox" />
+        {!isLoaded ? (
+          <ContentLoader />
+        ) : data.length > 0 ? (
           <FlatList
             data={data}
             style={{width: '100%'}}
             renderItem={renderMessage}
-            key={Math.random() * 1000}
+            keyExtractor={item => item.id} // Assuming unique 'id' in your data
           />
-        </SafeAreaView>
-      ) : (
-        <ContentLoader />
-      )}
+        ) : (
+          // Placeholder for empty inbox (replace with appropriate UI)
+          <Text style={styles.emptyInbox}>No messages yet</Text>
+        )}
+      </SafeAreaView>
     </>
   );
 };
@@ -290,6 +297,13 @@ const styles = StyleSheet.create({
   leftContainer: {
     flexDirection: 'row',
     width: '70%',
+  },
+  emptyInbox: {
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    fontSize: 18,
+    color: Color.colorDarkslategray,
+    fontFamily: FontFamily.poppinsRegular,
   },
 });
 
