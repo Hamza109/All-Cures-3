@@ -25,66 +25,78 @@ const OutButton = ({name, docID, firstName, lastName}) => {
   };
 
   const createChat = () => {
-    axios
-      .post(`${backendHost}/chat/start/${profile.registration_id}/${docID}`)
-      .then(res => {
-        if (res.data[0].Chat_id != null) {
-          navigation.navigate(Route.CHAT, {
-            id: docID,
-            messages: [],
-            chatId: res.data[0].Chat_id,
-            first_name: firstName,
-            last_name: lastName,
-          }).catch(err=>console.log(err))
-        } else {
-          Alert.alert('Something went wrong,please try again');
-        }
-      })
+    try {
+      axios
+        .post(`${backendHost}/chat/start/${profile.registration_id}/${docID}`)
+        .then(res => {
+          if (res.data[0].Chat_id != null) {
+            navigation
+              .navigate(Route.CHAT, {
+                id: docID,
+                messages: [],
+                chatId: res.data[0].Chat_id,
+                first_name: firstName,
+                last_name: lastName,
+              })
+              .catch(err => console.log(err));
+          } else {
+            Alert.alert('Something went wrong,please try again');
+          }
+        })
 
-      .catch(err => Alert.alert(err));
+        .catch(err => Alert.alert(err));
+    } catch (error) {
+      console.log(error);
+      Alert.alert(error);
+    }
   };
 
   const initiateChat = () => {
     if (profile.registration_id != 0) {
       console.log(profile.registration_id);
-      axios
-        .get(`${backendHost}/chat/${profile.registration_id}/${docID}`)
-        .then(res => {
-          console.log(res.data);
-          if (res.status === 200) {
-            if (res.data[0].Chat_id === null) {
-              createChat();
-            } else {
-              console.log('transformedMEssage');
-              const transformedMessages = res.data.map(message => {
-                return {
-                  _id: Math.random().toString(36).substring(2, 9),
-                  text: message.Message,
-                  createdAt: new Date(message.Time),
-                  user: {
-                    _id: message.From_id,
-                    name: message.From,
-                  },
-                };
-              });
-              console.log('navigate');
 
-              navigation.navigate(Route.CHAT, {
-                messages:
-                  res.data[0].Message != ''
-                    ? transformedMessages.reverse()
-                    : [],
-                id: docID,
-                chatId: res.data[0].Chat_id,
-                first_name: firstName,
-                last_name: lastName,
-              });
+      try {
+        axios
+          .get(`${backendHost}/chat/${profile.registration_id}/${docID}`)
+          .then(res => {
+            console.log(res.data);
+            if (res.status === 200) {
+              if (res.data[0].Chat_id === null) {
+                createChat();
+              } else {
+                console.log('transformedMEssage');
+                const transformedMessages = res.data.map(message => {
+                  return {
+                    _id: Math.random().toString(36).substring(2, 9),
+                    text: message.Message,
+                    createdAt: new Date(message.Time),
+                    user: {
+                      _id: message.From_id,
+                      name: message.From,
+                    },
+                  };
+                });
+                console.log('navigate');
+
+                navigation.navigate(Route.CHAT, {
+                  messages:
+                    res.data[0].Message != ''
+                      ? transformedMessages.reverse()
+                      : [],
+                  id: docID,
+                  chatId: res.data[0].Chat_id,
+                  first_name: firstName,
+                  last_name: lastName,
+                });
+              }
+            } else {
+              Alert.alert('Please Try again', 'something went wrong');
             }
-          } else {
-            Alert.alert('Please Try again', 'something went wrong');
-          }
-        })
-        .catch(err => err);
+          })
+          .catch(err => err);
+      } catch (error) {
+        Alert.alert('Please Try Again');
+      }
     } else {
       dispatch(screen(Route.LOGIN));
     }

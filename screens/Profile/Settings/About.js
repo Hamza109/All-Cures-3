@@ -1,4 +1,11 @@
-import {StyleSheet, Text, View, TouchableOpacity, Linking,SafeAreaView} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Linking,
+  SafeAreaView,
+} from 'react-native';
 import React from 'react';
 import {Color, width} from '../../../config/GlobalStyles';
 import NotificationIcon from '../../../assets/images/Notification.svg';
@@ -7,7 +14,7 @@ import HeaderComponent from '../../../Components/HeaderComponent';
 const About = () => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <HeaderComponent/>
+      <HeaderComponent title="About us" />
       <View style={styles.setting}>
         <Text style={{color: Color.colorDarkslategray, fontSize: 18}}>
           All Cures is a product developed, managed and owned by Etherium

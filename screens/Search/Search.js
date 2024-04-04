@@ -5,7 +5,7 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import {Input} from 'native-base';
 import {width, height, FontFamily, Color} from '../../config/GlobalStyles';
@@ -41,9 +41,10 @@ const Search = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderComponent title = "Search"/>
+      <HeaderComponent title="Search" />
 
-      <ScrollView  style={{paddingHorizontal: 26,width:'100%',height:'100%'}}>
+      <ScrollView
+        style={{paddingHorizontal: 26, width: '100%', height: '100%'}}>
         <View style={{marginBottom: 22}}>
           <View style={styles.label}>
             <Text style={styles.headlabel}>Find Cures</Text>
@@ -61,7 +62,6 @@ const Search = ({navigation}) => {
                 onPress={() => {
                   navigation.navigate(Route.SEARCH_RESULT, {
                     medicineId: item.med_id,
-                   
                   });
                 }}
                 key={item.med_id}>
@@ -120,7 +120,7 @@ const Search = ({navigation}) => {
               handleNavigation('Find Practitioner', 'Practitioner City', 'city')
             }
             activeOpacity={0.5}
-            style={[styles.textBox,{marginBottom:20}]}>
+            style={[styles.textBox, {marginBottom: 20}]}>
             <Text style={styles.placeholderText}>Practitioner City</Text>
           </TouchableOpacity>
         </View>
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     width: '100%',
-    marginBottom:22
+    marginBottom: 22,
   },
 
   item: {

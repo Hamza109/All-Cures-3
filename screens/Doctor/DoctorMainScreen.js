@@ -205,7 +205,7 @@ const DoctorMainScreen = ({route, navigation}) => {
               />
             </View>
           ) : null}
-          {item?.videoService == 1 ? (
+          {/* {item?.videoService == 1 ? (
             <View
               style={{alignSelf: 'center', width: '100%', marginBottom: 10}}>
               <OutButton
@@ -215,9 +215,9 @@ const DoctorMainScreen = ({route, navigation}) => {
                 lastName={item.lastName}
               />
             </View>
-          ) : null}
+          ) : null} */}
           {item?.videoService == 1 ? (
-            <View style={{alignSelf: 'center', width: '100%'}}>
+            <View style={{alignSelf: 'center', width: '100%',marginBottom:5}}>
               <ScheduleButton docID={item.docID} />
             </View>
           ) : null}

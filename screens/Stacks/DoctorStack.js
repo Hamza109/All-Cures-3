@@ -34,7 +34,7 @@ const DoctorStack = ({navigation}) => {
         name={Route.DOCTOR_MAIN_SCREEN}
         component={DoctorMainScreen}
         options={{
-          title: 'Practitioners',
+          title: 'Practitioner',
           headerShown: true,
           headerTitleAlign: 'center',
           headerTitleStyle: {

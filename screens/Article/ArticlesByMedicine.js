@@ -15,6 +15,7 @@ import ContentLoader from '../../Components/ContentLoader';
 import {FlashList} from '@shopify/flash-list';
 import ArticleCard from '../../Components/ArticleCard';
 import {useNavigation} from '@react-navigation/native';
+import { Route } from '../../routes';
 const ArticlesByMedicine = ({route}) => {
   const [loading, setLoading] = useState(false);
   const [initial, setInitial] = useState(9);
@@ -77,7 +78,7 @@ const ArticlesByMedicine = ({route}) => {
         activeOpacity={0.7}
         onPress={() => {
           console.log(`${item.article_id}`),
-            navigation.push(ARTICLES_READ, {
+            navigation.push(Route.ARTICLES_READ, {
               articleId: item.article_id,
             });
         }}>

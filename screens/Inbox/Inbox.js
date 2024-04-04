@@ -75,6 +75,7 @@ const Inbox = () => {
   };
 
   const initiateChat = (userID, first_name, second_name) => {
+    setIsLoaded(false)
     if (profile.registration_id != 0) {
       console.log('hah', userID);
       if (profile.docID == 0) {
@@ -107,6 +108,7 @@ const Inbox = () => {
                 };
               });
               console.log('navigate', transformedMessages);
+              
 
               navigation.navigate(Route.CHAT, {
                 messages:
@@ -118,6 +120,7 @@ const Inbox = () => {
                 first_name: first_name,
                 last_name: second_name,
               });
+              setIsLoaded(true)
             }
           } else {
             Alert.alert('Please Try again', 'something went wrong');

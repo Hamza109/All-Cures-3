@@ -47,7 +47,7 @@ const ArticleCard = ({
   const [addFav, setAddFav] = useState(0);
   const [toggle, setToggle] = useState();
   const profile = useSelector(state => state.profile.data);
-
+  console.log(articleId);
   const dispatch = useDispatch();
   const handleOptionPress = () => {
     setShowOptions(!showOptions), console.log('Touched', showOptions);
@@ -74,7 +74,6 @@ const ArticleCard = ({
         await axios
           .post(
             `${backendHost}/favourite/userid/${profile.registration_id}/articleid/${articleId}/status/1/create`,
-            
           )
           .then(res => {
             console.log('added');
@@ -155,18 +154,11 @@ const ArticleCard = ({
     // Article Card Component
 
     <View style={styles.cardContainer}>
-      <Pressable
+      <View
         activeOpacity={0.7}
         style={styles.detailsCardContainer}
         onPressIn={() => setShowOptions(false)}
-        onPress={() => {
-          dispatch(option(-85)),
-            navigation.navigate(Route.ARTICLES_READ, {
-              articleId: articleId,
-              title: title,
-              image: image_location,
-            });
-        }}>
+       >
         <Text style={styles.article_title}>
           {window_title}{' '}
           {dc_name !== undefined && (
@@ -182,7 +174,7 @@ const ArticleCard = ({
             10 min read <Dot height={5} width={5} /> {createdAt}{' '}
           </Text>
         </View>
-      </Pressable>
+      </View>
       <View style={{justifyContent: 'center'}}>
         <View
           style={{width: 100, height: 100, backgroundColor: Color.colorSilver}}>

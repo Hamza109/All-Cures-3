@@ -18,9 +18,6 @@ import DoctorsCard from '../../Components/DoctorsCard';
 import InactiveSearch from '../../assets/images/INACTIVE_SEARCH.svg';
 
 const SearchResults = ({navigation, route}) => {
-
-
-
   const [data, setData] = useState([]);
   const [Loaded, setLoaded] = useState(false);
 
@@ -35,7 +32,6 @@ const SearchResults = ({navigation, route}) => {
       key: key,
     });
   };
-  
 
   const searchByText = async () => {
     if (key == 'cure') {
@@ -43,7 +39,7 @@ const SearchResults = ({navigation, route}) => {
         console.log('key-->', key);
         const response = await fetch(`${backendHost}/isearch/${text}`);
         const articleData = await response.json();
-   console.log('articleResult',articleData)
+        console.log('articleResult', articleData);
         setData(articleData);
         setLoaded(true);
       } catch (error) {
@@ -65,13 +61,12 @@ const SearchResults = ({navigation, route}) => {
       }
     } else if (key == 'city') {
       try {
-      
         const response = await fetch(
           `${backendHost}/SearchActionController?cmd=getResults&city=${text}&Latitude=undefined&Longitude=undefined`,
         );
         const doctorByCity = await response.json();
         console.log('key-->', text);
-        console.log(doctorByCity.map.DoctorDetails.myArrayList)
+        console.log(doctorByCity.map.DoctorDetails.myArrayList);
         setData(doctorByCity.map.DoctorDetails.myArrayList);
         setLoaded(true);
       } catch (error) {
@@ -103,12 +98,7 @@ const SearchResults = ({navigation, route}) => {
     searchByText();
   }, [key]);
 
-
-    
-  
-
   const renderCure = ({item}) => {
-  
     let imageLoc = '';
     const imgLocation = item.content_location;
     if (imgLocation && imgLocation.includes('cures_articleimages')) {
@@ -127,6 +117,8 @@ const SearchResults = ({navigation, route}) => {
           console.log(`${item.article_id}`),
             navigation.push(Route.ARTICLES_READ, {
               articleId: item.article_id,
+              title: item.title,
+              image: imageLoc,
             });
         }}>
         <ArticlesCard
@@ -193,43 +185,64 @@ const SearchResults = ({navigation, route}) => {
           <NotificationIcon width={16} height={18} style={{marginTop: 5}} />
         </View>
       </View>
-      <View style={{paddingHorizontal:26}}>
+      <View style={{paddingHorizontal: 26}}>
         {
-      <TouchableOpacity
-            onPress={() =>
-                {
-                    key=='cure'? handleNavigation('Find Cures', 'Search for cures', 'cure'):key=='name'?handleNavigation('Find Practitioner', 'Practitioner Name', 'name'):key =='city'?handleNavigation('Find Practitioner', 'Practitioner City', 'city'):handleNavigation('Find Cures', 'Search for cures', 'cure')
-          
-                }
-            }
+          <TouchableOpacity
+            onPress={() => {
+              key == 'cure'
+                ? handleNavigation('Find Cures', 'Search for cures', 'cure')
+                : key == 'name'
+                ? handleNavigation(
+                    'Find Practitioner',
+                    'Practitioner Name',
+                    'name',
+                  )
+                : key == 'city'
+                ? handleNavigation(
+                    'Find Practitioner',
+                    'Practitioner City',
+                    'city',
+                  )
+                : handleNavigation('Find Cures', 'Search for cures', 'cure');
+            }}
             activeOpacity={0.5}
             style={styles.textBox}>
-                
-            <Text style={styles.placeholderText}> {key=='cure'?'Search for cures':key=='name'?'Practitioner Name':key=='city'?'Practitioner City':'Search for cures'} </Text>
+            <Text style={styles.placeholderText}>
+              {' '}
+              {key == 'cure'
+                ? 'Search for cures'
+                : key == 'name'
+                ? 'Practitioner Name'
+                : key == 'city'
+                ? 'Practitioner City'
+                : 'Search for cures'}{' '}
+            </Text>
             <View style={styles.searchIcon}>
               <InactiveSearch width={16} height={16} />
             </View>
           </TouchableOpacity>
-}
-          </View>
-       
+        }
+      </View>
 
-      {Loaded ?  data.length > 0 ? (
-        <FlashList
-          estimatedItemSize={100}
-          data={data}
-          renderItem={
-            key == 'cure'
-              ? renderCure
-              : key == 'name' || key == 'city'
-              ? renderDoctor
-              : renderCure
-          }
-        />
-      ) : (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text>No data found</Text>
-        </View>
+      {Loaded ? (
+        data.length > 0 ? (
+          <FlashList
+            estimatedItemSize={100}
+            data={data}
+            renderItem={
+              key == 'cure'
+                ? renderCure
+                : key == 'name' || key == 'city'
+                ? renderDoctor
+                : renderCure
+            }
+          />
+        ) : (
+          <View
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text>No data found</Text>
+          </View>
+        )
       ) : (
         <MyLoader />
       )}
@@ -272,10 +285,10 @@ const styles = StyleSheet.create({
     width: '100%',
     borderColor: 'rgba(76, 78, 100, 0.22)',
     height: 50,
-  alignItems:'center',
-  justifyContent:'space-between',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     borderRadius: 5,
-    flexDirection:'row'
+    flexDirection: 'row',
   },
   placeholderText: {
     fontSize: 12,
@@ -284,7 +297,7 @@ const styles = StyleSheet.create({
     color: 'rgba(76, 78, 100, 0.6)',
     fontFamily: FontFamily.poppinsRegular,
   },
-  searchIcon:{
-    marginRight:20
-  }
+  searchIcon: {
+    marginRight: 20,
+  },
 });

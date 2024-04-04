@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from 'react-native';
 import {Input} from 'native-base';
 import {FlashList} from '@shopify/flash-list';
@@ -132,7 +132,7 @@ const SearchInput = ({navigation, route}) => {
       </View>
       <View style={styles.inputContainer}>
         <Input
-          onSubmitEditing={()=>onSubmit(inputText)}
+          onSubmitEditing={() => onSubmit(inputText)}
           onChangeText={onSearch}
           placeholder={placeholder}
           value={inputText}

@@ -53,10 +53,15 @@ const Chat = ({route}) => {
   const [selectedMessageId, setSelectedMessageId] = useState(null);
 
   useEffect(() => {
-
-    navigation.setOptions({
-      title: `Dr. ${FIRST_NAME} ${LAST_NAME}`,
-    });
+    if (profile.docID != 0) {
+      navigation.setOptions({
+        title: `${FIRST_NAME} ${LAST_NAME}`,
+      });
+    } else {
+      navigation.setOptions({
+        title: `Dr.${FIRST_NAME} ${LAST_NAME}`,
+      });
+    }
   });
 
   useEffect(() => {

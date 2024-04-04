@@ -1,5 +1,14 @@
-import {StyleSheet, Text, View, TouchableOpacity, SafeAreaView,Linking} from 'react-native';
-import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  SafeAreaView,
+  Linking,
+  Alert,
+} from 'react-native';
+import React, {useState} from 'react';
+import axios from 'axios';
 import {Color, FontFamily, width} from '../../../config/GlobalStyles';
 import NotificationIcon from '../../../assets/images/Notification.svg';
 import IonIcons from 'react-native-vector-icons/Ionicons';
@@ -7,14 +16,58 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {useSelector, useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import HeaderComponent from '../../../Components/HeaderComponent';
+import {Modal} from 'native-base';
+import {FormControl, Input, Button} from 'native-base';
+import {screen} from '../../../Redux/Slice/screenNameSlice';
+import {Route} from '../../../routes';
+import {profileData} from '../../../Redux/Slice/ProfileDataSlice';
 const Help = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  //   const user = useSelector(state => state.userId.regId);
+  const profile = useSelector(state => state.profile.data);
+  console.log(profile);
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
+  const [email, setEmail] = useState(profile?.email_address);
+  const [password, setPassword] = useState('');
+  const [show, setShow] = React.useState(false);
   const onDelete = () => {
-    // if (user != 0) {
-    // } else {
-    // }
+    console.log('pressed modal');
+    if (Object.keys(profile).length != 0) {
+      console.log('Modal opened');
+      setModalVisible(true);
+    } else {
+      dispatch(screen(Route.LOGIN));
+    }
+  };
+  const handleDelete = async () => {
+    const body = {
+      email: email,
+      pwd: password,
+      reasonID: 1,
+    };
+    console.log(body);
+    try {
+      const res = await axios.put(
+        'https://uat.all-cures.com:444/cures/data/deactivate',
+        body,
+      );
+      const json = res.data;
+      console.log(json);
+      if (json == 0) {
+        Alert.alert('Incorrect Password');
+      } else if (json == 1) {
+        Alert.alert('Account Deleted Successfully'),
+          dispatch(profileData([])),
+          dispatch(screen(Route.MAIN));
+        setModalVisible(false);
+      } else {
+        Alert.alert('Some Error Occured');
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   const dialCall = () => {
     let phoneNumber = '';
@@ -27,9 +80,14 @@ const Help = () => {
 
     Linking.openURL(phoneNumber);
   };
+  const handleClick = () => setShow(!show);
+  const handleChange = i => {
+    console.log('New password value:', i);
+    setPassword(i);
+  };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <HeaderComponent title={'Help'}/>
+      <HeaderComponent title={'Help'} />
 
       <View style={styles.header}>
         <Text style={styles.headerText}>Contact Us</Text>
@@ -62,6 +120,65 @@ const Help = () => {
           <View></View>
         </View>
       </View>
+      <Modal
+        isOpen={modalVisible}
+        onClose={() => setModalVisible(false)}
+        finalFocusRef={finalRef}>
+        <Modal.Content>
+          <Modal.CloseButton />
+          <Modal.Header>Delete Your Account</Modal.Header>
+          <Modal.Body>
+            <FormControl>
+              <FormControl.Label>Email</FormControl.Label>
+              <Input
+                style={{backgroundColor: Color.lightpurple, padding: '10px'}}
+                value={email}
+                disabled
+              />
+            </FormControl>
+            <FormControl mt="3">
+              <FormControl.Label>Password</FormControl.Label>
+              <Input
+                type={show ? 'text' : 'password'}
+                w="100%"
+                py="0"
+                style={{backgroundColor: Color.lightpurple, padding: '10px'}}
+                InputRightElement={
+                  <Button
+                    size="xs"
+                    rounded="none"
+                    w="1/8"
+                    h="full"
+                    onPress={handleClick}>
+                    {show ? 'Hide' : 'Show'}
+                  </Button>
+                }
+                placeholder="Password"
+                onChangeText={i => handleChange(i)}
+              />
+            </FormControl>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button.Group space={2}>
+              <Button
+                variant="ghost"
+                colorScheme="blueGray"
+                onPress={() => {
+                  setModalVisible(false);
+                }}>
+                Cancel
+              </Button>
+              <Button
+                onPress={() => {
+                  handleDelete();
+                }}
+                colorScheme="red">
+                Delete Account
+              </Button>
+            </Button.Group>
+          </Modal.Footer>
+        </Modal.Content>
+      </Modal>
 
       <View style={styles.delete}>
         <Text style={styles.infoText}>
