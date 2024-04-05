@@ -162,7 +162,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
           <TextInput
           autoCapitalize='none'
             style={[styles.input, {borderBottomWidth: 1}]}
-            placeholder="Email/Phone Number"
+            placeholder="Email"
             keyboardType="email-address" // Or 'phone-pad' if appropriate
             onChangeText={setEmail}
             value={email}

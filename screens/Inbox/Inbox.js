@@ -14,7 +14,7 @@ import axios from 'axios';
 import Svg, {Path, Circle} from 'react-native-svg';
 import {backendHost} from '../../Components/apiConfig';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused, useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 
 import moment from 'moment';
@@ -141,8 +141,7 @@ const Inbox = () => {
       setUser(profile.registration_id);
     }
   }, []);
-
-  useEffect(() => {
+useFocusEffect(() => {
     console.log(profile);
     if (user) {
       const fetchData = async () => {

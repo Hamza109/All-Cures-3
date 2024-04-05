@@ -1,16 +1,26 @@
-import {FlatList, StyleSheet, Text, View, TouchableOpacity, SafeAreaView} from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import ArticleCard from '../../Components/ArticleCard';
 import {backendHost} from '../../Components/apiConfig';
 import {useSelector} from 'react-redux';
 import {FlashList} from '@shopify/flash-list';
-import { width ,Color} from '../../config/GlobalStyles';
+import {width, Color} from '../../config/GlobalStyles';
 import ContentLoader from '../../Components/ContentLoader';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {Route} from '../../routes';
 const Favourite = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const profile = useSelector(state => state.profile.data);
   console.log(profile);
   const [items, setItems] = useState();
+  const navigation = useNavigation();
 
   const data = [
     {
@@ -114,7 +124,7 @@ const Favourite = () => {
     },
   ];
 
-  useEffect(() => {
+ useFocusEffect(() => {
     const receivedData = () => {
       fetch(
         `${backendHost}/favourite/userid/${profile.registration_id}/favouritearticle`,
@@ -127,7 +137,7 @@ const Favourite = () => {
         .catch(err => err);
     };
     receivedData();
-  }, []);
+  });
   const renderItem = ({item}) => {
     console.log(item);
     let imageLoc = '';
@@ -141,20 +151,30 @@ const Favourite = () => {
         'https://all-cures.com:444/cures_articleimages//299/default.png';
     }
     return (
-      <ArticleCard
-        title={item.title}
-        window_title={item.authors_name}
-        create_date={item.create_date}
-        image_location={imageLoc}
-        dc_name={item.dc_name}
-      />
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() =>
+          navigation.push(Route.ARTICLES_READ, {
+            articleId: item.article_id,
+            title: item.title,
+            image: imageLoc,
+          })
+        }>
+        <ArticleCard
+          title={item.title}
+          window_title={item.authors_name}
+          create_date={item.create_date}
+          image_location={imageLoc}
+          dc_name={item.dc_name}
+        />
+      </TouchableOpacity>
     );
   };
 
   return (
     <>
       {isLoaded ? (
-        <SafeAreaView style={{flex: 1,backgroundColor:'#fff'}}>
+        <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
           <View style={styles.feedHeader}>
             <View
               style={{
@@ -165,7 +185,6 @@ const Favourite = () => {
                 marginLeft: 5,
               }}>
               <Text style={styles.read}>Favourite</Text>
-            
             </View>
           </View>
           <FlashList
@@ -184,15 +203,15 @@ const Favourite = () => {
 export default Favourite;
 
 const styles = StyleSheet.create({
-    feedHeader: {
-        height: 100,
-        width: width,
-        backgroundColor: '#fff',
-        paddingHorizontal: 20,
-      },
-      read: {
-        color: Color.colorDarkslategray,
-        fontWeight: '700',
-        fontSize: 25,
-      },
+  feedHeader: {
+    height: 100,
+    width: width,
+    backgroundColor: '#fff',
+    paddingHorizontal: 20,
+  },
+  read: {
+    color: Color.colorDarkslategray,
+    fontWeight: '700',
+    fontSize: 25,
+  },
 });

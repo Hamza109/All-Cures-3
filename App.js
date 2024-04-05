@@ -10,11 +10,11 @@ import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import PushNotification from 'react-native-push-notification';
 import {backendHost} from './Components/apiConfig';
 import DeviceInfo from 'react-native-device-info';
-import {Linking,Text} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {Linking, Text} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {articleId} from './Redux/Slice/ArticleIdSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Route } from './routes';
+import {Route} from './routes';
 const App = () => {
   const articeId = async id => {
     try {
@@ -23,7 +23,6 @@ const App = () => {
       throw error;
     }
   };
- 
 
   const checkApplicationPermission = async () => {
     if (Platform.OS == 'android') {
@@ -36,9 +35,6 @@ const App = () => {
       }
     }
   };
-  
- 
-
 
   const handleInitialNotification = async () => {
     const initialNotification = await messaging().getInitialNotification();
@@ -84,12 +80,13 @@ const App = () => {
 
       fetch(`${backendHost}/notification/token/"${token}"`, {
         method: 'POST',
-      }).then(res => {
-        console.log('post', res);
       })
-      .catch(err=>{
-        console.log(err)
-      })
+        .then(res => {
+          console.log('post', res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
 
       console.log('FCM', token);
       // Send the token to your server for further processing if needed.
@@ -241,7 +238,6 @@ const App = () => {
 
     let deviceId = DeviceInfo.getUniqueId();
 
-   
     // Get the deep link used to open the app
     const getUrl = async () => {
       const initialUrl = await Linking.getInitialURL();
@@ -270,7 +266,9 @@ const App = () => {
       if (initialUrl.includes('/notification')) {
         const url = initialUrl.split('/').slice(-2).join('/');
 
-        navigationRef.current?.navigate(Route.VIDEOCALL, {url: ` https://${url}`});
+        navigationRef.current?.navigate(Route.VIDEOCALL, {
+          url: ` https://${url}`,
+        });
 
         console.log('url', url);
       }
@@ -280,7 +278,7 @@ const App = () => {
 
         setMail(url);
         setTimeout(() => {
-          navigationRef.current?.navigate('Forgetpass');
+          navigationRef.current?.navigate(Route.RESETPASSWORD);
         }, 2000);
       }
     };

@@ -5,6 +5,7 @@ import Login from '../Profile/Login';
 import SignUp from '../Profile/SignUp';
 import ForgetPassword from '../Profile/ForgetPassword';
 import Notification from '../Profile/Settings/Notification';
+import ResetPassword from '../Profile/ResetPassword';
 
 const LoginStack = () => {
   const Stack = createStackNavigator();
@@ -13,13 +14,13 @@ const LoginStack = () => {
       initialRouteName={Route.LOGIN}
       screenOptions={{
         headerShown: false,
-        headerLeftLabelVisible:false,
-      
+        headerLeftLabelVisible: false,
       }}>
       <Stack.Screen name={Route.LOGIN} component={Login} />
       <Stack.Screen name={Route.SIGNUP} component={SignUp} />
       <Stack.Screen name={Route.FORGETPASSWORD} component={ForgetPassword} />
-      <Stack.Screen name = {Route.NOTIFICATION} component={Notification}/>
+      <Stack.Screen name={Route.NOTIFICATION} component={Notification} />
+      <Stack.Screen name={Route.RESETPASSWORD} component={ResetPassword} />
     </Stack.Navigator>
   );
 };

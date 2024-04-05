@@ -32,6 +32,22 @@ const SearchStack = ({navigation}) => {
       <Stack.Screen
         name={Route.DOCTOR_MAIN_SCREEN}
         component={DoctorMainScreen}
+        options={{
+          title: 'Practitioner',
+          headerShown: true,
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: FontFamily.poppinsBold,
+            fontSize: 20,
+          },
+          headerLeft: () => {
+            return (
+              <TouchableOpacity style={{padding: 10}} onPress={handleBack}>
+                <Back />
+              </TouchableOpacity>
+            );
+          },
+        }}
       />
       <Stack.Screen
         name={Route.CHAT}

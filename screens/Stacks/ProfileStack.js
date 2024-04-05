@@ -17,6 +17,8 @@ import Chat from '../Inbox/Chat';
 import MyCures from '../Profile/Settings/MyCures';
 import {FontFamily} from '../../config/GlobalStyles';
 import {useNavigation} from '@react-navigation/native';
+import ResetPassword from '../Profile/ResetPassword';
+import ArticlesRead from '../Article/ArticlesRead';
 const ProfileStack = () => {
   const navigation = useNavigation();
   const handleBack = () => {
@@ -53,7 +55,9 @@ const ProfileStack = () => {
       <Stack.Screen name={Route.MYCURES} component={MyCures} />
 
       <Stack.Screen name={Route.NOTIFICATION} component={Notification} />
+      <Stack.Screen name ={Route.RESETPASSWORD} component={ResetPassword}/>
       <Stack.Screen name={Route.SUBMITARTICLE} component={SubmitArticle} />
+      <Stack.Screen name ={Route.ARTICLES_READ} component={ArticlesRead}/>
     </Stack.Navigator>
   );
 };

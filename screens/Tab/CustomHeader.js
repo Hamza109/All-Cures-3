@@ -87,7 +87,17 @@ const CustomHeader = ({title, id}) => {
           .then(res => {
             console.log('added');
             if (res.data > 0) {
-              Alert.alert('Added to Favorite');
+              Alert.alert('Favourites', 'Added to Favourites', [
+                {
+                  text: 'Go to favourites',
+                  onPress: () =>
+                    navigation.navigate(Route.PROFILE_TAB, {
+                      screen: Route.FAVOURITE,
+                    }),
+                  style: 'cancel',
+                },
+                {text: 'OK', onPress: () => console.log('OK Pressed')},
+              ]);
               setAddFav(2);
             }
           })
