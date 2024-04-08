@@ -40,20 +40,7 @@ const ResetPassword = ({navigation}) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const dispatch = useDispatch();
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-  const [number, setNumber] = useState();
-  //Hamza Sir Please add and check this mail part
-  //   useEffect(() => {
-  //     getMail();
-  //     // const params = new URLSearchParams(location.search);
-  //     // const getEmail= params.get('em');
-  //   }, []);
-  //   const getMail = () => {
-  //     try {
-  //       AsyncStorage.getItem('mail1')
+ 
   //         .then(value2 => {
   //           if (value2 != null) {
   //             axios

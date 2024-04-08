@@ -249,7 +249,7 @@ useFocusEffect(() => {
   return (
     <>
       <SafeAreaView style={styles.container}>
-        <StatusBar backgroundColor="#00415e" barStyle="light-content" />
+        <StatusBar  barStyle="light-content" />
         <HeaderComponent title="Inbox" />
         {!isLoaded ? (
           <ContentLoader />
