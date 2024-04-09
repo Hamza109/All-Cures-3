@@ -57,8 +57,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name="com.daily.reactlibrary.DailyOngoingMeetingForegroundService"
-            android:foregroundServiceType="mediaProjection" />
+    
 
       
       <activity
