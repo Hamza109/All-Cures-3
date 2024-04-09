@@ -1,16 +1,13 @@
 import React from 'react';
 import {FlatList, StyleSheet, Text, ActivityIndicator} from 'react-native';
 import {View} from 'react-native';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+
 import {Image} from '@rneui/themed';
 
 import RenderHTML from 'react-native-render-html';
-import {useSelector} from 'react-redux';
+
 import {Color, FontFamily} from '../../config/GlobalStyles';
-import {width, height} from '../../config/GlobalStyles';
+import {width} from '../../config/GlobalStyles';
 const ratio = width / 378;
 
 const CenterWell1 = ({
@@ -19,17 +16,14 @@ const CenterWell1 = ({
   text,
   title,
   message,
-  source,
-  embed,
   caption,
   alignment,
   imageUrl,
-  item,
 }) => {
   const tex = {
     html: text,
   };
-  console.log("html-->",tex);
+  console.log('html-->', tex);
   return (
     <View>
       {
@@ -55,6 +49,7 @@ const CenterWell1 = ({
                     color: Color.colorDarkslategray,
                     fontSize: 15,
                     fontWeight: '700',
+                    fontFamily: FontFamily.poppinsBold,
                   },
                   b: {
                     fontFamily: FontFamily.poppinsBold,

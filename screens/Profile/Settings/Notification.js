@@ -15,10 +15,12 @@ import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Divider from '../../../Components/Divider';
 import NotificationIcon from '../../../assets/images/Notification.svg';
 import {Modal} from 'native-base';
+import ContentLoader from '../../../Components/ContentLoader';
 const Notification = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [showModals, setShowModals] = useState(Array(11).fill(false)); // An array of state variables
+  const [isLoaded,setIsLoaded] = useState(false)
 
   const handlePress = index => {
     setShowModals(prevModals =>
@@ -26,13 +28,14 @@ const Notification = () => {
     );
   };
   const getTip = async () => {
+setIsLoaded(false)
     await axios
       .get(`${backendHost}/tip/get`)
 
       .then(res => {
         setData(res.data.reverse());
         console.log('notification data', res.data);
-        setLoading(true);
+        setIsLoaded(true);
       })
       .catch(error => {});
   };
@@ -117,12 +120,13 @@ const Notification = () => {
           <Text style={styles.read}>Tip of the Day</Text>
         </View>
       </View>
-      <FlatList
+      {isLoaded? <FlatList
         data={data.slice(0, 10)}
         renderItem={renderTipItem}
         showsVerticalScrollIndicator={false}
         estimatedItemSize={80} // Replace 80 with the estimated height of your items
-      />
+      />:<ContentLoader/>}
+     
     </SafeAreaView>
   );
 };
