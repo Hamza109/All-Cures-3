@@ -11,8 +11,9 @@ import Chat from '../Inbox/Chat.js';
 import Appointment from '../Doctor/Appointment.js';
 import VideoCall from '../VideoCall/VideoCall.js';
 import Notification from '../Profile/Settings/Notification.js';
-import { FontFamily } from '../../config/GlobalStyles';
+import {FontFamily} from '../../config/GlobalStyles';
 import Back from '../../assets/images/BACK.svg';
+import EditProfile from '../Profile/EditProfile.js';
 const SearchStack = ({navigation}) => {
   const handleBack = () => {
     console.log('back');
@@ -24,7 +25,7 @@ const SearchStack = ({navigation}) => {
       initialRouteName={Route.SEARCH}
       screenOptions={{
         headerShown: false,
-        headerLeftLabelVisible:false,
+        headerLeftLabelVisible: false,
       }}>
       <Stack.Screen name={Route.SEARCH} component={Search} />
       <Stack.Screen name={Route.SEARCH_INPUT} component={SearchInput} />
@@ -71,6 +72,7 @@ const SearchStack = ({navigation}) => {
       <Stack.Screen name={Route.ARTICLES_READ} component={ArticlesRead} />
       <Stack.Screen name={Route.APPOINTMENT} component={Appointment} />
       <Stack.Screen name={Route.VIDEOCALL} component={VideoCall} />
+      <Stack.Screen name={Route.EDITPROFILE} component={EditProfile} />
       <Stack.Screen name={Route.NOTIFICATION} component={Notification} />
     </Stack.Navigator>
   );

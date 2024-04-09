@@ -16,8 +16,12 @@ const OutButton = ({name, docID, firstName, lastName}) => {
   const handlePress = () => {
     console.log(name);
     if (name == 'Initiate Chat') {
-      console.log('Initiated', name);
-      initiateChat();
+      console.log('Initiated', profile);
+      if (Object.keys(profile) != 0) {
+        initiateChat();
+      } else {
+        navigation.navigate(Route.EDITPROFILE);
+      }
     } else if (name == 'Video Call') {
       videoCall();
       console.log('Video', name);
@@ -25,11 +29,19 @@ const OutButton = ({name, docID, firstName, lastName}) => {
   };
 
   const createChat = () => {
+    console.log('Chat Is being created');
+    console.log('docID', typeof docID);
+    console.log('user', typeof profile.registration_id);
     try {
       axios
         .post(`${backendHost}/chat/start/${profile.registration_id}/${docID}`)
         .then(res => {
           if (res.data[0].Chat_id != null) {
+            console.log('chat create id', res.data);
+            console.log(
+              'Chat Screen is being navigate',
+              docID + firstName + lastName,
+            );
             navigation
               .navigate(Route.CHAT, {
                 id: docID,

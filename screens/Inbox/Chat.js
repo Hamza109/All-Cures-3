@@ -34,7 +34,7 @@ import {useNavigation} from '@react-navigation/native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {Color} from '../../config/GlobalStyles';
 
-const CHAT_SERVER_URL = 'wss://uat.all-cures.com:8000';
+const CHAT_SERVER_URL = 'wss://all-cures.com:8000';
 
 const Chat = ({route}) => {
   const navigation = useNavigation();
@@ -53,19 +53,8 @@ const Chat = ({route}) => {
   const [selectedMessageId, setSelectedMessageId] = useState(null);
 
   useEffect(() => {
-    if (profile.docID != 0) {
-      navigation.setOptions({
-        title: `${FIRST_NAME} ${LAST_NAME}`,
-      });
-    } else {
-      navigation.setOptions({
-        title: `Dr.${FIRST_NAME} ${LAST_NAME}`,
-      });
-    }
-  });
-
-  useEffect(() => {
     setMessages(chatData.reverse());
+    console.log('runned succesfully');
 
     if (!socket || socket.readyState === WebSocket.CLOSED) {
       setupSocket();
@@ -79,13 +68,17 @@ const Chat = ({route}) => {
 
   const setupSocket = () => {
     const newSocket = new WebSocket(CHAT_SERVER_URL);
-
+    console.log('setupSocket');
+    console.log(chatid);
     newSocket.onopen = event => {
       newSocket.send(`{"Room_No":"${chatid}"}`);
     };
+    console.log('chl rha hai');
     newSocket.onmessage = event => {
+      console.log(event);
       const fromId = event.data.split(':')[0];
       const message = event.data.split(':').pop();
+      console.log('here tk working', event.data);
 
       const transformedMessages = {
         _id: Math.random().toString(36).substring(2, 9),
@@ -95,6 +88,7 @@ const Chat = ({route}) => {
           _id: fromId,
         },
       };
+      console.log('transformed', transformedMessages);
       setMessages(prevMessages =>
         GiftedChat.append(prevMessages, transformedMessages),
       );

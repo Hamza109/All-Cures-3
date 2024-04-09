@@ -15,7 +15,17 @@ import {useNavigation} from '@react-navigation/native';
 import {articleId} from './Redux/Slice/ArticleIdSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Route} from './routes';
+import BootSplash from 'react-native-bootsplash';
 const App = () => {
+  useEffect(() => {
+    const init = async () => {
+      // Hide the splash screen when you feel it's appropriate
+      await BootSplash.hide({fade: true, duration: 300});
+    };
+
+    init();
+  }, []);
+
   const articeId = async id => {
     try {
       await AsyncStorage.setItem('artId', JSON.stringify(id));
@@ -294,7 +304,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <NativeBaseProvider>
-        <NavigationContainer>
+        <NavigationContainer onReady={() => BootSplash.hide({ fade: true })}>
           <RootStack />
         </NavigationContainer>
       </NativeBaseProvider>

@@ -37,7 +37,7 @@
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Daily Playground needs microphone access to work</string>
-		<key>NSPhotoLibraryUsageDescription</key>
+	<key>NSPhotoLibraryUsageDescription</key>
 	<string>AllCures requires access to your photo library</string>
 	<key>UIAppFonts</key>
 	<array>
@@ -55,7 +55,7 @@
 		<string>voip</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen.storyboard</string>
+	<string>BootSplash.storyboard</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

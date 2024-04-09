@@ -37,7 +37,7 @@ const CenterWell1 = ({
             <View>
               <Text
                 adjustsFontSizeToFit
-                style={{fontSize: 17, fontWeight: 'bold', color: '#00415e'}}>
+                style={{fontSize: 17, fontWeight: 'bold'}}>
                 {title}
               </Text>
             </View>
