@@ -1,16 +1,19 @@
 import React from 'react';
 import {FlatList} from 'react-native';
 import {View} from 'react-native';
-import { Text } from 'native-base';
+import {Text} from 'native-base';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {Image} from 'react-native';
 
-
-
-import { moderateScale,verticalScale,scale,scalledPixel } from '../../components/Scale';
+import {
+  moderateScale,
+  verticalScale,
+  scale,
+  scalledPixel,
+} from '../../components/Scale';
 
 const CenterWell = ({
   content,
@@ -29,11 +32,11 @@ const CenterWell = ({
   var texts;
   if (typeof text == 'string') {
     textContent = text.replace(/&nbsp;/g, ' ');
-    texts=textContent.replace("\n", "").trim();
+    texts = textContent.replace('\n', '').trim();
   }
-  const tex ={
-    html: text
-  }
+  const tex = {
+    html: text,
+  };
   return (
     <View>
       {
@@ -52,9 +55,10 @@ const CenterWell = ({
             </View>
           ),
           paragraph: (
-          
-            <View style={{width:wp('50%'),height:hp('12%')}}>
-<Text numberOfLines={4} style={{fontSize:scale(12)}}>{texts}</Text>
+            <View style={{width: wp('50%'), height: hp('12%')}}>
+              <Text numberOfLines={4} style={{fontSize: scale(12)}}>
+                {texts}
+              </Text>
             </View>
           ),
 

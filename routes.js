@@ -37,6 +37,7 @@ export const Route = {
   INBOX: 'INBOX',
   FORGETPASSWORD: 'FORGETPASSWORD',
   MYCURES: 'MYCURES',
+  RESETPASSWORD:'RESETPASSWORD'
 };
 
 //feed screen and tab

@@ -40,7 +40,7 @@ const ArticlesRead = ({route, navigation}) => {
   const signal = abortController.signal;
 
   const scrollY = useRef(new Animated.Value(0)).current;
-
+useEffect(()=>{console.log(items);},[items])
   const handleScroll = Animated.event(
     [{nativeEvent: {contentOffset: {y: scrollY}}}],
     {useNativeDriver: false},

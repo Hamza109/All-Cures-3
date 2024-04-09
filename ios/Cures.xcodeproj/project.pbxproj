@@ -18,6 +18,7 @@
 		6EF6F2DDB69A45CC88C987DB /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF5453E47DC44FE093A5553F /* Poppins-Bold.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		AE8954B83B2F97A587C085B1 /* Pods_Cures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3422F92DF01A2DF38188B071 /* Pods_Cures.framework */; };
+		0DE3169C29DA4671B3DBC1AF /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C409BAAB834747B98063909A /* BootSplash.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		DFA9B0EA20434B549B6D8822 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Regular.ttf"; path = "../assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FF5453E47DC44FE093A5553F /* Poppins-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Bold.ttf"; path = "../assets/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; };
+		C409BAAB834747B98063909A /* BootSplash.storyboard */ = {isa = PBXFileReference; name = "BootSplash.storyboard"; path = "Cures/BootSplash.storyboard"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				C409BAAB834747B98063909A /* BootSplash.storyboard */,
 			);
 			name = Cures;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 				180D0DFB2BAC175C004B66BA /* GoogleService-Info.plist in Resources */,
 				6EF6F2DDB69A45CC88C987DB /* Poppins-Bold.ttf in Resources */,
 				5F064228F76B434D816EF00D /* Poppins-Regular.ttf in Resources */,
+				0DE3169C29DA4671B3DBC1AF /* BootSplash.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

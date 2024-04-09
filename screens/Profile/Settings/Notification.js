@@ -50,9 +50,7 @@ const Notification = () => {
                   style={{marginRight: 6}}
                 />
 
-                <Text numberOfLines={2} style={styles.tipTitle}>
-                  {item.tip_title}
-                </Text>
+                <Text style={styles.tipTitle}>{item.tip_title}</Text>
               </View>
               <View style={styles.date}>
                 <MaterialIcons

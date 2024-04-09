@@ -8,7 +8,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {backendHost, headers} from '../../Components/apiConfig';
+import {backendHost, headers, imageHost} from '../../Components/apiConfig';
 import {Image} from '@rneui/themed';
 import {useDispatch, useSelector} from 'react-redux';
 import {FontFamily, Color, width} from '../../config/GlobalStyles';
@@ -33,7 +33,7 @@ const DoctorMainScreen = ({route, navigation}) => {
   );
   const firstName = route.params.firstName;
   const secondName = route.params.secondName;
-
+  const imgLoc = route.params.imgLoc;
   const checkIfImage = async imageUrl => {
     try {
       const res = await fetch(imageUrl, {method: 'HEAD', mode: 'no-cors'});
@@ -109,7 +109,6 @@ const DoctorMainScreen = ({route, navigation}) => {
     fetchDocData();
 
     // Move the checkIfImage call inside the fetchDocData function
-    checkIfImage(url);
   }, []); // Empty dependency array to ensure the effect runs only once on mount
 
   return (
@@ -119,7 +118,7 @@ const DoctorMainScreen = ({route, navigation}) => {
           <View style={{backgroundColor: '#fff'}}>
             <Image
               source={{
-                uri: url,
+                uri: `${imageHost}${imgLoc}`,
               }}
               style={{
                 width: 372,
@@ -139,7 +138,7 @@ const DoctorMainScreen = ({route, navigation}) => {
                 <Text style={styles.mainTextTitle}>Name</Text>
                 <Text style={styles.mainText}>
                   {' '}
-                  Dr.{item?.firstName} {item?.secondName}
+                  Dr.{item?.firstName} {item?.lastName}
                 </Text>
               </View>
             )}
@@ -217,7 +216,7 @@ const DoctorMainScreen = ({route, navigation}) => {
             </View>
           ) : null} */}
           {item?.videoService == 1 ? (
-            <View style={{alignSelf: 'center', width: '100%',marginBottom:5}}>
+            <View style={{alignSelf: 'center', width: '100%', marginBottom: 5}}>
               <ScheduleButton docID={item.docID} />
             </View>
           ) : null}

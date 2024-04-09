@@ -49,10 +49,9 @@ const Doctor = () => {
 
         const data1 = await response1.json();
         const data2 = await response2.json();
-    
 
         setFeaturedDoctors(data1.map.DoctorDetails.myArrayList);
-        console.log(data2)
+        console.log(data2);
         setSpeciality(data2);
       } catch (error) {
         console.log(error);
@@ -72,7 +71,6 @@ const Doctor = () => {
       return i.map.medicineType === medicineId;
     });
     setSortedDoc(data);
-
   }, [medicineId]);
 
   const renderItem = ({item}) => {
@@ -134,7 +132,14 @@ const Doctor = () => {
                 marginLeft: 5,
               }}>
               <Text style={styles.read}>Practitioners</Text>
-              <NotificationIcon width={16} height={18} style={{marginTop: 5}} />
+              <Pressable
+                onPress={() => navigation.navigate(Route.NOTIFICATION)}>
+                <NotificationIcon
+                  width={16}
+                  height={18}
+                  style={{marginTop: 5}}
+                />
+              </Pressable>
             </View>
             <View style={{flexDirection: 'row'}}>
               <ScrollView
@@ -151,7 +156,7 @@ const Doctor = () => {
                         : null
                     }
                     onPress={() => {
-                      selectItem({med_id: 0, med_type:'Featured'});
+                      selectItem({med_id: 0, med_type: 'Featured'});
                     }}>
                     <Text
                       style={[
@@ -169,7 +174,6 @@ const Doctor = () => {
                   return (
                     <View key={item.med_id} style={{paddingHorizontal: 11}}>
                       <TouchableOpacity
-                 
                         style={
                           Platform.OS === 'ios'
                             ? item.med_type === medicineId
