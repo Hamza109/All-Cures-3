@@ -20,7 +20,7 @@ const App = () => {
   useEffect(() => {
     const init = async () => {
       // Hide the splash screen when you feel it's appropriate
-      await BootSplash.hide({fade: true, duration: 300});
+      await BootSplash.hide({fade: true, duration: 500});
     };
 
     init();

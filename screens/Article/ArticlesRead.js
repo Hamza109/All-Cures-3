@@ -40,7 +40,9 @@ const ArticlesRead = ({route, navigation}) => {
   const signal = abortController.signal;
 
   const scrollY = useRef(new Animated.Value(0)).current;
-useEffect(()=>{console.log(items);},[items])
+  useEffect(() => {
+    console.log(items);
+  }, [items]);
   const handleScroll = Animated.event(
     [{nativeEvent: {contentOffset: {y: scrollY}}}],
     {useNativeDriver: false},
@@ -166,23 +168,26 @@ useEffect(()=>{console.log(items);},[items])
               <Dot height={5} width={5} /> {data.authors_name}
             </Text>
 
-            {items.map((i, key) => (
-              <View style={{marginTop: 11}} key={Math.random().toString(36)}>
-                <CenterWell1
-                  key={Math.random().toString(36)}
-                  pageTitle={i.title}
-                  type={i.type}
-                  text={i.data.text}
-                  title={i.data.title}
-                  message={i.data.message}
-                  source={i.data.source}
-                  embed={i.data.embed}
-                  caption={i.data.caption}
-                  alignment={i.data.alignment}
-                  imageUrl={i.data.file ? i.data.file.url : null}
-                />
-              </View>
-            ))}
+            {items.map((i, key) => {
+              console.log("text-->",i.data.text);
+              return (
+                <View style={{marginTop: 11}} key={Math.random().toString(36)}>
+                  <CenterWell1
+                    key={Math.random().toString(36)}
+                    pageTitle={i.title}
+                    type={i.type}
+                    text={i.data.text}
+                    title={i.data.title}
+                    message={i.data.message}
+                    source={i.data.source}
+                    embed={i.data.embed}
+                    caption={i.data.caption}
+                    alignment={i.data.alignment}
+                    imageUrl={i.data.file ? i.data.file.url : null}
+                  />
+                </View>
+              );
+            })}
           </View>
 
           <View style={{marginBottom: 20, paddingHorizontal: 3}}>

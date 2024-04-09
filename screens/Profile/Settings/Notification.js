@@ -1,4 +1,11 @@
-import {StyleSheet, Text, View, FlatList, SafeAreaView} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  SafeAreaView,
+  Pressable,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {Color, FontFamily, width} from '../../../config/GlobalStyles';
 import {backendHost} from '../../../Components/apiConfig';
@@ -7,10 +14,17 @@ import axios from 'axios';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Divider from '../../../Components/Divider';
 import NotificationIcon from '../../../assets/images/Notification.svg';
+import {Modal} from 'native-base';
 const Notification = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [showModals, setShowModals] = useState(Array(11).fill(false)); // An array of state variables
 
+  const handlePress = index => {
+    setShowModals(prevModals =>
+      prevModals.map((isOpen, i) => (i === index ? !isOpen : isOpen)),
+    );
+  };
   const getTip = async () => {
     await axios
       .get(`${backendHost}/tip/get`)
@@ -28,7 +42,7 @@ const Notification = () => {
     getTip();
   }, []);
 
-  const renderTipItem = ({item}) => {
+  const renderTipItem = ({item, index}) => {
     return (
       <>
         <View
@@ -42,29 +56,48 @@ const Notification = () => {
           ]}>
           <View style={{flexDirection: 'row', padding: 10}}>
             <View style={styles.tipBody}>
-              <View
-                style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+              <Pressable
+                style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}
+                onPress={() => handlePress(index)}>
                 <NotificationIcon
                   width={10}
                   height={10}
                   style={{marginRight: 6}}
                 />
 
-                <Text style={styles.tipTitle}>{item.tip_title}</Text>
-              </View>
+                <Text style={styles.tipTitle} numberOfLines={2}>
+                  {item.tip_title}
+                </Text>
+              </Pressable>
               <View style={styles.date}>
                 <MaterialIcons
                   name="calendar"
                   style={{}}
                   color={Color.appDefaultColor}
                 />
-                <Text> </Text>
+
                 <Text style={styles.tipDate}>
                   {item.tip_date.split('T')[0]}
                 </Text>
               </View>
             </View>
           </View>
+          <Modal
+            isOpen={showModals[index]}
+            onClose={() => handlePress(index)}
+            _backdrop={{
+              _dark: {
+                bg: 'coolGray.800',
+              },
+              bg: 'warmGray.50',
+            }}>
+            <Modal.Content maxWidth="350" maxH="212">
+              <Modal.CloseButton />
+              <Modal.Header>Tip</Modal.Header>
+              {console.log(item.tip_title)}
+              <Modal.Body>{item.tip_title}</Modal.Body>
+            </Modal.Content>
+          </Modal>
         </View>
         <Divider />
       </>
@@ -84,10 +117,9 @@ const Notification = () => {
           <Text style={styles.read}>Tip of the Day</Text>
         </View>
       </View>
-      <FlashList
+      <FlatList
         data={data.slice(0, 10)}
         renderItem={renderTipItem}
-        removeClippedSubviews
         showsVerticalScrollIndicator={false}
         estimatedItemSize={80} // Replace 80 with the estimated height of your items
       />

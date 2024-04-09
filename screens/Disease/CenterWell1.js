@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, StyleSheet, Text,ActivityIndicator} from 'react-native';
+import {FlatList, StyleSheet, Text, ActivityIndicator} from 'react-native';
 import {View} from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -29,6 +29,7 @@ const CenterWell1 = ({
   const tex = {
     html: text,
   };
+  console.log("html-->",tex);
   return (
     <View>
       {
@@ -50,6 +51,11 @@ const CenterWell1 = ({
                 tagsStyles={{
                   adjustsFontSizeToFit: true,
                   span: {fontSize: 15},
+                  h2: {
+                    color: Color.colorDarkslategray,
+                    fontSize: 15,
+                    fontWeight: '700',
+                  },
                   b: {
                     fontFamily: FontFamily.poppinsBold,
                     fontWeight: '700',
