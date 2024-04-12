@@ -40,6 +40,19 @@ const Feed = ({navigation}) => {
   const abortController = new AbortController();
   const signal = abortController.signal;
 
+ const  getUrl= async () =>{
+  const videoUrl = await AsyncStorage.getItem('url');
+  const url = videoUrl!=null?JSON.parse(videoUrl):null
+
+  if(url!=null){
+    console.log('video',url)
+    navigation.navigate(Route.VIDEOCALL,{
+      url: ` https://${url}`,
+    })
+    AsyncStorage.removeItem('url');
+  }
+ }
+
   const getValue = async () => {
     const myValue = await AsyncStorage.getItem('artId');
     const myObject = myValue != null ? JSON.parse(myValue) : null;
@@ -82,6 +95,7 @@ const Feed = ({navigation}) => {
 
   useEffect(() => {
     getValue();
+    getUrl()
   });
 
   useEffect(() => {

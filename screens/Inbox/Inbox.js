@@ -1,5 +1,5 @@
 import {StatusBar} from 'native-base';
-import React, {useState, useEffect, useLayoutEffect} from 'react';
+import React, {useState, useEffect, useLayoutEffect, useCallback} from 'react';
 import {
   View,
   Text,
@@ -141,31 +141,30 @@ const Inbox = () => {
       setUser(profile.registration_id);
     }
   }, []);
-useFocusEffect(() => {
+
+
+  useFocusEffect(() => {
     console.log(profile);
+    fetchData();
+  });
+  
+  const fetchData = useCallback(async () => {
     if (user) {
-      const fetchData = async () => {
-        console.log(typeof user);
-        console.log(user);
-        try {
-          const response = await fetch(`${backendHost}/chat/list/${user}`);
-          console.log(response);
-          if (!response.ok) {
-            throw new Error(`Network response was not ok (${response.status})`);
-          }
-
-          const json = await response.json();
-          setData(json);
-          setIsLoaded(true);
-        } catch (error) {
-          setIsLoaded(true);
-          Alert.alert('Error Fetching Data', error.message); // More informative message
+      try {
+        const response = await fetch(`${backendHost}/chat/list/${user}`);
+        if (!response.ok) {
+          throw new Error(`Network response was not ok (${response.status})`);
         }
-      };
-
-      fetchData();
+        const json = await response.json();
+        setData(json);
+        setIsLoaded(true);
+      } catch (error) {
+        setIsLoaded(true);
+        Alert.alert('Error Fetching Data', error.message);
+      }
     }
   }, [user]);
+  
 
   const renderMessage = ({item}) => {
     const now = moment();

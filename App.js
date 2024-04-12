@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect,useRef} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import BottomTab from './screens/Tab/BottomTab';
 import {Provider, useDispatch} from 'react-redux';
@@ -17,6 +17,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Route} from './routes';
 import BootSplash from 'react-native-bootsplash';
 const App = () => {
+
+  const navigationRef = React.useRef();
   useEffect(() => {
     const init = async () => {
       // Hide the splash screen when you feel it's appropriate
@@ -33,6 +35,15 @@ const App = () => {
       throw error;
     }
   };
+
+ const videoLinkUrl= async url=>{
+  try {
+    await AsyncStorage.setItem('url',JSON.stringify(url))
+  }catch(error){
+    throw error
+  }
+ }
+
 
   const checkApplicationPermission = async () => {
     if (Platform.OS == 'android') {
@@ -251,6 +262,8 @@ const App = () => {
     // Get the deep link used to open the app
     const getUrl = async () => {
       const initialUrl = await Linking.getInitialURL();
+      console.log('hello',initialUrl)
+     
 
       if (initialUrl === null) {
         return;
@@ -274,11 +287,13 @@ const App = () => {
       }
 
       if (initialUrl.includes('/notification')) {
+   
         const url = initialUrl.split('/').slice(-2).join('/');
 
-        navigationRef.current?.navigate(Route.VIDEOCALL, {
-          url: ` https://${url}`,
-        });
+        videoLinkUrl(url)
+
+     
+      
 
         console.log('url', url);
       }
