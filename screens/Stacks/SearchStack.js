@@ -14,6 +14,8 @@ import Notification from '../Profile/Settings/Notification.js';
 import {FontFamily} from '../../config/GlobalStyles';
 import Back from '../../assets/images/BACK.svg';
 import EditProfile from '../Profile/EditProfile.js';
+import Payment from '../Doctor/Payment.js';
+import Success from '../Doctor/Success.js';
 const SearchStack = ({navigation}) => {
   const handleBack = () => {
     console.log('back');
@@ -30,6 +32,7 @@ const SearchStack = ({navigation}) => {
       <Stack.Screen name={Route.SEARCH} component={Search} />
       <Stack.Screen name={Route.SEARCH_INPUT} component={SearchInput} />
       <Stack.Screen name={Route.SEARCH_RESULT} component={SearchResults} />
+      <Stack.Screen name={Route.PAYMENT} component={Payment} />
       <Stack.Screen
         name={Route.DOCTOR_MAIN_SCREEN}
         component={DoctorMainScreen}
@@ -74,6 +77,7 @@ const SearchStack = ({navigation}) => {
       <Stack.Screen name={Route.VIDEOCALL} component={VideoCall} />
       <Stack.Screen name={Route.EDITPROFILE} component={EditProfile} />
       <Stack.Screen name={Route.NOTIFICATION} component={Notification} />
+      <Stack.Screen name={Route.SUCCESS}  component={Success} />
     </Stack.Navigator>
   );
 };

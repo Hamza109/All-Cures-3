@@ -13,6 +13,8 @@ export const Route = {
   APPOINTMENT: 'APPOINTMENT',
   CHAT: 'CHAT',
   VIDEOCALL: 'VIDEOCALL',
+  PAYMENT:'PAYMENT',
+  SUCCESS:'SUCCESS',
 
   //search screen and tab
   SEARCH: 'SEARCH',

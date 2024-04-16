@@ -12,6 +12,7 @@ import DocCures from '../Doctor/DocCures';
 import Chat from '../Inbox/Chat';
 import {FontFamily} from '../../config/GlobalStyles';
 import Notification from '../Profile/Settings/Notification';
+import Payment from '../Doctor/Payment';
 
 const DoctorStack = ({navigation}) => {
   const handleBack = () => {
@@ -51,6 +52,8 @@ const DoctorStack = ({navigation}) => {
         }}
       />
       <Stack.Screen name={Route.APPOINTMENT} component={Appointment} />
+      <Stack.Screen name={Route.PAYMENT} component={Payment} />
+
       <Stack.Screen name={Route.ARTICLES_READ} component={ArticlesRead} />
       <Stack.Screen
         name={Route.DOC_CURES}
