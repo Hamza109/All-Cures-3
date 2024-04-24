@@ -314,7 +314,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
     <>
       {!loading ? (
         <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-          <HeaderComponent />
+          <HeaderComponent  title={"Submit Article"}/>
           <ScrollView>
             <View>
               <Text style={styles.title}>Title</Text>

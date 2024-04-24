@@ -46,7 +46,8 @@ const styles = StyleSheet.create({
     marginLeft: 14,
     marginTop: -10,
     fontWeight:'500',
-    letterSpacing:1
+    letterSpacing:1,
+    width:220
   },
   headerTitle: {
     marginLeft: 12,

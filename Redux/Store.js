@@ -3,6 +3,7 @@ import indexSlice from './Slice/indexSlice';
 import screenSlice from './Slice/screenNameSlice';
 import docSlice from './Slice/DoctorDetailSlice';
 import profileSlice from './Slice/ProfileDataSlice';
+import BookingSlice from './Slice/BookingSlice';
 import {
   persistReducer,
   persistStore,
@@ -22,15 +23,16 @@ const rootReducer = combineReducers({
   height: heightSlice,
   index: indexSlice,
   doc: docSlice,
-  option:OptionSlice,
+  option: OptionSlice,
   profile: profileSlice,
-  articleId:articleIdSlice
+  articleId: articleIdSlice,
+  booking:BookingSlice
 });
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['screen', 'index', 'height','article'],
+  blacklist: ['screen', 'index', 'height', 'article'],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

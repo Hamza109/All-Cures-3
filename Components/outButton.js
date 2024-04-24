@@ -20,7 +20,7 @@ const OutButton = ({name, docID, firstName, lastName}) => {
       if (Object.keys(profile) != 0) {
         initiateChat();
       } else {
-        navigation.navigate(Route.EDITPROFILE);
+        navigation.navigate(Route.LOGIN);
       }
     } else if (name == 'Video Call') {
       videoCall();

@@ -9,8 +9,8 @@ import ArticlesByMedicine from '../Article/ArticlesByMedicine';
 import Back from '../../assets/images/BACK.svg';
 import Notification from '../Profile/Settings/Notification';
 import VideoCall from '../VideoCall/VideoCall';
+import Success from '../Doctor/Success';
 const FeedStack = ({navigation}) => {
-
   const handleBack = () => {
     console.log('back');
     navigation.goBack();
@@ -20,12 +20,13 @@ const FeedStack = ({navigation}) => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        headerLeftLabelVisible:false,
+        headerLeftLabelVisible: false,
       }}>
+
       <Stack.Screen name={Route.FEED} component={Feed} />
       <Stack.Screen name={Route.ARTICLES_READ} component={ArticlesRead} />
-      <Stack.Screen name = {Route.NOTIFICATION} component={Notification}/>
-      <Stack.Screen name = {Route.VIDEOCALL} component={VideoCall}/>
+      <Stack.Screen name={Route.NOTIFICATION} component={Notification} />
+      <Stack.Screen name={Route.VIDEOCALL} component={VideoCall} />
       <Stack.Screen
         name={Route.ARTICLES_BY_MEDICINE}
         component={ArticlesByMedicine}

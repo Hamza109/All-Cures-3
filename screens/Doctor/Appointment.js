@@ -29,7 +29,7 @@ import axios from 'axios';
 
 const Appointment = ({route,navigation}) => {
   const [availableSlots, setAvailableSlots] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date().toLocaleDateString('en-CA'));
   const [unbookedSlots, setUnBookedSlots] = useState();
   const [isloaded, setIsLoaded] = useState(true);
   const [timeSlot, setTimeSlot] = useState();

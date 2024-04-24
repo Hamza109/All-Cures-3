@@ -13,11 +13,15 @@ import Chat from '../Inbox/Chat';
 import {FontFamily} from '../../config/GlobalStyles';
 import Notification from '../Profile/Settings/Notification';
 import Payment from '../Doctor/Payment';
-
-const DoctorStack = ({navigation}) => {
+import {useNavigation} from '@react-navigation/native';
+import { StackActions } from '@react-navigation/native';
+import Success from '../Doctor/Success';
+const DoctorStack = () => {
+  const navigation = useNavigation();
   const handleBack = () => {
-    console.log('back');
-    navigation.goBack();
+    const popAction = StackActions.pop(1);
+
+    navigation.dispatch(popAction);
   };
 
   const Stack = createStackNavigator();
@@ -26,9 +30,7 @@ const DoctorStack = ({navigation}) => {
       initialRouteName={Route.DOCTOR}
       screenOptions={{
         headerShown: false,
-        headerLeftLabelVisible:false,
-        
-     
+        headerLeftLabelVisible: false,
       }}>
       <Stack.Screen name={Route.DOCTOR} component={Doctor} />
       <Stack.Screen
@@ -44,7 +46,9 @@ const DoctorStack = ({navigation}) => {
           },
           headerLeft: () => {
             return (
-              <TouchableOpacity style={{padding: 10}} onPress={handleBack}>
+              <TouchableOpacity
+                style={{padding: 10}}
+                onPress={() => handleBack()}>
                 <Back />
               </TouchableOpacity>
             );
@@ -53,6 +57,7 @@ const DoctorStack = ({navigation}) => {
       />
       <Stack.Screen name={Route.APPOINTMENT} component={Appointment} />
       <Stack.Screen name={Route.PAYMENT} component={Payment} />
+      <Stack.Screen name={Route.SUCCESS}  component={Success} />
 
       <Stack.Screen name={Route.ARTICLES_READ} component={ArticlesRead} />
       <Stack.Screen
@@ -74,7 +79,10 @@ const DoctorStack = ({navigation}) => {
           },
         }}
       />
-      <Stack.Screen name={Route.CHAT} component={Chat}  options={{
+      <Stack.Screen
+        name={Route.CHAT}
+        component={Chat}
+        options={{
           headerShown: true,
           headerTitleAlign: 'center',
           headerTitleStyle: {
@@ -88,8 +96,9 @@ const DoctorStack = ({navigation}) => {
               </TouchableOpacity>
             );
           },
-        }} />
-      <Stack.Screen name = {Route.NOTIFICATION} component={Notification}/>
+        }}
+      />
+      <Stack.Screen name={Route.NOTIFICATION} component={Notification} />
 
       <Stack.Screen name={Route.EDITPROFILE} component={EditProfile} />
     </Stack.Navigator>

@@ -33,6 +33,7 @@ const Profile = ({navigation}) => {
   const profileOptionsData = [
     {title: 'Tip of the Day', route: Route.NOTIFICATION},
     {title: 'About us', route: Route.ABOUT},
+    {title: 'My Bookings', route: Route.MYBOOKINGS},
     {title: 'Submit Articles', route: Route.SUBMITARTICLE},
     {title: 'Favourite', route: Route.FAVOURITE},
     {title: 'Inbox', route: Route.INBOX},
@@ -148,7 +149,8 @@ const Profile = ({navigation}) => {
     } else if (
       item.title === 'Submit Articles' ||
       item.title === 'Inbox' ||
-      item.title === 'Favourite'
+      item.title === 'Favourite' ||
+      item.title === 'My Bookings'
     ) {
       if (Object.keys(profileInfo).length) {
         navigation.navigate(item.route);
@@ -167,23 +169,7 @@ const Profile = ({navigation}) => {
     }
   }, []);
 
-  const handlePayment = () => {
-    axios
-      .post(
-        'https://test.ccavenue.com/transaction.do?command=initiateTransaction',
-        {
-          encRequest:
-            '0EE39E5A05CF73D2E10DA350D26555225B1A2B3113AD55BD461E6DB9D990B9CCDFDFD279E48A969E23210C030732FA980303819412A0263EBD6A2F104A67D3AFB0B7410AFA9C801DC36836ABB29A9169FE22EDAFD56649AF082E05D066F349E6C5AF85D763331CFE4CFBCBBE1FD6504EFCEE6AAE0E49C5243A06153463703BBB7327E5ECD799327B0FE6B8AB7F7806A66D62367F5C282BAA6F9A1CAD99CFABBDF86FB65C0A426CA1FA6205FB13AAE97BCFC913670E480B6FD8ABB123D82F669EFBEC14C9757B517D60A8CED051F0E6B86FFC8DB94C9C733795F312991FF01F87',
-          accessCode: 'AVKI05LC59AW25IKWA',
-        },
-      )
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  };
+
   return (
     <>
       <SafeAreaView style={styles.container}>
@@ -246,15 +232,14 @@ const Profile = ({navigation}) => {
           {/* Commented out section; not relevant to map function focus */}
 
           {profileOptionsData.map((item, index) => (
-            <View  key={item.title}>
+            <View key={item.title}>
               {Object.keys(profileInfo).length == 0 &&
               item.title == 'Logout' ? null : (
                 <TouchableOpacity
-               
                   onPress={() => {
                     handleProfile(item);
                   }}>
-                  <View  style={styles.titleView}>
+                  <View style={styles.titleView}>
                     <Text style={styles.titleText}>{item.title}</Text>
                     <Right width={7.5} height={15} />
                   </View>

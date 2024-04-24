@@ -16,10 +16,12 @@ import Back from '../../assets/images/BACK.svg';
 import EditProfile from '../Profile/EditProfile.js';
 import Payment from '../Doctor/Payment.js';
 import Success from '../Doctor/Success.js';
+import {StackActions} from '@react-navigation/native';
 const SearchStack = ({navigation}) => {
   const handleBack = () => {
-    console.log('back');
-    navigation.goBack();
+    const popAction = StackActions.pop(1);
+
+    navigation.dispatch(popAction);
   };
   const Stack = createStackNavigator();
   return (
@@ -77,7 +79,7 @@ const SearchStack = ({navigation}) => {
       <Stack.Screen name={Route.VIDEOCALL} component={VideoCall} />
       <Stack.Screen name={Route.EDITPROFILE} component={EditProfile} />
       <Stack.Screen name={Route.NOTIFICATION} component={Notification} />
-      <Stack.Screen name={Route.SUCCESS}  component={Success} />
+      <Stack.Screen name={Route.SUCCESS} component={Success} />
     </Stack.Navigator>
   );
 };

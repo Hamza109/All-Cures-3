@@ -31,15 +31,16 @@ import Foundation from 'react-native-vector-icons/Foundation';
 import {StatusBar} from 'native-base';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+
 import {Color} from '../../config/GlobalStyles';
 
-const CHAT_SERVER_URL = 'wss://all-cures.com:8000';
+import {CHAT_SERVER_URL} from '../../Components/apiConfig';
 
 const Chat = ({route}) => {
   const navigation = useNavigation();
   const chatData = route.params.messages;
   const Id = route.params.id;
+
   const FIRST_NAME = route.params.first_name;
   const LAST_NAME = route.params.last_name;
   console.log(FIRST_NAME + LAST_NAME);
@@ -51,7 +52,17 @@ const Chat = ({route}) => {
   const user = profile.registration_id;
 
   const [selectedMessageId, setSelectedMessageId] = useState(null);
-
+  useEffect(() => {
+    if (Object.keys(profile) != 0 && profile.docID != 0)
+      navigation.setOptions({
+        title: `${FIRST_NAME} ${LAST_NAME}`,
+      });
+    else {
+      navigation.setOptions({
+        title: ` Dr.${FIRST_NAME} ${LAST_NAME}`,
+      });
+    }
+  });
   useEffect(() => {
     setMessages(chatData.reverse());
     console.log('runned succesfully');
@@ -106,6 +117,11 @@ const Chat = ({route}) => {
   };
 
   const sendMessage = (newMessages = []) => {
+    if (socket.readyState !== WebSocket.OPEN) {
+      console.error('WebSocket is not open. Ready state:', socket.readyState);
+      Alert.alert('Please Try Again');
+      return; // Or potentially retry connection
+    }
     setMessages(prevMessages => GiftedChat.append(prevMessages, newMessages));
     const message = newMessages[0];
     const fromId = user;
@@ -113,8 +129,15 @@ const Chat = ({route}) => {
     const chat_id = chatid;
     const payload = `${fromId}:${toId}:${chat_id}:${message.text}`;
     console.log(payload);
+    console.log(typeof payload);
 
-    socket.send(payload);
+    try {
+      socket.send(payload);
+      console.log('Done');
+    } catch (error) {
+      console.log(error);
+      Alert.alert(error);
+    }
   };
 
   const renderSend = props => (
@@ -134,11 +157,8 @@ const Chat = ({route}) => {
 
   return (
     <>
-      <StatusBar backgroundColor={'#fff'} barStyle={'light-content'} />
-      <KeyboardAvoidingView
-        behavior="padding"
-        keyboardVerticalOffset={-210}
-        style={{flex: 1}}>
+      <StatusBar backgroundColor={'#fff'} barStyle={'dark-content'} />
+      <View behavior="padding" style={{flex: 1}}>
         <GiftedChat
           wrapInSafeArea={false}
           messagesContainerStyle={{backgroundColor: Color.lightpurple}}
@@ -170,7 +190,7 @@ const Chat = ({route}) => {
             },
           ]}
         />
-      </KeyboardAvoidingView>
+      </View>
     </>
   );
 };

@@ -21,9 +21,8 @@ import {User} from '../../Components/profile/UserPic';
 const BottomTab = () => {
   const Tab = createBottomTabNavigator();
   const profile = useSelector(state => state.profile.data);
- 
-  const name = `${profile.first_name} ${profile.last_name}`;
 
+  const name = `${profile.first_name} ${profile.last_name}`;
 
   return (
     <Tab.Navigator
@@ -31,11 +30,11 @@ const BottomTab = () => {
       screenOptions={({route, navigation}) => {
         return {
           headerShown: false,
-       
+
           tabBarStyle: {
             justifyContent: 'center',
             alignItems: 'center',
-            height: Platform.OS === 'android'?60:80 ,
+            height: Platform.OS === 'android' ? 60 : 80,
 
             display:
               getFocusedRouteNameFromRoute(route) === 'NOTIFICATION' ||
@@ -91,7 +90,6 @@ const BottomTab = () => {
         name={Route.SEARCH_TAB}
         component={SearchStack}
         options={{
-          unmountOnBlur: true,
           tabBarLabel: '',
           tabBarIcon: ({focused}) =>
             focused ? (

@@ -269,7 +269,7 @@ const EditProfile = ({route}) => {
         }, 3000);
       })
       .catch(error => {
-      throw error
+        throw error;
       });
   };
   const choosePhotoFromLibrary = () => {
@@ -523,7 +523,7 @@ const EditProfile = ({route}) => {
                 setOther(value), console.log(value);
               }}
               defaultValue={preData?.medicineTypeID}
-              selectedValue={preData?.medicineType}
+              selectedValue={systemOfMedicine}
               isRequired
               placeholder="Types Of medicine">
               {medicine.map(i => (

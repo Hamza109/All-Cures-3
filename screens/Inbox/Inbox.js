@@ -14,7 +14,11 @@ import axios from 'axios';
 import Svg, {Path, Circle} from 'react-native-svg';
 import {backendHost} from '../../Components/apiConfig';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useFocusEffect, useIsFocused, useNavigation} from '@react-navigation/native';
+import {
+  useFocusEffect,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 
 import moment from 'moment';
@@ -74,8 +78,8 @@ const Inbox = () => {
       .catch(err => err);
   };
 
-  const initiateChat = (userID, first_name, second_name) => {
-    setIsLoaded(false)
+  const initiateChat = async (userID, first_name, second_name) => {
+    setIsLoaded(false);
     if (profile.registration_id != 0) {
       console.log('hah', userID);
       if (profile.docID == 0) {
@@ -86,47 +90,65 @@ const Inbox = () => {
         setEnd(profile.docID);
       }
       console.log('user', user);
+      try {
+        console.log('try statement ');
+        console.log(start);
+        const res = await axios.get(`${backendHost}/chat/${start}/${end}`);
 
-      axios
-        .get(`${backendHost}/chat/${start}/${end}`)
-        .then(res => {
-          console.log('res', res.data);
-          if (res.status === 200) {
-            if (res.data[0].Chat_id === null) {
-              createChat();
-            } else {
-              console.log('transformedMEssage', res.data);
-              const transformedMessages = res.data.map(message => {
-                return {
-                  _id: Math.random().toString(36).substring(2, 9),
-                  text: message.Message,
-                  createdAt: new Date(message.Time),
-                  user: {
-                    _id: message.From_id,
-                    name: message.From,
-                  },
-                };
-              });
-              console.log('navigate', transformedMessages);
-              
-
-              navigation.navigate(Route.CHAT, {
-                messages:
-                  res.data[0].Message != ''
-                    ? transformedMessages.reverse()
-                    : [],
-                id: user,
-                chatId: res.data[0].Chat_id,
-                first_name: first_name,
-                last_name: second_name,
-              });
-              setIsLoaded(true)
-            }
+        console.log('res', res.data);
+        if (res.status === 200) {
+          if (res.data[0].Chat_id === null) {
+            createChat();
           } else {
-            Alert.alert('Please Try again', 'something went wrong');
+            console.log('transformedMEssage', res.data);
+            const transformedMessages = res.data.map(message => {
+              return {
+                _id: Math.random().toString(36).substring(2, 9),
+                text: message.Message,
+                createdAt: new Date(message.Time),
+                user: {
+                  _id: message.From_id,
+                  name: message.From,
+                },
+              };
+            });
+            console.log('navigate', transformedMessages);
+
+            navigation.navigate(Route.CHAT, {
+              messages:
+                res.data[0].Message != '' ? transformedMessages.reverse() : [],
+              id: user,
+              chatId: res.data[0].Chat_id,
+              first_name: first_name,
+              last_name: second_name,
+            });
+            setIsLoaded(true);
           }
-        })
-        .catch(err => err);
+        } else {
+          Alert.alert('Please Try again', 'something went wrong');
+        }
+      } catch (error) {
+        if (error.response) {
+          // Server-side error
+          console.log(
+            'Server error:',
+            error.response.data,
+            error.response.status,
+          );
+          Alert.alert('Error', 'Server error occurred.');
+        } else if (error.request) {
+          // Network error
+          console.log('Network error:', error.request);
+          Alert.alert(
+            'Error',
+            'Network error occurred. Check your connection.',
+          );
+        } else {
+          // Other unknown error
+          console.log('Unexpected error:', error);
+          Alert.alert('Error', 'An unexpected error occurred.');
+        }
+      }
     } else {
       dispatch(screen(Route.LOGIN));
     }
@@ -142,13 +164,12 @@ const Inbox = () => {
     }
   }, []);
 
-
   useFocusEffect(() => {
     console.log(profile);
     fetchData();
   });
-  
-  const fetchData = useCallback(async () => {
+
+  const fetchData = async () => {
     if (user) {
       try {
         const response = await fetch(`${backendHost}/chat/list/${user}`);
@@ -163,8 +184,7 @@ const Inbox = () => {
         Alert.alert('Error Fetching Data', error.message);
       }
     }
-  }, [user]);
-  
+  }
 
   const renderMessage = ({item}) => {
     const now = moment();
@@ -248,7 +268,7 @@ const Inbox = () => {
   return (
     <>
       <SafeAreaView style={styles.container}>
-        <StatusBar  barStyle="light-content" />
+        <StatusBar barStyle="light-content" />
         <HeaderComponent title="Inbox" />
         {!isLoaded ? (
           <ContentLoader />

@@ -4,3 +4,4 @@ export const headers = new Headers({
 });
 
 export const imageHost = 'https://all-cures.com:444';
+export const CHAT_SERVER_URL = 'wss://all-cures.com:8000';
