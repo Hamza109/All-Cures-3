@@ -55,6 +55,8 @@ const SearchInput = ({navigation, route}) => {
   const searchByname = async text => {
     try {
       const response = await fetch(`${backendHost}/IntegratedActionController`);
+      console.log(response);
+      console.log("api hit");
       const doctorData = await response.json();
       const newData = doctorData.map.Doctorname.myArrayList.filter(function (
         item,

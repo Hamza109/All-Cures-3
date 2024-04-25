@@ -1,7 +1,7 @@
-export const backendHost = 'https://all-cures.com:444/cures';
+export const backendHost = 'https://uat.all-cures.com:444/cures';
 export const headers = new Headers({
   Authorization: 'Bearer local@7KpRq3XvF9',
 });
 
-export const imageHost = 'https://all-cures.com:444';
-export const CHAT_SERVER_URL = 'wss://all-cures.com:8000';
+export const imageHost = 'https://uat.all-cures.com:444';
+export const CHAT_SERVER_URL = 'wss://uat.all-cures.com:8000';

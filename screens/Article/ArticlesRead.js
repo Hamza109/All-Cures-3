@@ -18,6 +18,7 @@ import {Route} from '../../routes';
 import {Border, Color, FontFamily} from '../../config/GlobalStyles';
 import moment from 'moment';
 import Dot from '../../assets/images/dot.svg';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Right from '../../assets/images/RIGHT.svg';
 import {width, height} from '../../config/GlobalStyles';
 import CenterWell1 from '../Disease/CenterWell1';
@@ -27,6 +28,7 @@ import CustomHeader from '../Tab/CustomHeader';
 const ratio = width / 378;
 const ArticlesRead = ({route, navigation}) => {
   const [title, setTitle] = useState(route.params?.title);
+  const [isVisible, setIsVisible] = useState(false);
 
   const [isConnected, setIsConnected] = useState(true);
   const [data, setData] = useState([]);
@@ -169,7 +171,7 @@ const ArticlesRead = ({route, navigation}) => {
             </Text>
 
             {items.map((i, key) => {
-              console.log("text-->",i.data.text);
+              console.log('text-->', i.data.text);
               return (
                 <View style={{marginTop: 11}} key={Math.random().toString(36)}>
                   <CenterWell1
@@ -188,6 +190,56 @@ const ArticlesRead = ({route, navigation}) => {
                 </View>
               );
             })}
+          </View>
+          <TouchableOpacity
+            key={Math.random().toString(36)}
+            style={styles.button}
+            onPress={() => setIsVisible(!isVisible)}>
+            <Icon
+              key={Math.random().toString(36)}
+              color={Color.appDefaultColor}
+              name={isVisible ? 'remove-circle-outline' : 'add-circle-outline'}
+              size={22}
+            />
+            <Text key={Math.random().toString(36)} style={styles.buttonText}>
+              Sources
+            </Text>
+          </TouchableOpacity>
+          {isVisible && (
+            <View
+              key={Math.random().toString(36)}
+              style={{width: '100%', justifyContent: 'center'}}>
+              <Text key={Math.random().toString(36)} style={styles.text}>
+                {data.window_title}
+              </Text>
+            </View>
+          )}
+          <View
+            style={{
+              width: '100%',
+              overflow: 'hidden',
+              backgroundColor: Color.lightpurple,
+              borderWidth: 1,
+              elevation: 0,
+              borderColor: '#e6f7ff',
+              alignItems: 'center',
+
+              justifyContent: 'center',
+              padding: 8,
+              borderRadius: 15,
+            }}>
+            <Text
+              style={[styles.disclaimer, {fontFamily: FontFamily.poppinsBold}]}>
+              Disclaimer :
+            </Text>
+            <Text style={styles.disclaimer}>
+              Content available on All Cures website is not intended to be a
+              substitute for professional medical advice, diagnosis, or
+              treatment. It is strongly recommended to consult your physician or
+              other qualified medical practitioner with any questions you may
+              have regarding a medical condition. The website should not be used
+              as a source for treatment of any medical condition.
+            </Text>
           </View>
 
           <View style={{marginBottom: 20, paddingHorizontal: 3}}>
@@ -341,6 +393,28 @@ const styles = StyleSheet.create({
     // Ensure the content stretches to fill the safe area
     justifyContent: 'center', // Center content vertically
     alignItems: 'center', // Center content horizontally
+  },
+  disclaimer: {
+    color: Color.appDefaultColor,
+    fontFamily: 'Raleway-Medium',
+    fontSize: 14,
+  },
+  button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom:5
+  },
+  buttonText: {
+    color: Color.appDefaultColor,
+    alignSelf: 'center',
+    textDecorationLine: 'underline',
+    fontSize: 15,
+  },
+  text: {
+    color: Color.appDefaultColor,
+    textAlign: 'left',
+    fontFamily: FontFamily.poppinsRegular,
+    marginLeft: 10,
   },
 });
 
