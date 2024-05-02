@@ -7,7 +7,7 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:www.all-cures.com</string>
-		<string>https://all-cures.com</string>
+		<string>applinks:https://all-cures.com</string>
 	</array>
 </dict>
 </plist>

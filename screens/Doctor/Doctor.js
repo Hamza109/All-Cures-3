@@ -102,7 +102,7 @@ const Doctor = () => {
           firstName={item.map.firstName}
           secondName={item.map.lastName}
           DocID={item.map.docID}
-          primarySpl={item.map.primarySpl}
+          primarySpl={item.map.medicineType}
           imgLoc={item.map.imgLoc}
           state={item.map.state}
           hospitalAffiliated={item.map.hospitalAffiliated}

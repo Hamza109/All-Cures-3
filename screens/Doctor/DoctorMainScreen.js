@@ -20,6 +20,7 @@ import Right from '../../assets/images/RIGHT.svg';
 import {Route} from '../../routes';
 
 const DoctorMainScreen = ({route, navigation}) => {
+  const profle = useSelector(state=>state.profile.data)
   const doc = useSelector(state => state.doc.data);
   const dispatch = useDispatch();
   const id = route.params.ids;
@@ -149,7 +150,7 @@ const DoctorMainScreen = ({route, navigation}) => {
                   Specialization
                 </Text>
                 <Text style={[styles.mainText, {alignSelf: 'flex-start'}]}>
-                  {item?.medicineType === '' ? '-NA-' : item?.medicineType}
+                  {item?.primarySpl === '' ? '-NA-' : item?.primarySpl}
                 </Text>
               </View>
 
