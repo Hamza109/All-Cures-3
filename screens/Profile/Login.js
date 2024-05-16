@@ -18,14 +18,18 @@ import CheckBox from '@react-native-community/checkbox';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Color, width} from '../../config/GlobalStyles';
 import {backendHost} from '../../Components/apiConfig';
-import {UseDispatch, useDispatch} from 'react-redux';
+import {UseDispatch, useDispatch, useSelector} from 'react-redux';
 import {profileData} from '../../Redux/Slice/ProfileDataSlice';
 import {Route} from '../../routes';
 import {Modal} from 'native-base';
 import RenderHTML from 'react-native-render-html';
 import {screen} from '../../Redux/Slice/screenNameSlice';
 import ContentLoader from '../../Components/ContentLoader';
-const Login = ({navigation}) => {
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const Login = async ({navigation}) => {
+  const token = await AsyncStorage.getItem('token')
+  console.log(token);
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -160,7 +164,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
         {/* Adjust image component as needed */}
         <View style={styles.form}>
           <TextInput
-          autoCapitalize='none'
+            autoCapitalize="none"
             style={[styles.input, {borderBottomWidth: 1}]}
             placeholder="Email"
             keyboardType="email-address" // Or 'phone-pad' if appropriate
@@ -172,7 +176,6 @@ These Terms and Conditions are governed by the internal substantive laws of the 
 
           <KeyboardAvoidingView style={[styles.passwordContainer]}>
             <TextInput
-          
               style={[styles.input, {width: 180}]}
               placeholder="Password"
               secureTextEntry={!showPassword}
@@ -239,7 +242,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
                     styles.termsLink,
                     {textAlign: 'center', marginTop: 15},
                   ]}>
-                  Forget Password?
+                  Forgot Password?
                 </Text>
               </Pressable>
             </>

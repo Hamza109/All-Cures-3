@@ -18,6 +18,7 @@ import OptionSlice from './Slice/OptionSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import heightSlice from './Slice/heightSlice';
 import articleIdSlice from './Slice/ArticleIdSlice';
+import { tokenSlice } from './Slice/TokenSlice';
 const rootReducer = combineReducers({
   screen: screenSlice,
   height: heightSlice,
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
   option: OptionSlice,
   profile: profileSlice,
   articleId: articleIdSlice,
-  booking:BookingSlice
+  booking:BookingSlice,
+  token:tokenSlice
 });
 
 const persistConfig = {

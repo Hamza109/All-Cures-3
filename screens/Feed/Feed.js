@@ -40,18 +40,18 @@ const Feed = ({navigation}) => {
   const abortController = new AbortController();
   const signal = abortController.signal;
 
- const  getUrl= async () =>{
-  const videoUrl = await AsyncStorage.getItem('url');
-  const url = videoUrl!=null?JSON.parse(videoUrl):null
+  const getUrl = async () => {
+    const videoUrl = await AsyncStorage.getItem('url');
+    const url = videoUrl != null ? JSON.parse(videoUrl) : null;
 
-  if(url!=null){
-    console.log('video',url)
-    navigation.navigate(Route.VIDEOCALL,{
-      url: ` https://${url}`,
-    })
-    AsyncStorage.removeItem('url');
-  }
- }
+    if (url != null) {
+      console.log('video', url);
+      navigation.navigate(Route.VIDEOCALL, {
+        url: ` https://${url}`,
+      });
+      AsyncStorage.removeItem('url');
+    }
+  };
 
   const getValue = async () => {
     const myValue = await AsyncStorage.getItem('artId');
@@ -95,7 +95,7 @@ const Feed = ({navigation}) => {
 
   useEffect(() => {
     getValue();
-    getUrl()
+    getUrl();
   });
 
   useEffect(() => {
@@ -137,6 +137,7 @@ const Feed = ({navigation}) => {
 
   async function getArticleByDisease() {
     try {
+      console.log('get By disease running');
       const response = await fetch(
         `${backendHost}/isearch/diseases/${diseaseId}`,
         {headers: headers, signal: signal},
@@ -231,13 +232,13 @@ const Feed = ({navigation}) => {
           navigation.navigate(Route.ARTICLES_READ, {
             articleId: item.article_id,
             title: item.title,
-            image: imageLoc,
+         
           })
         }>
         <ArticlesCard
           title={item.title}
           window_title={item.authors_name}
-          create_date={item.create_date}
+          create_date={item.published_date}
           image_location={imageLoc}
           dc_name={item.med_type_name}
           articleId={item.article_id}

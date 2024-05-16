@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontFamily: FontFamily.poppinsRegular,
     fontWeight: '500',
-    fontSize: 13,
+    fontSize: 12,
 
     alignSelf: 'center',
   },

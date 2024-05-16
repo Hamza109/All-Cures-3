@@ -25,7 +25,7 @@ const FeedStack = ({navigation}) => {
 
       <Stack.Screen name={Route.FEED} component={Feed} />
       <Stack.Screen name={Route.ARTICLES_READ} component={ArticlesRead} />
-      <Stack.Screen name={Route.NOTIFICATION} component={Notification} />
+      <Stack.Screen name={Route.NOTIFICATION} component={Notification} options={{headerShown:true,title:""}}/>
       <Stack.Screen name={Route.VIDEOCALL} component={VideoCall} />
       <Stack.Screen
         name={Route.ARTICLES_BY_MEDICINE}

@@ -83,8 +83,8 @@ android {
         applicationId "com.allcures"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 33
-        versionName "2.3"
+        versionCode 36
+        versionName "2.6"
     }
     signingConfigs {
          release {

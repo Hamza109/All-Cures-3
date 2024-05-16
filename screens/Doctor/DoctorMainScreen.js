@@ -139,7 +139,7 @@ const DoctorMainScreen = ({route, navigation}) => {
                 <Text style={styles.mainTextTitle}>Name</Text>
                 <Text style={styles.mainText}>
                   {' '}
-                  Dr.{item?.firstName} {item?.lastName}
+                  Dr. {item?.firstName} {item?.lastName}
                 </Text>
               </View>
             )}

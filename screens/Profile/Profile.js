@@ -221,7 +221,7 @@ const Profile = ({navigation}) => {
                   fontFamily: FontFamily.poppinsRegular,
                   textDecorationLine: 'underline',
                 }}>
-                Sign In/Create Account
+                Sign In/Sign Up
               </Text>
             </Pressable>
           </View>

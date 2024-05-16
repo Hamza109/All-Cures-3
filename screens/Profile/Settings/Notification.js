@@ -5,6 +5,7 @@ import {
   FlatList,
   SafeAreaView,
   Pressable,
+  TouchableOpacity,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {Color, FontFamily, width} from '../../../config/GlobalStyles';
@@ -16,11 +17,14 @@ import Divider from '../../../Components/Divider';
 import NotificationIcon from '../../../assets/images/Notification.svg';
 import {Modal} from 'native-base';
 import ContentLoader from '../../../Components/ContentLoader';
+import {useNavigation} from '@react-navigation/native';
+import { Route } from '../../../routes';
 const Notification = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [showModals, setShowModals] = useState(Array(11).fill(false)); // An array of state variables
-  const [isLoaded,setIsLoaded] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false);
+  const navigation = useNavigation();
 
   const handlePress = index => {
     setShowModals(prevModals =>
@@ -28,7 +32,7 @@ const Notification = () => {
     );
   };
   const getTip = async () => {
-setIsLoaded(false)
+    setIsLoaded(false);
     await axios
       .get(`${backendHost}/tip/get`)
 
@@ -97,8 +101,16 @@ setIsLoaded(false)
             <Modal.Content maxWidth="350" maxH="212">
               <Modal.CloseButton />
               <Modal.Header>Tip</Modal.Header>
-              {console.log(item.tip_title)}
-              <Modal.Body>{item.tip_title}</Modal.Body>
+
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate(Route.ARTICLES_READ, {
+                    articleId: item.article_id,
+                    title: item.article_title,
+                  })
+                }>
+                <Modal.Body>{item.tip_title}</Modal.Body>
+              </TouchableOpacity>
             </Modal.Content>
           </Modal>
         </View>
@@ -120,13 +132,16 @@ setIsLoaded(false)
           <Text style={styles.read}>Tip of the Day</Text>
         </View>
       </View>
-      {isLoaded? <FlatList
-        data={data.slice(0, 10)}
-        renderItem={renderTipItem}
-        showsVerticalScrollIndicator={false}
-        estimatedItemSize={80} // Replace 80 with the estimated height of your items
-      />:<ContentLoader/>}
-     
+      {isLoaded ? (
+        <FlatList
+          data={data.slice(0, 10)}
+          renderItem={renderTipItem}
+          showsVerticalScrollIndicator={false}
+          estimatedItemSize={80} // Replace 80 with the estimated height of your items
+        />
+      ) : (
+        <ContentLoader />
+      )}
     </SafeAreaView>
   );
 };
