@@ -10,6 +10,7 @@ import Back from '../../assets/images/BACK.svg';
 import Notification from '../Profile/Settings/Notification';
 import VideoCall from '../VideoCall/VideoCall';
 import Success from '../Doctor/Success';
+import Appointment from '../Doctor/Appointment';
 const FeedStack = ({navigation}) => {
   const handleBack = () => {
     console.log('back');
@@ -22,10 +23,13 @@ const FeedStack = ({navigation}) => {
         headerShown: false,
         headerLeftLabelVisible: false,
       }}>
-
       <Stack.Screen name={Route.FEED} component={Feed} />
       <Stack.Screen name={Route.ARTICLES_READ} component={ArticlesRead} />
-      <Stack.Screen name={Route.NOTIFICATION} component={Notification} options={{headerShown:true,title:""}}/>
+      <Stack.Screen
+        name={Route.NOTIFICATION}
+        component={Notification}
+        options={{headerShown: true, title: ''}}
+      />
       <Stack.Screen name={Route.VIDEOCALL} component={VideoCall} />
       <Stack.Screen
         name={Route.ARTICLES_BY_MEDICINE}
@@ -47,6 +51,7 @@ const FeedStack = ({navigation}) => {
           },
         }}
       />
+      <Stack.Screen name={Route.APPOINTMENT} component={Appointment} />
     </Stack.Navigator>
   );
 };

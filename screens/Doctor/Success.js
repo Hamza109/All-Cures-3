@@ -33,9 +33,8 @@ const Success = () => {
         onPress={() => {
           navigation.navigate(Route.PROFILE_TAB, {screen: Route.MYBOOKINGS});
         }}
-        style={{marginTop:50}}
-        >
-        <Text style={{fontSize:11}}>Check Your bookings</Text>
+        style={{marginTop: 50}}>
+        <Text style={{fontSize: 11}}>Check Your bookings</Text>
       </Pressable>
       <Pressable>
         <Text></Text>

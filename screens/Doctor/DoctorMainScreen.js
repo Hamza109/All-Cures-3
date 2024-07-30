@@ -20,7 +20,7 @@ import Right from '../../assets/images/RIGHT.svg';
 import {Route} from '../../routes';
 
 const DoctorMainScreen = ({route, navigation}) => {
-  const profle = useSelector(state=>state.profile.data)
+  const profle = useSelector(state => state.profile.data);
   const doc = useSelector(state => state.doc.data);
   const dispatch = useDispatch();
   const id = route.params.ids;
@@ -29,26 +29,11 @@ const DoctorMainScreen = ({route, navigation}) => {
   const [exist, setExist] = useState(false);
   const [docCures, setDocCures] = useState([]);
   const [availability, setAvailability] = useState();
-  const [url, setUrl] = useState(
-    `http://all-cures.com:8080/cures_articleimages/doctors/${id}.png`,
-  );
+
   const firstName = route.params.firstName;
   const secondName = route.params.secondName;
   const imgLoc = route.params.imgLoc;
-  const checkIfImage = async imageUrl => {
-    try {
-      const res = await fetch(imageUrl, {method: 'HEAD', mode: 'no-cors'});
-
-      if (res.ok) {
-        setExist(true);
-      } else {
-        setExist(false);
-      }
-    } catch (error) {
-      console.error(error);
-      // Handle the error if needed
-    }
-  };
+ 
   useEffect(() => {
     // Initially, mark the component as not loaded.
     setIsLoaded(false);

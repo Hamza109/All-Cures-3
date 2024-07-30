@@ -117,7 +117,8 @@ const Inbox = () => {
             navigation.navigate(Route.CHAT, {
               messages:
                 res.data[0].Message != '' ? transformedMessages.reverse() : [],
-              id: user,
+              id: profile.docID != 0 ? res.data[0].From_id : res.data[0].To_id,
+
               chatId: res.data[0].Chat_id,
               first_name: first_name,
               last_name: second_name,
@@ -184,7 +185,7 @@ const Inbox = () => {
         Alert.alert('Error Fetching Data', error.message);
       }
     }
-  }
+  };
 
   const renderMessage = ({item}) => {
     const now = moment();

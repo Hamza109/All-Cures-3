@@ -276,6 +276,7 @@ const Appointment = ({route,navigation}) => {
                 justifyContent: 'center',
                 borderRadius: 18,
                 marginTop: 40,
+                borderRadius:5
               }}
               onPress={handleBookAppointment}>
               <Text
@@ -347,11 +348,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   dateContainer: {
-    padding: 10,
+    padding: 8,
     margin: 10,
     borderWidth: 2,
     borderColor: Color.appDefaultColor,
-    borderRadius: 2,
+    borderRadius: 10,
   },
   dateText: {
     fontSize: 14,

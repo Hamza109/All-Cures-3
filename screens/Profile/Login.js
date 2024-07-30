@@ -26,9 +26,8 @@ import RenderHTML from 'react-native-render-html';
 import {screen} from '../../Redux/Slice/screenNameSlice';
 import ContentLoader from '../../Components/ContentLoader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const Login = async ({navigation}) => {
-  const token = await AsyncStorage.getItem('token')
-  console.log(token);
+const Login =  ({navigation}) => {
+
   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

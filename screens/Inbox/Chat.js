@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useDeferredValue} from 'react';
 import {View, Text, Alert, KeyboardAvoidingView} from 'react-native';
 import {GiftedChat} from 'react-native-gifted-chat';
 import {Image} from 'react-native';
@@ -49,7 +49,16 @@ const Chat = ({route}) => {
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
   const profile = useSelector(state => state.profile.data);
-  const user = profile.registration_id;
+  const [user, setUser] = useState();
+  useEffect(() => {
+    if (profile.docID == 0) {
+      console.log('this is user');
+      setUser(profile.registration_id);
+    } else {
+      console.log('docID run');
+      setUser(profile.docID);
+    }
+  }, [profile]);
 
   const [selectedMessageId, setSelectedMessageId] = useState(null);
   useEffect(() => {
@@ -123,8 +132,9 @@ const Chat = ({route}) => {
       return; // Or potentially retry connection
     }
     setMessages(prevMessages => GiftedChat.append(prevMessages, newMessages));
+    console.log(profile.docID);
     const message = newMessages[0];
-    const fromId = user;
+    const fromId = profile.docID == 0 ? profile.registration_id : profile.docID;
     const toId = Id;
     const chat_id = chatid;
     const payload = `${fromId}:${toId}:${chat_id}:${message.text}`;
