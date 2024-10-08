@@ -1,7 +1,3 @@
-
-
-
-
 import {
   StyleSheet,
   Text,
@@ -13,6 +9,7 @@ import {
   FlatList,
   TouchableOpacity,
   Pressable,
+  BackHandler,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import LottieView from 'lottie-react-native';
@@ -26,10 +23,12 @@ import {Route} from '../../routes';
 import {useSelector} from 'react-redux';
 import axios from 'axios';
 
-
-const Appointment = ({route,navigation}) => {
+import {StackActions} from '@react-navigation/native';
+const Appointment = ({route, navigation}) => {
   const [availableSlots, setAvailableSlots] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(new Date().toLocaleDateString('en-CA'));
+  const [selectedDate, setSelectedDate] = useState(
+    new Date().toLocaleDateString('en-CA'),
+  );
   const [unbookedSlots, setUnBookedSlots] = useState();
   const [isloaded, setIsLoaded] = useState(true);
   const [timeSlot, setTimeSlot] = useState();
@@ -40,32 +39,54 @@ const Appointment = ({route,navigation}) => {
   const [id, setId] = useState(route.params.docID);
   console.log('DocID Appoint', id);
 
+  useEffect(() => {
+    const backAction = () => {
+      navigation.dispatch(StackActions.pop(1));
+      return true;
+    };
 
-  const handleBookAppointment = async ()=>{
-    axios.post(`${backendHost}/appointments/create`, {
-      docID: id,
-      userID: parseInt(userId),
-      appointmentDate: selectedDate,
-      startTime: timeSlot.slot,
-      paymentStatus: 0,
-      amount: "1.00",
-      currency: "INR",
-    })
-    .then((res) => {
-      let enc = res.data;
-     
-      const response = JSON.stringify(enc);
-      const responseObject = JSON.parse(response);
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
 
-      navigation.navigate(Route.PAYMENT,{ccAvenueData:responseObject.encRequest})
-     
-  })
-  .catch(err=>{
-    console.log(err)
-  })
+    return () => backHandler.remove();
+  }, []);
+  const handleBookAppointment = async () => {
+    axios
+      .post(`${backendHost}/appointments/create`, {
+        docID: id,
+        userID: parseInt(userId),
+        appointmentDate: selectedDate,
+        startTime: timeSlot.slot,
+        paymentStatus: 0,
+        amount: unbookedSlots.amount,
+        currency: 'INR',
+      })
+      .then(res => {
+        let enc = res.data;
+        console.log('enc', enc);
 
-  }
+        if (enc.Count == 0) {
+          console.log(enc.Count);
 
+          navigation.navigate(Route.SUCCESS);
+        } else if (enc.Count == 1) {
+          console.log(enc.Count);
+          const response = JSON.stringify(enc);
+          const responseObject = JSON.parse(response);
+
+          navigation.navigate(Route.PAYMENT, {
+            ccAvenueData: responseObject.encRequest,
+          });
+        } else {
+          console.log('Not working');
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   const getDayName = dateString => {
     const date = new Date(dateString);
@@ -132,7 +153,6 @@ const Appointment = ({route,navigation}) => {
       paymentStatus: 0,
     };
 
-
     try {
       setIsLoaded(false);
       const response = await fetch(`${backendHost}/appointments/create`, {
@@ -157,7 +177,7 @@ const Appointment = ({route,navigation}) => {
         // Appointment creation failed
         console.error('Appointment creation failed:');
         setIsLoaded(true);
-        Alert.alert("Error Creating Appointment") // Log any detailed error message from the server
+        Alert.alert('Error Creating Appointment'); // Log any detailed error message from the server
         // ... handle failure
       }
     } catch (error) {
@@ -205,7 +225,6 @@ const Appointment = ({route,navigation}) => {
         item.date === selectedDate &&
         (selectedDate === today ? item.slot > currentTime : true),
     );
-  
 
     return (
       <View style={styles.slotsContainer}>
@@ -215,7 +234,6 @@ const Appointment = ({route,navigation}) => {
             style={[styles.slot, timeSlot === item && styles.selectedTime]}
             onPress={() => {
               setTimeSlot(item);
-             
             }}>
             {console.log('temSlot1 item', item)}
 
@@ -263,6 +281,9 @@ const Appointment = ({route,navigation}) => {
             </View>
           )}
           <Divider />
+          <Text style={styles.title}>
+            Consultation Fee :{unbookedSlots.amount}
+          </Text>
 
           {selectedDate && renderSlots()}
           {timeSlot ? (
@@ -276,7 +297,7 @@ const Appointment = ({route,navigation}) => {
                 justifyContent: 'center',
                 borderRadius: 18,
                 marginTop: 40,
-                borderRadius:5
+                borderRadius: 5,
               }}
               onPress={handleBookAppointment}>
               <Text

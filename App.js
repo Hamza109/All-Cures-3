@@ -96,7 +96,7 @@ const App = () => {
   const getToken = async () => {
     try {
       const token = await messaging().getToken();
-      await AsyncStorage.setItem('token', JSON.stringify(token));
+      await AsyncStorage.setItem('token', token);
 
       fetch(`${backendHost}/notification/token/"${token}"`, {
         method: 'POST',
@@ -309,7 +309,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <NativeBaseProvider>
-        <NavigationContainer onReady={() => BootSplash.hide({fade: true})}>
+        <NavigationContainer>
           <RootStack />
         </NavigationContainer>
       </NativeBaseProvider>

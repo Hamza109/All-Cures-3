@@ -20,6 +20,7 @@ import {useNavigation} from '@react-navigation/native';
 import ResetPassword from '../Profile/ResetPassword';
 import ArticlesRead from '../Article/ArticlesRead';
 import MyBookings from '../Profile/Settings/MyBookings';
+import BookAppointment from '../Profile/Settings/BookAppointment';
 const ProfileStack = () => {
   const navigation = useNavigation();
   const handleBack = () => {
@@ -60,6 +61,7 @@ const ProfileStack = () => {
       <Stack.Screen name={Route.RESETPASSWORD} component={ResetPassword} />
       <Stack.Screen name={Route.SUBMITARTICLE} component={SubmitArticle} />
       <Stack.Screen name={Route.ARTICLES_READ} component={ArticlesRead} />
+      <Stack.Screen name={'BookAppointment'} component={BookAppointment} />
     </Stack.Navigator>
   );
 };

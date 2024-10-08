@@ -4,13 +4,10 @@ import {useSelector} from 'react-redux';
 import {Color, FontFamily} from '../../config/GlobalStyles';
 import {User} from './UserPic';
 const UserProfile = () => {
-  const profileData = useSelector(state => state.profile.data);
+  const profile = useSelector(state => state.profile.data || {});
   return (
-    <View style= {{}}>
-      <StatusBar
-       
-        barStyle="light-content"
-      />
+    <View style={{}}>
+      <StatusBar barStyle="light-content" />
       <View style={styles.profileHeader}>
         <User
           style={{
@@ -45,9 +42,9 @@ const styles = StyleSheet.create({
     fontSize: 25,
     marginLeft: 14,
     marginTop: -10,
-    fontWeight:'500',
-    letterSpacing:1,
-    width:220
+    fontWeight: '500',
+    letterSpacing: 1,
+    width: 220,
   },
   headerTitle: {
     marginLeft: 12,

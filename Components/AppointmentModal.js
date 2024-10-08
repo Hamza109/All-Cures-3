@@ -20,6 +20,8 @@ import {useNavigation} from '@react-navigation/native';
 import {Route} from '../routes';
 import {Center, AlertDialog, Input, Icon} from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {screen} from '../Redux/Slice/screenNameSlice';
+import { useSelector } from 'react-redux';
 
 const AppointmentModal = () => {
   const [modalVisible, setModalVisible] = React.useState(true);
@@ -33,25 +35,53 @@ const AppointmentModal = () => {
   const [searchText, setSearchText] = useState('');
 
   const [isOpen, setIsOpen] = useState(false);
+  const [videoService, setVideoService] = useState();
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [img, setImg] = useState();
   const onClose = () => setIsOpen(false);
   const cancelRef = useRef(null);
+  const postData = async (docID) => {
+ 
+    console.log('started',docID);
 
+    try {
+      const response = await fetch(
+        `${backendHost}/video/post/leads?userID=${profile.registration_id}&docID=${docID}`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      const jsonResponse = await response.json();
+      if (response.ok) {
+        console.log('Response:', jsonResponse);
+      } else {
+        console.log('Response:', jsonResponse);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      Alert.alert('Error', 'An error occurred');
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await fetch(`${backendHost}/video/get/doctors/list`);
-        const res1 = await fetch(
-          `${backendHost}/SearchActionController?cmd=getResults&FeaturedDoctors`,
-        );
+
         const json = await res.json();
-        const json1 = await res1.json();
 
         // Combine the two arrays
-        const combinedData = [...json, ...json1.map.DoctorDetails.myArrayList];
+        const sortedArr = json.sort((a, b) => b.videoService - a.videoService);
+        console.log(sortedArr);
 
-        setDoc(combinedData);
-        setFilteredDoc(combinedData);
-        console.log('Appointment Doc', combinedData);
+        setDoc(sortedArr);
+        setFilteredDoc(sortedArr);
+        console.log('Appointment Doc', json);
       } catch (error) {
         console.log(error);
         Alert.alert('Some Error occurred. Try Again!');
@@ -63,27 +93,32 @@ const AppointmentModal = () => {
   useEffect(() => {
     if (searchText) {
       const filteredData = doc.filter(item =>
-        `${item.docname_first} ${item.docname_last}`
-          .toLowerCase()
-          .includes(searchText.toLowerCase()),
+        `${item.firstName} `.toLowerCase().includes(searchText.toLowerCase()),
       );
       setFilteredDoc(filteredData);
     } else {
       setFilteredDoc(doc);
     }
   }, [searchText, doc]);
-
+  const profile = useSelector(state => state.profile.data);
   const renderItem = ({item}) => {
-    const id = item.docId ? item.docId : item.docID;
+    const id = item.docID;
     const isSelected = id === selectedDocID;
     return (
       <TouchableOpacity
+        activeOpacity={0.7}
         style={[
           styles.itemContainer,
           isSelected && styles.selectedItemContainer,
+          (item.videoService === 1) & !isSelected && styles.videoService,
         ]}
         onPress={() => {
-          setSelectedDocID(item.docId ? item.docId : item.docID);
+          setSelectedDocID(item.docID);
+          setVideoService(item.videoService);
+          setFirstName(item.firstName);
+          setLastName(item.lastName);
+          setImg(item.imgLoc);
+          postData(item.docID)
         }}>
         {item.imgLoc ? (
           <Image
@@ -98,18 +133,19 @@ const AppointmentModal = () => {
           </View>
         )}
         <View style={styles.itemTextContainer}>
-          <Text style={styles.mainText}>
-            Dr. {item.docname_first} {item.docname_last}
+          <Text
+            style={[
+              styles.mainText,
+              (item.videoService === 1) & !isSelected && styles.videoService
+            ]}>
+            Dr. {item.firstName} {item.lastName}
           </Text>
           <View style={styles.hospitalInfoContainer}>
-            <Text style={styles.mainTextHospital} numberOfLines={1}>
-              {item.hospital_affliated}{' '}
+            <Text style={[styles.mainTextHospital, (item.videoService === 1) & !isSelected && styles.videoService]} numberOfLines={1}>
+              {item.hospitalAffiliated}{' '}
             </Text>
             <Dot height={5} width={5} />
-            <Text style={styles.mainTextMedicine}>
-              {' '}
-              {item.MedicineTypeName}
-            </Text>
+            <Text style={[styles.mainTextMedicine, (item.videoService === 1) & !isSelected && styles.videoService]}> {item.medicineType}</Text>
           </View>
           <View style={styles.separator} />
         </View>
@@ -118,7 +154,7 @@ const AppointmentModal = () => {
   };
 
   const handleBook = () => {
-    if (selectedDocID) {
+    if (selectedDocID & (videoService === 1)) {
       navigation.navigate(Route.APPOINTMENT, {
         docID: selectedDocID,
       });
@@ -133,7 +169,7 @@ const AppointmentModal = () => {
         isOpen={modalVisible}
         onClose={() => setModalVisible(false)}
         finalFocusRef={finalRef}>
-        <Modal.Content>
+        <Modal.Content minHeight={'300px'}>
           <Modal.CloseButton />
           <Modal.Header>Select from our Expert Doctors</Modal.Header>
           <Modal.Body>
@@ -160,7 +196,19 @@ const AppointmentModal = () => {
                 />
               }
             />
-            <FlatList data={filteredDoc} renderItem={renderItem} />
+            {filteredDoc.length === 0 ? (
+              <Text
+                style={{
+                  justifyContent: 'center',
+                  flex: 1,
+                  alignSelf: 'center',
+                  marginTop: 20,
+                }}>
+                No doctor by this name. 🔍
+              </Text>
+            ) : (
+              <FlatList data={filteredDoc} renderItem={renderItem} />
+            )}
           </Modal.Body>
           <Modal.Footer>
             <Button onPress={handleBook} backgroundColor="#5E4DB0">
@@ -182,9 +230,10 @@ const AppointmentModal = () => {
                 fontFamily: FontFamily.poppinsRegular,
                 padding: 2,
               }}>
-              🚫 This doctor is not available right now. We will get back to you
-              ASAP. Meanwhile, check the doctor's profile to read articles and
-              know more about him. 📄👨‍⚕️
+              🚫 This doctor is not registered with us for video call
+              functionality at the moment. We will get back to you ASAP.
+              Meanwhile, check the doctor's profile to read articles and learn
+              more about them. 📄👨‍⚕️
             </Text>
           </AlertDialog.Body>
           <AlertDialog.Footer>
@@ -196,7 +245,16 @@ const AppointmentModal = () => {
                 ref={cancelRef}>
                 Cancel
               </Button>
-              <Button backgroundColor={'#5E4DB0'}>
+              <Button
+                backgroundColor={'#5E4DB0'}
+                onPress={() => {
+                  navigation.navigate(Route.DOCTOR_MAIN_SCREEN, {
+                    ids: selectedDocID,
+                    firstName: firstName,
+                    lastName: lastName,
+                    imgLoc: img,
+                  });
+                }}>
                 Go to Doctor's Profile
               </Button>
             </Button.Group>
@@ -251,7 +309,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontFamily: FontFamily.poppinsRegular,
     color: Color.colorDarkslategray,
-    maxWidth: width / 2,
+    maxWidth: width / 2.8,
   },
   hospitalInfoContainer: {
     flexDirection: 'row',
@@ -260,5 +318,8 @@ const styles = StyleSheet.create({
   separator: {
     borderWidth: 0.2,
     marginTop: 5,
+  },
+  videoService: {
+    fontWeight:'700',
   },
 });

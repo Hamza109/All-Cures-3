@@ -27,7 +27,7 @@ const Success = () => {
           color: Color.appDefaultColor,
           fontFamily: FontFamily.poppinsBold,
         }}>
-        Payment successful
+        Appointment Schedule
       </Text>
       <Pressable
         onPress={() => {

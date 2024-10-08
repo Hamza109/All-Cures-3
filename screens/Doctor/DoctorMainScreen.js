@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
+  BackHandler,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {backendHost, headers, imageHost} from '../../Components/apiConfig';
@@ -18,7 +19,7 @@ import OutButton from '../../Components/outButton';
 import RelatedCard from '../../Components/RelatedCard';
 import Right from '../../assets/images/RIGHT.svg';
 import {Route} from '../../routes';
-
+import {StackActions} from '@react-navigation/native';
 const DoctorMainScreen = ({route, navigation}) => {
   const profle = useSelector(state => state.profile.data);
   const doc = useSelector(state => state.doc.data);
@@ -33,7 +34,19 @@ const DoctorMainScreen = ({route, navigation}) => {
   const firstName = route.params.firstName;
   const secondName = route.params.secondName;
   const imgLoc = route.params.imgLoc;
- 
+  useEffect(() => {
+    const backAction = () => {
+      navigation.dispatch(StackActions.pop(1));
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
   useEffect(() => {
     // Initially, mark the component as not loaded.
     setIsLoaded(false);

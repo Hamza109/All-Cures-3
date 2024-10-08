@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import RenderHTML from 'react-native-render-html';
 import {useForm, Controller} from 'react-hook-form';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Modal} from 'native-base';
 import SignUpImg from '../../assets/images/signUpImg.svg';
 import CheckBox from '@react-native-community/checkbox';
@@ -26,6 +26,7 @@ import axios from 'axios';
 import {useToast} from 'native-base';
 import {screen} from '../../Redux/Slice/screenNameSlice';
 import ContentLoader from '../../Components/ContentLoader';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const SignUp = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -96,6 +97,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
       password: null,
     },
   });
+  const [FCMToken, setFCMToken] = useState();
   const [isLoaded, setIsLoaded] = useState(false);
   const toast = useToast();
   const dispatch = useDispatch();
@@ -132,7 +134,13 @@ These Terms and Conditions are governed by the internal substantive laws of the 
     setLoginError(null); // Clear errors if validation passes
     return true;
   };
-
+  useEffect(() => {
+    const fetchToken = async () => {
+      const tok = await AsyncStorage.getItem('token');
+      setFCMToken(tok);
+    };
+    fetchToken();
+  }, []);
   const handleSubmit = async () => {
     console.log('Pressed');
     if (!validate()) return; // Validate the form data
@@ -146,7 +154,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
       // Attempt login
       const type = userType ? 'Doctor' : 'other';
       console.log('Staring', firstName + lastName + email + password + type);
-
+      console.log('reg', FCMToken);
       const response = await axios.post(
         `${backendHost}/registration/add/new`,
         {
@@ -161,15 +169,17 @@ These Terms and Conditions are governed by the internal substantive laws of the 
           acceptTnc: '1',
           number: number,
           Age: null, // Assuming you intentionally set this to null
+          FCM: FCMToken,
         },
         {
           withCredentials: true, // This should be in the second argument as part of the config object
           headers: {'Access-Control-Allow-Credentials': true},
         },
       );
-      console.log('Doc Res', response.data);
+      console.log('Doc Res', response);
+      const res = await response.data;
 
-      if (response.data.registration_id) {
+      if (res.registration_id) {
         setTimeout(() => {
           console.log('docID', response.data.docID);
           dispatch(profileData(response.data));

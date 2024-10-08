@@ -3,7 +3,7 @@ import React from 'react';
 import {width, height, Color} from '../config/GlobalStyles';
 import NotificationIcon from '../assets/images/Notification.svg';
 import {useNavigation} from '@react-navigation/native';
-import { Route } from '../routes';
+import {Route} from '../routes';
 const HeaderComponent = ({title}) => {
   const navigation = useNavigation();
   return (
@@ -17,7 +17,11 @@ const HeaderComponent = ({title}) => {
           marginLeft: 5,
         }}>
         <Text style={styles.read}>{title}</Text>
-        <Pressable onPress={() => {navigation.navigate(Route.NOTIFICATION)}}>
+        <Text></Text>
+        <Pressable
+          onPress={() => {
+            navigation.navigate(Route.NOTIFICATION);
+          }}>
           <NotificationIcon width={16} height={18} style={{marginTop: 5}} />
         </Pressable>
       </View>

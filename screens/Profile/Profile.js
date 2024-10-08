@@ -35,6 +35,7 @@ const Profile = ({navigation}) => {
     {title: 'About us', route: Route.ABOUT},
     {title: 'My Bookings', route: Route.MYBOOKINGS},
     {title: 'Submit Articles', route: Route.SUBMITARTICLE},
+    {title: 'Book An Appointment', route: 'BookAppointment'},
     {title: 'Favourite', route: Route.FAVOURITE},
     {title: 'Inbox', route: Route.INBOX},
 
@@ -150,7 +151,8 @@ const Profile = ({navigation}) => {
       item.title === 'Submit Articles' ||
       item.title === 'Inbox' ||
       item.title === 'Favourite' ||
-      item.title === 'My Bookings'
+      item.title === 'My Bookings' ||
+      item.title === 'Book An Appointment'
     ) {
       if (Object.keys(profileInfo).length) {
         navigation.navigate(item.route);
@@ -168,7 +170,6 @@ const Profile = ({navigation}) => {
       getUser();
     }
   }, []);
-
 
   return (
     <>

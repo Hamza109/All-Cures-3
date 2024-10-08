@@ -14,12 +14,24 @@ const MyBookings = () => {
   const [data, setData] = useState();
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
-  const profile= useSelector(state=>state.profile.data)
+  const profile = useSelector(state => state.profile.data);
+  console.log(profile);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         setIsLoaded(false);
-        const response = await fetch(`${backendHost}/appointments/get/user/${profile.registration_id}`); //change 87 to registration ID
+        let response;
+        if (profile.docID === 0) {
+          response = await fetch(
+            `${backendHost}/appointments/get/user/${profile.registration_id}`
+          );
+        } else {
+          response = await fetch(
+            `${backendHost}/appointments/get/${profile.docID}`
+          );
+        }
+        //change 87 to registration ID
         // if (!response.ok) {
         //   return;
         // }
@@ -34,7 +46,7 @@ const MyBookings = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [profile.docID]);
   return (
     <View style={styles.container}>
       <HeaderComponent title={'My bookings'} />

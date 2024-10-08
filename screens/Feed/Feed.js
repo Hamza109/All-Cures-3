@@ -262,7 +262,7 @@ const Feed = ({navigation}) => {
       setRefreshing(false);
     }, 2000);
   }, []);
-  const [isLoading, setIsLoading] = useState(false);
+  const [LoadingModal, setIsLoading] = useState(false);
   const handleSchedule = () => {
     setIsLoading(true);
     // if (Object.keys(profileInfo).length) {
@@ -271,6 +271,7 @@ const Feed = ({navigation}) => {
     //   dispatch(screen(Route.LOGIN));
     // }
   };
+  console.log(profileInfo);
 
   return (
     // feed container
@@ -351,61 +352,64 @@ const Feed = ({navigation}) => {
           })}
         </ScrollView>
       </View>
-      {!isLoading ? (
-        <Modal
-          isOpen={modalVisible}
-          onClose={() => setModalVisible(false)}
-          finalFocusRef={finalRef}>
-          <Modal.Content>
-            <Modal.CloseButton
-              onPress={() => {
-                setModalVisible(false);
-              }}
-            />
-            <Modal.Header>Looking For a Doctor?</Modal.Header>
+      {profileInfo.docID == 0 ? (
+        !LoadingModal ? (
+          <Modal
+            isOpen={modalVisible}
+            onClose={() => setModalVisible(false)}
+            finalFocusRef={finalRef}>
+            <Modal.Content>
+              <Modal.CloseButton
+                onPress={() => {
+                  setModalVisible(false);
+                }}
+              />
+              <Modal.Header>Looking For a Doctor?</Modal.Header>
 
-            <View>
-              <Modal.Body>
-                <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                  <LottieView
-                    source={require('../../assets/animations/doc.json')}
-                    style={{width: width, height: 100}}
-                    autoPlay={true}
-                    loop={false}
-                  />
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: Color.colorDarkslategray,
-                      paddingVertical: 15,
-                      textAlign: 'center',
-                      fontWeight: '400',
-                      marginTop: 5,
-                    }}>
-                    Connect with our expert doctors from the comfort of your
-                    home through video consultation. Enjoy personalized medical
-                    advice without the need for a physical visit. Click
-                    "Schedule Now" to book your appointment.
-                  </Text>
-                </View>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button.Group space={2}>
-                  <Button
-                    onPress={() => {
-                      handleSchedule();
-                    }}
-                    backgroundColor="#5E4DB0">
-                    Schedule Now
-                  </Button>
-                </Button.Group>
-              </Modal.Footer>
-            </View>
-          </Modal.Content>
-        </Modal>
-      ) : (
-        <AppointmentModal />
-      )}
+              <View>
+                <Modal.Body>
+                  <View
+                    style={{justifyContent: 'center', alignItems: 'center'}}>
+                    <LottieView
+                      source={require('../../assets/animations/doc.json')}
+                      style={{width: width, height: 100}}
+                      autoPlay={true}
+                      loop={false}
+                    />
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color: Color.colorDarkslategray,
+                        paddingVertical: 15,
+                        textAlign: 'center',
+                        fontWeight: '400',
+                        marginTop: 5,
+                      }}>
+                      Connect with our expert doctors from the comfort of your
+                      home through video consultation. Enjoy personalized
+                      medical advice without the need for a physical visit.
+                      Click "Schedule Now" to book your appointment.
+                    </Text>
+                  </View>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button.Group space={2}>
+                    <Button
+                      onPress={() => {
+                        handleSchedule();
+                      }}
+                      backgroundColor="#5E4DB0">
+                      Schedule Now
+                    </Button>
+                  </Button.Group>
+                </Modal.Footer>
+              </View>
+            </Modal.Content>
+          </Modal>
+        ) : (
+          <AppointmentModal />
+        )
+      ) : null}
 
       {Loaded ? (
         <FlashList

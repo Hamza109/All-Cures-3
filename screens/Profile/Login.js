@@ -12,7 +12,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import LoginImg from '../../assets/images/LoginImg.svg';
 import CheckBox from '@react-native-community/checkbox';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -26,9 +26,7 @@ import RenderHTML from 'react-native-render-html';
 import {screen} from '../../Redux/Slice/screenNameSlice';
 import ContentLoader from '../../Components/ContentLoader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const Login =  ({navigation}) => {
-
-  
+const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -36,6 +34,7 @@ const Login =  ({navigation}) => {
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [loginError, setLoginError] = useState(null);
+  const [FCMToken, setFCMToken] = useState();
   const dispatch = useDispatch();
   const source = {
     html: `
@@ -109,7 +108,13 @@ These Terms and Conditions are governed by the internal substantive laws of the 
     setLoginError(null); // Clear errors if validation passes
     return true;
   };
-
+  useEffect(() => {
+    const fetchToken = async () => {
+      const tok = await AsyncStorage.getItem('token');
+      setFCMToken(tok);
+    };
+    fetchToken();
+  }, []);
   const handleSubmit = async () => {
     setIsLoaded(true);
     console.log('Pressed', password.trim());
@@ -118,6 +123,10 @@ These Terms and Conditions are governed by the internal substantive laws of the 
     try {
       // Attempt login
       console.log('Staring');
+      const dataFCM = {
+        FCM: FCMToken,
+      };
+      console.log(typeof FCMToken);
       const response = await fetch(
         `${backendHost}/login?cmd=login&email=${email}&psw=${password}&rempwd=on`,
         {
@@ -127,6 +136,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
             'Content-Type': 'application/json',
             // 'Access-Control-Allow-Credentials': 'true', might not be necessary for the request, commonly used in responses
           },
+          body: JSON.stringify(dataFCM),
         },
       );
       const data = await response.json();
@@ -336,17 +346,17 @@ const styles = StyleSheet.create({
     color: Color.appDefaultColor,
     textDecorationLine: 'underline',
   },
-  login: {
-    backgroundColor: Color.appDefaultColor,
-    height: 48,
-    borderRadius: 8,
-    justifyContent: 'center',
-  },
-  loginText: {
-    fontSize: 18,
-    lineHeight: 24,
-    alignSelf: 'center',
-    color: '#fff',
-    fontWeight: '500',
-  },
+    login: {
+      backgroundColor: Color.appDefaultColor,
+      height: 48,
+      borderRadius: 8,
+      justifyContent: 'center',
+    },
+    loginText: {
+      fontSize: 18,
+      lineHeight: 24,
+      alignSelf: 'center',
+      color: '#fff',
+      fontWeight: '500',
+    },
 });
