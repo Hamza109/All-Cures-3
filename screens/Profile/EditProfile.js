@@ -32,7 +32,7 @@ import LottieView from 'lottie-react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {screenName} from '../Redux/Action';
 import {backendHost, headers, imageHost} from '../../Components/apiConfig';
-import ImagePicker from 'react-native-image-crop-picker';
+// import ImagePicker from 'react-native-image-crop-picker';
 import InputBox from '../../Components/InputBox';
 import {Color} from '../../config/GlobalStyles';
 import {Route} from '../../routes';
@@ -273,25 +273,8 @@ const EditProfile = ({route}) => {
       });
   };
   const choosePhotoFromLibrary = () => {
-    ImagePicker.openPicker({
-      width: 300,
-      height: 300,
-      cropping: true,
-      compressImageQuality: 0.7,
-    })
-      .then(image => {
-        const a = image.path.split('/');
-        const b = a[a.length - 1];
-
-        userProfile.docID != 0
-          ? (setImage(image.path),
-            setSelectedFile(b),
-            bs.current.snapTo(1),
-            handleImageSubmission())
-          : setImageUser(image.path);
-        bs.current.snapTo(1);
-      })
-      .catch(err => err);
+  console.log("add image picker");
+  
   };
   return (
     <View style={styles.container}>

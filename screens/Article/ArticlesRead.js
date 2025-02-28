@@ -36,15 +36,12 @@ const ArticlesRead = ({route, navigation}) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [id, setId] = useState(route.params.articleId);
   const [relatedItem, setRelatedItem] = useState([]);
-  console.log(route.params.articleId);
 
   const abortController = new AbortController();
   const signal = abortController.signal;
 
   const scrollY = useRef(new Animated.Value(0)).current;
-  useEffect(() => {
-    console.log(items);
-  }, [items]);
+
   const handleScroll = Animated.event(
     [{nativeEvent: {contentOffset: {y: scrollY}}}],
     {useNativeDriver: false},
@@ -69,7 +66,6 @@ const ArticlesRead = ({route, navigation}) => {
             headers: headers,
           });
           const json = await response.json();
-          console.log(json);
 
           const relatedArticlesResponse = await fetch(
             `${backendHost}/isearch/${json.dc_name}`,
@@ -78,16 +74,16 @@ const ArticlesRead = ({route, navigation}) => {
             },
           );
           const relatedArticlesJson = await relatedArticlesResponse.json();
-          console.log('relatedItems', relatedArticlesJson);
+          console.log('mainData', json);
 
           setData(json);
           setRelatedItem(relatedArticlesJson);
 
           try {
-            console.log(
-              'content',
-              JSON.parse(decodeURIComponent(json.content)),
-            );
+            // console.log(
+            //   'content',
+            //   JSON.parse(decodeURIComponent(json.content)),
+            // );
 
             const contentBlocks = await JSON.parse(
               decodeURIComponent(json.content),
@@ -166,18 +162,20 @@ const ArticlesRead = ({route, navigation}) => {
             <Text style={styles.title}>{data.title}</Text>
 
             <Text style={styles.time}>
-              {moment(`${data.create_date}`, 'YYYYMMDD').fromNow()}{' '}
+              {moment(`${data.published_date}`, 'YYYYMMDD').fromNow()}{' '}
               <Dot height={5} width={5} /> {data.authors_name}
             </Text>
 
             {items.map((i, key) => {
-              console.log('text-->', i.data.text);
+              console.log('daata', i.data);
+
               return (
                 <View style={{marginTop: 11}} key={Math.random().toString(36)}>
                   <CenterWell1
                     key={Math.random().toString(36)}
                     pageTitle={i.title}
                     type={i.type}
+                    level={i.data.level}
                     text={i.data.text}
                     title={i.data.title}
                     message={i.data.message}
@@ -402,7 +400,7 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom:5
+    marginBottom: 5,
   },
   buttonText: {
     color: Color.appDefaultColor,

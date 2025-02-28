@@ -24,7 +24,6 @@ import BookAppointment from '../Profile/Settings/BookAppointment';
 const ProfileStack = () => {
   const navigation = useNavigation();
   const handleBack = () => {
-    console.log('back');
     navigation.pop();
   };
   const Stack = createStackNavigator();

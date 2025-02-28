@@ -12,11 +12,9 @@ const OutButton = ({name, docID, firstName, lastName}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [isLoaded, setIsLoaded] = useState(true);
-  console.log('aas', docID);
+
   const handlePress = () => {
-    console.log(name);
     if (name == 'Initiate Chat') {
-      console.log('Initiated', profile);
       if (Object.keys(profile) != 0) {
         initiateChat();
       } else {
@@ -76,7 +74,6 @@ const OutButton = ({name, docID, firstName, lastName}) => {
               if (res.data[0].Chat_id === null) {
                 createChat();
               } else {
-                console.log('transformedMEssage');
                 const transformedMessages = res.data.map(message => {
                   return {
                     _id: Math.random().toString(36).substring(2, 9),
@@ -88,7 +85,6 @@ const OutButton = ({name, docID, firstName, lastName}) => {
                     },
                   };
                 });
-                console.log('navigate');
 
                 navigation.navigate(Route.CHAT, {
                   messages:
@@ -122,8 +118,6 @@ const OutButton = ({name, docID, firstName, lastName}) => {
 
       setIsLoaded(true);
       navigation.navigate(Route.VIDEOCALL, {id: `${docID}`, url: result});
-
-      console.log('res', result);
     } catch (error) {
       console.error('Error in startCall:', error);
     }

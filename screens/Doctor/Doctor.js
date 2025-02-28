@@ -66,8 +66,6 @@ const Doctor = () => {
   const [sortedDoc, setSortedDoc] = useState();
   useEffect(() => {
     const data = featuredDoctors.filter(i => {
-      console.log('odl', i.map.medicineType);
-      console.log('new', medicineId);
       return i.map.medicineType === medicineId;
     });
     setSortedDoc(data);
@@ -84,6 +82,8 @@ const Doctor = () => {
       imageLoc =
         'https://all-cures.com:444/cures_articleimages//299/default.png';
     }
+    console.log("Doctor Data",item);
+    
 
     return (
       <TouchableOpacity

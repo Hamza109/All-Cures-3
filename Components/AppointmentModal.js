@@ -21,7 +21,7 @@ import {Route} from '../routes';
 import {Center, AlertDialog, Input, Icon} from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {screen} from '../Redux/Slice/screenNameSlice';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const AppointmentModal = () => {
   const [modalVisible, setModalVisible] = React.useState(true);
@@ -41,10 +41,7 @@ const AppointmentModal = () => {
   const [img, setImg] = useState();
   const onClose = () => setIsOpen(false);
   const cancelRef = useRef(null);
-  const postData = async (docID) => {
- 
-    console.log('started',docID);
-
+  const postData = async docID => {
     try {
       const response = await fetch(
         `${backendHost}/video/post/leads?userID=${profile.registration_id}&docID=${docID}`,
@@ -58,11 +55,6 @@ const AppointmentModal = () => {
       );
 
       const jsonResponse = await response.json();
-      if (response.ok) {
-        console.log('Response:', jsonResponse);
-      } else {
-        console.log('Response:', jsonResponse);
-      }
     } catch (error) {
       console.error('Error:', error);
       Alert.alert('Error', 'An error occurred');
@@ -77,11 +69,9 @@ const AppointmentModal = () => {
 
         // Combine the two arrays
         const sortedArr = json.sort((a, b) => b.videoService - a.videoService);
-        console.log(sortedArr);
 
         setDoc(sortedArr);
         setFilteredDoc(sortedArr);
-        console.log('Appointment Doc', json);
       } catch (error) {
         console.log(error);
         Alert.alert('Some Error occurred. Try Again!');
@@ -118,7 +108,7 @@ const AppointmentModal = () => {
           setFirstName(item.firstName);
           setLastName(item.lastName);
           setImg(item.imgLoc);
-          postData(item.docID)
+          postData(item.docID);
         }}>
         {item.imgLoc ? (
           <Image
@@ -136,16 +126,28 @@ const AppointmentModal = () => {
           <Text
             style={[
               styles.mainText,
-              (item.videoService === 1) & !isSelected && styles.videoService
+              (item.videoService === 1) & !isSelected && styles.videoService,
             ]}>
             Dr. {item.firstName} {item.lastName}
           </Text>
           <View style={styles.hospitalInfoContainer}>
-            <Text style={[styles.mainTextHospital, (item.videoService === 1) & !isSelected && styles.videoService]} numberOfLines={1}>
+            <Text
+              style={[
+                styles.mainTextHospital,
+                (item.videoService === 1) & !isSelected && styles.videoService,
+              ]}
+              numberOfLines={1}>
               {item.hospitalAffiliated}{' '}
             </Text>
             <Dot height={5} width={5} />
-            <Text style={[styles.mainTextMedicine, (item.videoService === 1) & !isSelected && styles.videoService]}> {item.medicineType}</Text>
+            <Text
+              style={[
+                styles.mainTextMedicine,
+                (item.videoService === 1) & !isSelected && styles.videoService,
+              ]}>
+              {' '}
+              {item.medicineType}
+            </Text>
           </View>
           <View style={styles.separator} />
         </View>
@@ -320,6 +322,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   videoService: {
-    fontWeight:'700',
+    fontWeight: '700',
   },
 });

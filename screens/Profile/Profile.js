@@ -16,7 +16,7 @@ import Divider from '../../Components/Divider';
 import {Color, FontFamily, height, width} from '../../config/GlobalStyles';
 import Right from '../../assets/images/RIGHT.svg';
 import DoctorProfile from '../../Components/profile/DoctorProfile';
-import NotificationIcon from '../../assets/images/Notification.svg';
+
 import {backendHost} from '../../Components/apiConfig';
 import {Route} from '../../routes';
 import {imageHost} from '../../Components/apiConfig';
@@ -221,6 +221,7 @@ const Profile = ({navigation}) => {
                   textAlign: 'center',
                   fontFamily: FontFamily.poppinsRegular,
                   textDecorationLine: 'underline',
+                  color: 'black',
                 }}>
                 Sign In/Sign Up
               </Text>

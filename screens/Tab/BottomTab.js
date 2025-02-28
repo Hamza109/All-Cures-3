@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React, {useEffect, useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Route} from '../../routes';
@@ -43,9 +44,8 @@ const BottomTab = () => {
               getFocusedRouteNameFromRoute(route) === 'LOGIN' ||
               getFocusedRouteNameFromRoute(route) === 'ABOUT' ||
               getFocusedRouteNameFromRoute(route) === Route.VIDEOCALL ||
-              getFocusedRouteNameFromRoute(route) === Route.CHAT||
+              getFocusedRouteNameFromRoute(route) === Route.CHAT ||
               getFocusedRouteNameFromRoute(route) === 'BookAppointment'
-
                 ? 'none'
                 : 'flex',
           },

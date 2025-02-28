@@ -10,6 +10,7 @@ import {
   ScrollView,
   Alert,
   KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import React, {useEffect, useState} from 'react';
@@ -31,7 +32,7 @@ const Login = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [agreeToTerms, setAgreeToTerms] = useState(false);
+
   const [isLoaded, setIsLoaded] = useState(false);
   const [loginError, setLoginError] = useState(null);
   const [FCMToken, setFCMToken] = useState();
@@ -117,14 +118,13 @@ These Terms and Conditions are governed by the internal substantive laws of the 
   }, []);
   const handleSubmit = async () => {
     setIsLoaded(true);
-    console.log('Pressed', password.trim());
+
     if (!validate()) return; // Validate the form data
 
     try {
-      // Attempt login
-      console.log('Staring');
       const dataFCM = {
         FCM: FCMToken,
+        deviceType: Platform.OS,
       };
       console.log(typeof FCMToken);
       const response = await fetch(
@@ -158,7 +158,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
       setIsLoaded(false);
     } catch (err) {
       // Handle login error
-      console.log(err);
+      console.log('error', err);
       Alert.alert('username/password is incorrect');
 
       setIsLoaded(false);
@@ -346,17 +346,17 @@ const styles = StyleSheet.create({
     color: Color.appDefaultColor,
     textDecorationLine: 'underline',
   },
-    login: {
-      backgroundColor: Color.appDefaultColor,
-      height: 48,
-      borderRadius: 8,
-      justifyContent: 'center',
-    },
-    loginText: {
-      fontSize: 18,
-      lineHeight: 24,
-      alignSelf: 'center',
-      color: '#fff',
-      fontWeight: '500',
-    },
+  login: {
+    backgroundColor: Color.appDefaultColor,
+    height: 48,
+    borderRadius: 8,
+    justifyContent: 'center',
+  },
+  loginText: {
+    fontSize: 18,
+    lineHeight: 24,
+    alignSelf: 'center',
+    color: '#fff',
+    fontWeight: '500',
+  },
 });

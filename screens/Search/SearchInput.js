@@ -23,9 +23,7 @@ const SearchInput = ({navigation, route}) => {
   const [searching, setSearching] = useState(false);
   const [inputLengthEnough, setInputLengthEnough] = useState(false);
 
-  useEffect(() => {
-    console.log(key);
-  }, []);
+ 
 
   const debounce = (func, delay) => {
     let timeoutId;
@@ -56,7 +54,7 @@ const SearchInput = ({navigation, route}) => {
     try {
       const response = await fetch(`${backendHost}/IntegratedActionController`);
       console.log(response);
-      console.log("api hit");
+
       const doctorData = await response.json();
       const newData = doctorData.map.Doctorname.myArrayList.filter(function (
         item,

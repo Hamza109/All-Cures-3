@@ -9,6 +9,7 @@ import {
   StatusBar,
   ScrollView,
   Alert,
+  Platform,
 } from 'react-native';
 import RenderHTML from 'react-native-render-html';
 import {useForm, Controller} from 'react-hook-form';
@@ -170,6 +171,7 @@ These Terms and Conditions are governed by the internal substantive laws of the 
           number: number,
           Age: null, // Assuming you intentionally set this to null
           FCM: FCMToken,
+          deviceType: Platform.OS,
         },
         {
           withCredentials: true, // This should be in the second argument as part of the config object

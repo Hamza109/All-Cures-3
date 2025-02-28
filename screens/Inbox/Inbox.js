@@ -1,5 +1,5 @@
 import {StatusBar} from 'native-base';
-import React, {useState, useEffect, useLayoutEffect, useCallback} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,22 +7,14 @@ import {
   StyleSheet,
   Pressable,
   Image,
-  BackHandler,
   Alert,
 } from 'react-native';
 import axios from 'axios';
-import Svg, {Path, Circle} from 'react-native-svg';
+import Svg, {Path} from 'react-native-svg';
 import {backendHost} from '../../Components/apiConfig';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {
-  useFocusEffect,
-  useIsFocused,
-  useNavigation,
-} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-
 import moment from 'moment';
-import {StackActions} from '@react-navigation/native';
 import {Route} from '../../routes';
 import HeaderComponent from '../../Components/HeaderComponent';
 import ContentLoader from '../../Components/ContentLoader';
@@ -30,14 +22,13 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {Color, FontFamily} from '../../config/GlobalStyles';
 
 const Inbox = () => {
-  const [messages, setMessages] = useState([]);
   const [data, setData] = useState([]);
-  const isFocused = useIsFocused();
+
   const [exist, setExist] = useState(false);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const profile = useSelector(state => state.profile.data);
-  console.log('profile', profile);
+
   const [user, setUser] = useState();
   const [start, setStart] = useState();
   const [end, setEnd] = useState();
@@ -166,7 +157,6 @@ const Inbox = () => {
   }, []);
 
   useFocusEffect(() => {
-    console.log(profile);
     fetchData();
   });
 

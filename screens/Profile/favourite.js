@@ -18,7 +18,7 @@ import {Route} from '../../routes';
 const Favourite = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const profile = useSelector(state => state.profile.data);
-  console.log(profile);
+ 
   const [items, setItems] = useState();
   const navigation = useNavigation();
 

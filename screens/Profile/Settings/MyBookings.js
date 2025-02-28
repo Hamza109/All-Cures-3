@@ -15,7 +15,7 @@ const MyBookings = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
   const profile = useSelector(state => state.profile.data);
-  console.log(profile);
+
 
   useEffect(() => {
     const fetchData = async () => {

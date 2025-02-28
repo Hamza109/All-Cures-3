@@ -25,7 +25,7 @@ const Help = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const profile = useSelector(state => state.profile.data);
-  console.log(profile);
+
   const [modalVisible, setModalVisible] = React.useState(false);
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);

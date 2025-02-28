@@ -1,10 +1,9 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   StyleSheet,
   Text,
   View,
   SafeAreaView,
-  Button,
-  Modal,
   Alert,
   FlatList,
   TouchableOpacity,
@@ -53,39 +52,51 @@ const Appointment = ({route, navigation}) => {
     return () => backHandler.remove();
   }, []);
   const handleBookAppointment = async () => {
-    axios
-      .post(`${backendHost}/appointments/create`, {
+    try {
+      const payload = {
         docID: id,
-        userID: parseInt(userId),
+        userID: parseInt(userId, 10),
         appointmentDate: selectedDate,
         startTime: timeSlot.slot,
         paymentStatus: 0,
-        amount: unbookedSlots.amount,
+        amount: '1.00',
         currency: 'INR',
-      })
-      .then(res => {
-        let enc = res.data;
-        console.log('enc', enc);
+      };
 
-        if (enc.Count == 0) {
-          console.log(enc.Count);
+      // Log the payload for debugging
+      console.log('Payload:', payload);
 
-          navigation.navigate(Route.SUCCESS);
-        } else if (enc.Count == 1) {
-          console.log(enc.Count);
-          const response = JSON.stringify(enc);
-          const responseObject = JSON.parse(response);
+      const response = await axios.post(
+        `${backendHost}/appointments/create`,
+        payload,
+      );
 
-          navigation.navigate(Route.PAYMENT, {
-            ccAvenueData: responseObject.encRequest,
-          });
-        } else {
-          console.log('Not working');
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+      const enc = response.data;
+
+      console.log('API Response:', enc);
+
+      if (enc.Count == 0) {
+        // Navigate to success if Count is 0
+        navigation.navigate(Route.SUCCESS);
+      } else if (enc.Count == 1) {
+        // Navigate to payment with encRequest data
+        navigation.navigate(Route.PAYMENT, {
+          ccAvenueData: enc.encRequest,
+        });
+      } else {
+        console.error('Unexpected response:', enc);
+        Alert.alert('Error', 'Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      // Log the error for debugging
+      console.error('Error booking appointment:', error);
+
+      // Show an alert with a user-friendly error message
+      Alert.alert(
+        'Booking Failed',
+        'An error occurred while booking your appointment. Please try again later.',
+      );
+    }
   };
 
   const getDayName = dateString => {
@@ -102,6 +113,8 @@ const Appointment = ({route, navigation}) => {
           throw new Error('Network response was not ok');
         }
         const responseData = await data.json();
+        console.log('responseData', responseData);
+
         setUnBookedSlots(responseData);
 
         const slots = [];
@@ -119,7 +132,7 @@ const Appointment = ({route, navigation}) => {
     };
 
     fetchData();
-  }, []);
+  }, [ ]);
 
   const confirmationMessage = () => {
     Alert.alert(
@@ -281,9 +294,9 @@ const Appointment = ({route, navigation}) => {
             </View>
           )}
           <Divider />
-          <Text style={styles.title}>
+          {/* <Text style={styles.title}>
             Consultation Fee :{unbookedSlots.amount}
-          </Text>
+          </Text> */}
 
           {selectedDate && renderSlots()}
           {timeSlot ? (
@@ -297,7 +310,6 @@ const Appointment = ({route, navigation}) => {
                 justifyContent: 'center',
                 borderRadius: 18,
                 marginTop: 40,
-                borderRadius: 5,
               }}
               onPress={handleBookAppointment}>
               <Text

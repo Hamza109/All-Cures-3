@@ -41,6 +41,8 @@ const AppointmentScreen = () => {
   const profile = useSelector(state => state.profile.data);
   useEffect(() => {
     const fetchData = async () => {
+      console.log('useEffect');
+
       try {
         const res = await fetch(`${backendHost}/video/get/doctors/list`);
 
@@ -72,7 +74,6 @@ const AppointmentScreen = () => {
     }
   }, [searchText, doc]);
   const postData = async ({docID}) => {
- 
     console.log('started');
 
     try {

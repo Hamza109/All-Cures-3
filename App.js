@@ -1,7 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import BottomTab from './screens/Tab/BottomTab';
-import {Provider, useDispatch} from 'react-redux';
+import {Provider} from 'react-redux';
 import RootStack from './screens/Stacks/RootStack';
 import {store} from './Redux/Store';
 import {NativeBaseProvider} from 'native-base';
@@ -9,14 +8,13 @@ import messaging from '@react-native-firebase/messaging';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import PushNotification from 'react-native-push-notification';
 import {backendHost} from './Components/apiConfig';
-import DeviceInfo from 'react-native-device-info';
-import {Linking, Text} from 'react-native';
+import {Linking, Platform, Text} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Route} from './routes';
 import BootSplash from 'react-native-bootsplash';
 
 const App = () => {
-  const navigationRef = React.useRef();
+  const navigationRef = useRef();
 
   useEffect(() => {
     const init = async () => {
@@ -60,9 +58,16 @@ const App = () => {
     console.log('notification-->', initialNotification);
     if (initialNotification) {
       console.log('you have a notification');
+      console.log('not', initialNotification);
 
       const {notification} = initialNotification;
+
       const {action, id} = initialNotification.data;
+      if (action === 'chat') {
+        console.log('navigating');
+
+        navigateToInbox();
+      }
       if (action === 'tip') {
       }
 
@@ -71,6 +76,20 @@ const App = () => {
       }
     }
   };
+  useEffect(() => {
+    const unsubscribeOnMessage = messaging().onMessage(async remoteMessage => {
+      console.log('Foreground Notification Received:', remoteMessage);
+
+      // Display the notification manually using PushNotification
+      PushNotification.localNotification({
+        channelId: 'channel_id_ALL_CURES',
+        title: remoteMessage.notification?.title || 'Notification Title',
+        message: remoteMessage.notification?.body || 'Notification Body',
+      });
+    });
+
+    return unsubscribeOnMessage; // Clean up the listener on unmount
+  }, []);
 
   // Request permission for push notifications
   const requestPermission = async () => {
@@ -96,12 +115,13 @@ const App = () => {
   const getToken = async () => {
     try {
       const token = await messaging().getToken();
+
       await AsyncStorage.setItem('token', token);
 
       fetch(`${backendHost}/notification/token/"${token}"`, {
         method: 'POST',
       }).catch(err => {
-        console.log(err);
+        console.log('error', err);
       });
 
       console.log('FCM', token);
@@ -112,7 +132,16 @@ const App = () => {
       console.error('Error getting token:', error);
     }
   };
-
+  const navigateToInbox = () => {
+    const currentState = navigationRef.current?.getRootState();
+    console.log('Current Navigation State:', currentState);
+    console.log('Navigation Ref:', navigationRef.current);
+    if (navigationRef.current) {
+      navigationRef.current.navigate(Route.PROFILE_TAB, {
+        screen: Route.INBOX,
+      });
+    }
+  };
   const configPush = () => {
     if (Platform.OS == 'ios') {
       PushNotification.getApplicationIconBadgeNumber(number => {
@@ -145,6 +174,20 @@ const App = () => {
       onNotification: function (notification) {
         //  tiPValue(true)
         // process the notification
+        console.log('Notification in Foreground:', notification);
+        const action = notification.data?.action || notification.action;
+        console.log('action received', action);
+
+        if (action === 'chat') {
+          navigateToInbox(); // Navigate to INBOX when "chat" action is detected
+        }
+
+        const message =
+          notification.message ||
+          notification.body ||
+          (notification.notification && notification.notification.body);
+        console.log('Notification Message', message);
+
         PushNotification.localNotification({
           channelId: 'channel_id_ALL_CURES',
           title: notification.title,
@@ -252,12 +295,10 @@ const App = () => {
     Text.defaultProps = Text.defaultProps || {};
     Text.defaultProps.allowFontScaling = false;
 
-    let deviceId = DeviceInfo.getUniqueId();
-
     // Get the deep link used to open the app
     const getUrl = async () => {
       const initialUrl = await Linking.getInitialURL();
-      console.log('hello', initialUrl);
+      console.log('initialUrl', initialUrl);
 
       if (initialUrl === null) {
         return;
@@ -309,7 +350,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <NativeBaseProvider>
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
           <RootStack />
         </NavigationContainer>
       </NativeBaseProvider>

@@ -16,9 +16,9 @@ const UserProfile = () => {
         />
         <View>
           <Text style={styles.profileName}>
-            {profileData.first_name} {profileData.last_name}
+            {profile.first_name} {profile.last_name}
           </Text>
-          <Text style={styles.infoText}>{profileData.email_address}</Text>
+          <Text style={styles.infoText}>{profile.email_address}</Text>
         </View>
       </View>
       {/* <Divider /> */}

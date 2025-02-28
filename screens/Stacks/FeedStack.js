@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Route} from '../../routes';
@@ -13,6 +14,7 @@ import Success from '../Doctor/Success';
 import Appointment from '../Doctor/Appointment';
 import DoctorMainScreen from '../Doctor/DoctorMainScreen';
 import Payment from '../Doctor/Payment';
+import Inbox from '../Inbox/Inbox';
 const FeedStack = ({navigation}) => {
   const handleBack = () => {
     console.log('back');
@@ -53,7 +55,7 @@ const FeedStack = ({navigation}) => {
           },
         }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name={Route.DOCTOR_MAIN_SCREEN}
         component={DoctorMainScreen}
         options={{
@@ -73,10 +75,12 @@ const FeedStack = ({navigation}) => {
               </TouchableOpacity>
             );
           },
-        }}/>
+        }}
+      />
       <Stack.Screen name={Route.APPOINTMENT} component={Appointment} />
       <Stack.Screen name={Route.PAYMENT} component={Payment} />
-      <Stack.Screen name={Route.SUCCESS}  component={Success} />
+      <Stack.Screen name={Route.SUCCESS} component={Success} />
+      <Stack.Screen name={Route.INBOX} component={Inbox}/>
     </Stack.Navigator>
   );
 };

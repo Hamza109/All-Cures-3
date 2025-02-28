@@ -47,11 +47,10 @@ const ArticleCard = ({
   const [addFav, setAddFav] = useState(0);
   const [toggle, setToggle] = useState();
   const profile = useSelector(state => state.profile.data);
-  console.log(articleId);
+
   const dispatch = useDispatch();
   const handleOptionPress = () => {
-    setShowOptions(!showOptions), console.log('Touched', showOptions);
-    dispatch(option(articleId)), stat();
+    setShowOptions(!showOptions), dispatch(option(articleId)), stat();
   };
 
   const goto = () => {
@@ -70,13 +69,11 @@ const ArticleCard = ({
   const favorite = async status => {
     if (Object.keys(profile).length !== 0) {
       if (addFav == 0) {
-        console.log('addFav');
         await axios
           .post(
             `${backendHost}/favourite/userid/${profile.registration_id}/articleid/${articleId}/status/1/create`,
           )
           .then(res => {
-            console.log('added');
             if (res.data > 0) {
               Alert.alert('Favourites', 'Added to Favourites', [
                 {
@@ -97,13 +94,11 @@ const ArticleCard = ({
             throw err;
           });
       } else {
-        console.log('deleted');
         axios
           .delete(
             `${backendHost}/favourite/userid/${profile.registration_id}/articleid/${articleId}/status/1/delete`,
           )
           .then(res => {
-            console.log(res.data);
             if (res.data > 0) {
               Alert.alert('Removed from favorite');
               setAddFav(2);
@@ -119,13 +114,12 @@ const ArticleCard = ({
   };
 
   const stat = async () => {
-    console.log('Initiated');
     if (Object.keys(profile).length !== 0) {
       try {
         const {data} = await axios.get(
           `${backendHost}/favourite/userid/${profile.registration_id}/articleid/${articleId}/favourite`,
         );
-        console.log('data', data);
+
         if (data.length == 0) {
           setAddFav(0);
         } else {

@@ -1,45 +1,26 @@
-import React, {useState, useEffect, useDeferredValue} from 'react';
-import {View, Text, Alert, KeyboardAvoidingView} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Text, Alert} from 'react-native';
 import {GiftedChat} from 'react-native-gifted-chat';
-import {Image} from 'react-native';
-import initialMessages from './messages';
-import {Svg, Path} from 'react-native-svg';
-import {
-  renderInputToolbar,
-  renderActions,
-  renderComposer,
-  renderSend,
-} from './InputToolbar';
-import {
-  renderBubble,
-  renderSystemMessage,
-  renderMessage,
-  renderMessageText,
-  renderCustomView,
-} from './MessageContainer';
-import {StackActions} from '@react-navigation/native';
-import {
-  InputToolbar,
-  Actions,
-  Composer,
-  Send,
-  Message,
-} from 'react-native-gifted-chat';
+
+import {renderInputToolbar} from './InputToolbar';
+import {renderBubble, renderMessageText} from './MessageContainer';
+
+import {Send, Message} from 'react-native-gifted-chat';
 import Icon from 'react-native-vector-icons/Ionicons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Foundation from 'react-native-vector-icons/Foundation';
+
 import {StatusBar} from 'native-base';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 
 import {Color} from '../../config/GlobalStyles';
 
-import {CHAT_SERVER_URL} from '../../Components/apiConfig';
+import {backendHost, CHAT_SERVER_URL} from '../../Components/apiConfig';
 
 const Chat = ({route}) => {
   const navigation = useNavigation();
   const chatData = route.params.messages;
   const Id = route.params.id;
+  console.log('backendHost', backendHost);
 
   const FIRST_NAME = route.params.first_name;
   const LAST_NAME = route.params.last_name;
@@ -74,7 +55,6 @@ const Chat = ({route}) => {
   });
   useEffect(() => {
     setMessages(chatData.reverse());
-    console.log('runned succesfully');
 
     if (!socket || socket.readyState === WebSocket.CLOSED) {
       setupSocket();
@@ -88,17 +68,15 @@ const Chat = ({route}) => {
 
   const setupSocket = () => {
     const newSocket = new WebSocket(CHAT_SERVER_URL);
-    console.log('setupSocket');
-    console.log(chatid);
+
     newSocket.onopen = event => {
       newSocket.send(`{"Room_No":"${chatid}"}`);
     };
-    console.log('chl rha hai');
+
     newSocket.onmessage = event => {
       console.log(event);
       const fromId = event.data.split(':')[0];
       const message = event.data.split(':').pop();
-      console.log('here tk working', event.data);
 
       const transformedMessages = {
         _id: Math.random().toString(36).substring(2, 9),
@@ -137,7 +115,8 @@ const Chat = ({route}) => {
     const fromId = profile.docID == 0 ? profile.registration_id : profile.docID;
     const toId = Id;
     const chat_id = chatid;
-    const payload = `${fromId}:${toId}:${chat_id}:${message.text}`;
+    const type = profile.docID == 0 ? 0 : 1;
+    const payload = `${fromId}:${toId}:${chat_id}:${message.text}:${type}`;
     console.log(payload);
     console.log(typeof payload);
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState, memo} from 'react';
+import React, {useEffect, useState, memo, useRef} from 'react';
 import {
   StyleSheet,
   View,
@@ -10,8 +10,6 @@ import {
   Platform,
   RefreshControl,
   Pressable,
-  PermissionsAndroid,
-  Animated,
   Alert,
 } from 'react-native';
 import {FontFamily, Color} from '../../config/GlobalStyles';
@@ -44,7 +42,7 @@ const Feed = ({navigation}) => {
   const [modalVisible, setModalVisible] = React.useState(false);
   const abortController = new AbortController();
   const signal = abortController.signal;
-  const initialRef = React.useRef(null);
+  const initialRef = useRef(null);
   const finalRef = React.useRef(null);
   const profileInfo = useSelector(state => state.profile.data);
   const getUrl = async () => {
@@ -104,20 +102,15 @@ const Feed = ({navigation}) => {
     getValue();
     getUrl();
   });
-  useEffect(() => {
-    setTimeout(() => {}, 2000);
-  });
+
   useEffect(() => {
     NetInfo.addEventListener(state => {
       setIsConnected(state.isConnected);
     });
-    console.log('network chanf', isConnected);
   }, [isConnected]);
 
   async function getFeaturedArticle() {
     try {
-      const startTime = performance.now(); // Get current time before request
-
       const response = await fetch(`${backendHost}/article/allkvranked`, {
         method: 'GET',
         headers: headers,
@@ -135,9 +128,6 @@ const Feed = ({navigation}) => {
       setItem(json);
       setLoaded(true);
       setModalVisible(true);
-      const endTime = performance.now(); // Get current time after request
-      const timeElapsed = endTime - startTime;
-      console.log(`API load time: ${timeElapsed.toFixed(2)} milliseconds`); // Log the time
     } catch (err) {
       console.error(err);
       // Handle errors, e.g., show an error message to the user
@@ -158,12 +148,8 @@ const Feed = ({navigation}) => {
 
       const json = await response.json();
 
-      // Using map directly to create the array
-
       setItem(json);
       setLoaded(true);
-
-      console.log(json);
     } catch (error) {
       if (error.name === 'AbortError') {
         console.log('Request aborted');
@@ -195,33 +181,6 @@ const Feed = ({navigation}) => {
     setDiseaseId(item.dc_id);
   };
 
-  // const renderCategory = ({item}) => {
-  //   return (
-  //     <View key={item.dc_id} style={{paddingHorizontal: 11}}>
-  //       <TouchableOpacity
-  //         style={
-  //           Platform.OS === 'ios'
-  //             ? item.dc_id === diseaseId
-  //               ? styles.activeLabel
-  //               : styles.inactiveLabel
-  //             : null
-  //         }
-  //         onPress={() => {
-  //           selectItem(item);
-  //         }}>
-  //         <Text
-  //           style={[
-  //             styles.category,
-  //             item.dc_id === diseaseId
-  //               ? styles.activeLabel
-  //               : styles.inactiveLabel,
-  //           ]}>
-  //           {item.category}
-  //         </Text>
-  //       </TouchableOpacity>
-  //     </View>
-  //   );
-  // };
   const renderItem = ({item}) => {
     let imageLoc = '';
     const imgLocation = item.content_location;
@@ -271,7 +230,7 @@ const Feed = ({navigation}) => {
     //   dispatch(screen(Route.LOGIN));
     // }
   };
-  console.log(profileInfo);
+
 
   return (
     // feed container
